@@ -1,18 +1,43 @@
+import Navbar from "@/components/Navbar"
+import HeroSection from "@/components/HeroSection"
+import ImpactNumbers from "@/components/ImpactNumbers"
+import InstructorsSection from "@/components/InstructorsSection"
+import ImplementationSection from "@/components/ImplementationSection"
+import CommunitySection from "@/components/CommunitySection"
+import ViralAgentSection from "@/components/ViralAgentSection"
+import GptAgentSection from "@/components/GptAgentSection"
+// import TechSection from "@/components/TechSection" // removida temporariamente
+import NivelacionSection from "@/components/NivelacionSection"
+
+import BonusSection from "@/components/BonusSection"
+import PricingSection from "@/components/PricingSection"
+import GuaranteeSection from "@/components/GuaranteeSection"
+import CertificateSection from "@/components/CertificateSection"
+import TestimonialsSection from "@/components/TestimonialsSection"
+import FaqSection from "@/components/FaqSection"
+import Footer from "@/components/Footer"
+
 const Index = () => {
   return (
-    <main className="min-h-screen bg-dark text-light">
-      <section className="section-container flex flex-col items-center justify-center min-h-screen text-center">
-        <h1 className="text-4go-hero font-heading font-black mb-6">
-          Bem-vindo à{" "}
-          <span className="text-gradient">4GO Academy</span>
-        </h1>
-        <p className="section-subtitle mx-auto mb-8">
-          O site está em construção. Em breve novidades incríveis.
-        </p>
-        <a href="#" className="btn-primary">
-          Saiba mais
-        </a>
-      </section>
+    <main>
+      <Navbar />
+      <HeroSection />
+      <ImpactNumbers />
+      <InstructorsSection />
+      <ImplementationSection />
+      <CommunitySection />
+      <ViralAgentSection />
+      <GptAgentSection />
+      {/* <TechSection /> removida temporariamente */}
+      <NivelacionSection />
+
+      <BonusSection />
+      <PricingSection />
+      <GuaranteeSection />
+      <CertificateSection />
+      <TestimonialsSection />
+      <FaqSection />
+      <Footer />
     </main>
   )
 }

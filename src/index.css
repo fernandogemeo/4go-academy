@@ -1,67 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap');
-
 @layer base {
   * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  html {
-    scroll-behavior: smooth;
   }
 
   body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0A0A0A;
-    color: #F5F5F5;
+    font-family: 'Outfit', sans-serif;
+    background-color: #ffffff;
+    color: #0F0F0F;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-weight: 700;
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-primary hover:bg-primary-hover text-white font-semibold px-8 py-3 rounded-lg transition-all duration-200;
-  }
-
-  .btn-outline {
-    @apply border border-primary text-primary hover:bg-primary hover:text-white font-semibold px-8 py-3 rounded-lg transition-all duration-200;
-  }
-
-  .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-
-  .section-title {
-    @apply text-4go-2xl font-heading font-bold text-light mb-4;
-  }
-
-  .section-subtitle {
-    @apply text-4go-base text-gray-400 max-w-2xl;
-  }
-
-  .card {
-    @apply bg-dark-card border border-gray-800 rounded-xl p-6;
-  }
-}
-
 @layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  .font-outfit { font-family: 'Outfit', sans-serif; }
+  .tracking-fire { letter-spacing: 0.06em; }
+
+  .shadow-fire {
+    box-shadow: 0 8px 30px -8px rgba(252, 108, 4, 0.45);
+  }
+
+  .shadow-card {
+    box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.12);
   }
 
   .animate-fade-up {
-    animation: fadeUp 0.6s ease-out forwards;
+    animation: fadeUp 0.7s ease-out forwards;
     opacity: 0;
   }
 }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 24s linear infinite;
+}
+
+html { scroll-behavior: smooth; }
