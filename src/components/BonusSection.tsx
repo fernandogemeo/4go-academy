@@ -91,7 +91,7 @@ const BonusSection = () => {
             className="font-outfit font-black text-white uppercase tracking-fire leading-none max-w-5xl mx-auto"
             style={{ fontSize: "clamp(28px, 5vw, 64px)" }}
           >
-            1 Anõ de acceso a todos los cursos de{" "}
+            1 Año de acceso a toda la{" "}
             <span
               className="relative inline-block"
               style={{
