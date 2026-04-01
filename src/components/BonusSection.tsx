@@ -108,7 +108,7 @@ const BonusSection = () => {
             style={{ fontSize: "clamp(15px, 1.6vw, 19px)" }}
           >
             Al inscribirte hoy en la Formación IA para Negocios, recibes acceso completo
-            a toda la plataforma 4GO Academy por <strong className="text-white">1 año entero.</strong>{" "}
+            a toda la plataforma con todos los entrenamientos de <strong className="text-white">4GO Plus.</strong>{" "}
             Mejora todas las áreas de tu carrera y negocio.
           </p>
 
