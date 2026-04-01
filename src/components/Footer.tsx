@@ -6,14 +6,14 @@ const Footer = () => (
       <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
         {/* Logo */}
-        <div>
-          <p className="font-outfit font-black text-xl text-white uppercase tracking-fire">
-            4GO <span className="text-[#fc6c04]">Academy</span>
-          </p>
-          <p className="font-outfit text-xs text-white/40 mt-1">
-            Por IA University — Formación en Inteligencia Artificial
-          </p>
-        </div>
+        <a href="#" className="shrink-0">
+          <img
+            src="/logo-navbar.png"
+            alt="iau · 4GO Academy"
+            className="h-8 md:h-10 w-auto object-contain"
+            style={{ mixBlendMode: "lighten" }}
+          />
+        </a>
 
         {/* Nav links */}
         <div className="flex flex-wrap items-center justify-center gap-6">
