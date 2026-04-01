@@ -8,7 +8,7 @@ const Footer = () => (
         {/* Logo */}
         <a href="#" className="shrink-0">
           <img
-            src="/logo-navbar.png"
+            src="/logo-navbar.png?v=2"
             alt="iau · 4GO Academy"
             className="h-8 md:h-10 w-auto object-contain"
             style={{ mixBlendMode: "lighten" }}
