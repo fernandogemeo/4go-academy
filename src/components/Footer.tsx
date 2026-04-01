@@ -1,4 +1,4 @@
-const HOTMART_URL = "https://pay.hotmart.com/N95283619Y?off=hyfkll71&checkoutMode=10"
+const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
 const Footer = () => (
   <footer className="py-12 bg-[#000000] border-t border-white/8">
