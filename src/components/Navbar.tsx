@@ -30,12 +30,11 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         {/* Logo */}
-        <a href="#" className="shrink-0">
+        <a href="#" className="shrink-0 mr-[50px]">
           <img
-            src="/logo-navbar.png"
+            src="/logo-navbar.png?v=2"
             alt="iau · 4GO Academy"
             className="h-8 md:h-9 w-auto object-contain"
-            style={{ mixBlendMode: "lighten" }}
           />
         </a>
 
