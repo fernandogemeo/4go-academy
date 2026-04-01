@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 
-const HOTMART_URL = "https://pay.hotmart.com/N95283619Y?off=hyfkll71&checkoutMode=10"
+const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
 const links = [
   { label: "Tecnologías", href: "#tecnologias" },
