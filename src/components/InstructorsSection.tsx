@@ -53,7 +53,7 @@ const InstructorCard = ({
   role: string
   photo: string
 }) => (
-  <div className="flex-shrink-0 flex flex-col items-center gap-4 w-44 md:w-52">
+  <div className="flex-shrink-0 flex flex-col items-center gap-4 w-48 md:w-56">
     <div
       className="overflow-hidden rounded-2xl w-full"
       style={{
@@ -64,7 +64,8 @@ const InstructorCard = ({
       <img
         src={photo}
         alt={name}
-        className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105"
+        className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105"
+        style={{ objectPosition: "center 15%" }}
         loading="lazy"
       />
     </div>
