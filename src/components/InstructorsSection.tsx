@@ -1,3 +1,5 @@
+import { useState, useRef } from "react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import davidPadilla from "@/assets/david-padilla.jpeg"
 import juanQuintero from "@/assets/juan-quintero.png"
 import xaviYustiz from "@/assets/xavi-yustiz.png"
@@ -51,10 +53,7 @@ const InstructorCard = ({
   role: string
   photo: string
 }) => (
-  <div
-    className="flex-shrink-0 flex flex-col items-center gap-4"
-    style={{ width: "clamp(160px, 20vw, 220px)" }}
-  >
+  <div className="flex-shrink-0 flex flex-col items-center gap-4 w-44 md:w-52">
     <div
       className="overflow-hidden rounded-2xl w-full"
       style={{
@@ -65,21 +64,15 @@ const InstructorCard = ({
       <img
         src={photo}
         alt={name}
-        className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105"
+        className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105"
         loading="lazy"
       />
     </div>
-    <div className="text-center">
-      <span
-        className="block font-outfit font-bold leading-tight text-white"
-        style={{ fontSize: "clamp(13px, 1.3vw, 15px)" }}
-      >
+    <div className="text-center px-1">
+      <span className="block font-outfit font-bold leading-tight text-white text-sm">
         {name}
       </span>
-      <span
-        className="block font-outfit text-[#fc6c04]/80 mt-1 leading-snug"
-        style={{ fontSize: "clamp(11px, 1.1vw, 12px)" }}
-      >
+      <span className="block font-outfit text-[#fc6c04]/80 mt-1 leading-snug text-xs">
         {role}
       </span>
     </div>
@@ -87,7 +80,24 @@ const InstructorCard = ({
 )
 
 const InstructorsSection = () => {
-  const duplicated = [...instructors, ...instructors]
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  const checkScroll = () => {
+    const el = scrollRef.current
+    if (!el) return
+    setCanScrollLeft(el.scrollLeft > 0)
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 2)
+  }
+
+  const scroll = (dir: "left" | "right") => {
+    const el = scrollRef.current
+    if (!el) return
+    const amount = dir === "left" ? -260 : 260
+    el.scrollBy({ left: amount, behavior: "smooth" })
+    setTimeout(checkScroll, 350)
+  }
 
   return (
     <section className="py-20 md:py-28 bg-[#04192D] overflow-hidden">
@@ -109,23 +119,35 @@ const InstructorsSection = () => {
         </p>
       </div>
 
-      <div className="overflow-hidden">
-        <div
-          className="flex gap-6"
-          style={{ animation: "marqueeReverse 35s linear infinite" }}
+      <div className="relative max-w-6xl mx-auto px-4">
+        {/* Navigation buttons */}
+        <button
+          onClick={() => scroll("left")}
+          className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[#fc6c04] flex items-center justify-center text-white transition-opacity duration-200 ${canScrollLeft ? "opacity-100" : "opacity-30 pointer-events-none"}`}
+          aria-label="Anterior"
         >
-          {duplicated.map((s, i) => (
+          <ChevronLeft size={20} />
+        </button>
+        <button
+          onClick={() => scroll("right")}
+          className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[#fc6c04] flex items-center justify-center text-white transition-opacity duration-200 ${canScrollRight ? "opacity-100" : "opacity-30 pointer-events-none"}`}
+          aria-label="Siguiente"
+        >
+          <ChevronRight size={20} />
+        </button>
+
+        {/* Scrollable row */}
+        <div
+          ref={scrollRef}
+          onScroll={checkScroll}
+          className="flex gap-8 overflow-x-auto scrollbar-hide px-12"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {instructors.map((s, i) => (
             <InstructorCard key={i} {...s} />
           ))}
         </div>
       </div>
-
-      <style>{`
-        @keyframes marqueeReverse {
-          from { transform: translateX(-50%); }
-          to   { transform: translateX(0); }
-        }
-      `}</style>
     </section>
   )
 }
