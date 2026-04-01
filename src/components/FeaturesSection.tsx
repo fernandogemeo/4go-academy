@@ -59,7 +59,7 @@ const FeaturesSection = () => {
           {features.map((f, i) => (
             <div
               key={i}
-              className={`relative rounded-2xl p-7 flex flex-col transition-all duration-300 bg-[#141414] ${
+              className={`relative rounded-2xl p-5 md:p-7 flex flex-col transition-all duration-300 bg-[#141414] ${
                 isInView ? "animate-fade-up" : "opacity-0"
               }`}
               style={{

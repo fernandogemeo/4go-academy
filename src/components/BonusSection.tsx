@@ -285,7 +285,7 @@ const BonusSection = () => {
                   href={HOTMART_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-3 font-outfit text-base font-black px-10 py-4 rounded-[70px] text-white uppercase tracking-fire transition-all duration-300 hover:scale-[1.03]"
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 font-outfit text-base font-black px-6 sm:px-10 py-4 rounded-[70px] text-white uppercase tracking-fire transition-all duration-300 hover:scale-[1.03]"
                   style={{
                     background: "linear-gradient(135deg, #fc6c04 0%, #e05a00 100%)",
                     boxShadow: "0 8px 40px -8px rgba(252,108,4,0.65)",

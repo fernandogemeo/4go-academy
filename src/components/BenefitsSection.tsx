@@ -59,7 +59,7 @@ const BenefitsSection = () => {
           {benefits.map((b, i) => (
             <div
               key={i}
-              className={`p-7 rounded-2xl bg-white border border-white/20 hover:shadow-card transition-all duration-300 ${
+              className={`p-5 md:p-7 rounded-2xl bg-white border border-white/20 hover:shadow-card transition-all duration-300 ${
                 isInView ? "animate-fade-up" : "opacity-0"
               }`}
               style={{ animationDelay: `${i * 0.07}s` }}

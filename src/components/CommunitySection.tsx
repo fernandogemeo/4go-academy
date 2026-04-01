@@ -173,7 +173,7 @@ const CommunitySection = () => {
 
         {/* Bottom quote banner */}
         <div
-          className={`max-w-5xl mx-auto mt-6 rounded-2xl px-8 py-6 flex flex-col md:flex-row items-center gap-4 md:gap-8 ${
+          className={`max-w-5xl mx-auto mt-6 rounded-2xl px-5 py-5 md:px-8 md:py-6 flex flex-col md:flex-row items-center gap-4 md:gap-8 ${
             isInView ? "animate-fade-up" : "opacity-0"
           }`}
           style={{

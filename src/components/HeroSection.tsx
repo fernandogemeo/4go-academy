@@ -123,12 +123,12 @@ const HeroSection = () => {
             <strong className="text-white/90">aunque no tengas experiencia previa en tecnología.</strong>
           </p>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center px-2">
             <a
               href={HOTMART_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-[#fc6c04] font-outfit text-base font-bold px-10 py-4 rounded-[70px] text-white hover:bg-[#e05a00] transition-colors shadow-fire uppercase tracking-fire"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-[#fc6c04] font-outfit text-base font-bold px-6 sm:px-10 py-4 rounded-[70px] text-white hover:bg-[#e05a00] transition-colors shadow-fire uppercase tracking-fire"
             >
               QUIERO ASEGURAR MI CUPO
             </a>

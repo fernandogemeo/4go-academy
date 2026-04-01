@@ -35,7 +35,7 @@ const PricingSection = () => {
 
         {/* Card */}
         <div
-          className={`max-w-lg mx-auto rounded-2xl p-8 md:p-10 bg-[#04192D] ${
+          className={`max-w-lg mx-auto rounded-2xl p-6 md:p-10 bg-[#04192D] ${
             isInView ? "animate-fade-up" : "opacity-0"
           }`}
           style={{ border: "2px solid #fc6c04" }}
