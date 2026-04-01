@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useRef, useCallback, useEffect, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import davidPadilla from "@/assets/david-padilla.jpeg"
 import juanQuintero from "@/assets/juan-quintero.png"
@@ -82,22 +82,53 @@ const InstructorCard = ({
 
 const InstructorsSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null)
-  const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(true)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const totalItems = instructors.length
 
-  const checkScroll = () => {
+  // Triplicamos el array para crear el efecto infinito
+  const tripled = [...instructors, ...instructors, ...instructors]
+
+  const getCardWidth = useCallback(() => {
+    // w-48 = 192px en mobile, w-56 = 224px en md+, gap-8 = 32px
+    const isMd = window.innerWidth >= 768
+    return (isMd ? 224 : 192) + 32
+  }, [])
+
+  // Posicionar en el set del medio al montar
+  useEffect(() => {
     const el = scrollRef.current
     if (!el) return
-    setCanScrollLeft(el.scrollLeft > 0)
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 2)
-  }
+    const cardW = getCardWidth()
+    el.scrollLeft = totalItems * cardW
+    setCurrentIndex(0)
+  }, [getCardWidth, totalItems])
+
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const cardW = getCardWidth()
+    const oneSetWidth = totalItems * cardW
+
+    // Si se fue muy a la izquierda, saltar al set del medio
+    if (el.scrollLeft < cardW * 0.5) {
+      el.scrollLeft += oneSetWidth
+    }
+    // Si se fue muy a la derecha, saltar al set del medio
+    else if (el.scrollLeft > oneSetWidth * 2 + cardW * 0.5) {
+      el.scrollLeft -= oneSetWidth
+    }
+
+    // Calcular índice actual
+    const idx = Math.round((el.scrollLeft % oneSetWidth) / cardW) % totalItems
+    setCurrentIndex(idx)
+  }, [getCardWidth, totalItems])
 
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current
     if (!el) return
-    const amount = dir === "left" ? -260 : 260
+    const cardW = getCardWidth()
+    const amount = dir === "left" ? -cardW : cardW
     el.scrollBy({ left: amount, behavior: "smooth" })
-    setTimeout(checkScroll, 350)
   }
 
   return (
@@ -121,31 +152,43 @@ const InstructorsSection = () => {
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4">
-        {/* Navigation buttons */}
+        {/* Navigation buttons - siempre activos */}
         <button
           onClick={() => scroll("left")}
-          className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[#fc6c04] flex items-center justify-center text-white transition-opacity duration-200 ${canScrollLeft ? "opacity-100" : "opacity-30 pointer-events-none"}`}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[#fc6c04] flex items-center justify-center text-white hover:bg-[#e05e00] transition-colors duration-200"
           aria-label="Anterior"
         >
           <ChevronLeft size={20} />
         </button>
         <button
           onClick={() => scroll("right")}
-          className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[#fc6c04] flex items-center justify-center text-white transition-opacity duration-200 ${canScrollRight ? "opacity-100" : "opacity-30 pointer-events-none"}`}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[#fc6c04] flex items-center justify-center text-white hover:bg-[#e05e00] transition-colors duration-200"
           aria-label="Siguiente"
         >
           <ChevronRight size={20} />
         </button>
 
-        {/* Scrollable row */}
+        {/* Scrollable row con loop infinito */}
         <div
           ref={scrollRef}
-          onScroll={checkScroll}
+          onScroll={handleScroll}
           className="flex gap-8 overflow-x-auto scrollbar-hide px-12"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {instructors.map((s, i) => (
+          {tripled.map((s, i) => (
             <InstructorCard key={i} {...s} />
+          ))}
+        </div>
+
+        {/* Dots indicator */}
+        <div className="flex justify-center gap-2 mt-8">
+          {instructors.map((_, i) => (
+            <div
+              key={i}
+              className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                i === currentIndex ? "bg-[#fc6c04]" : "bg-white/20"
+              }`}
+            />
           ))}
         </div>
       </div>
