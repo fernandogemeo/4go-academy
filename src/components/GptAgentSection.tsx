@@ -138,7 +138,7 @@ const GptAgentSection = () => {
               </div>
 
               {/* Agent list */}
-              <div className="divide-y" style={{ divideColor: "rgba(255,255,255,0.04)" }}>
+              <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
                 {agents.map((agent, i) => (
                   <div key={i} className="flex items-start gap-3 px-4 py-4 transition-colors duration-200 hover:bg-white/[0.02] cursor-default"
                     style={{
