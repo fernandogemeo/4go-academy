@@ -180,17 +180,6 @@ const InstructorsSection = () => {
           ))}
         </div>
 
-        {/* Dots indicator */}
-        <div className="flex justify-center gap-2 mt-8">
-          {instructors.map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                i === currentIndex ? "bg-[#fc6c04]" : "bg-white/20"
-              }`}
-            />
-          ))}
-        </div>
       </div>
     </section>
   )
