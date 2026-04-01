@@ -22,22 +22,15 @@ const CertificateSection = () => {
         </p>
 
         <div
-          className={`max-w-sm mx-auto bg-white rounded-2xl p-12 text-center ${
+          className={`max-w-2xl mx-auto ${
             isInView ? "animate-fade-up" : "opacity-0"
           }`}
-          style={{ border: "2px solid rgba(4,25,45,0.15)" }}
         >
-          <div className="text-6xl mb-4">🎓</div>
-          <p className="font-outfit font-black text-[#04192D] text-xl uppercase tracking-fire">
-            Certificado Oficial
-          </p>
-          <p className="font-outfit text-[#04192D]/50 text-sm mt-2 uppercase tracking-fire">
-            IA University · 2026
-          </p>
-          <div className="mt-4 h-0.5 bg-[#fc6c04]/30 rounded-full" />
-          <p className="font-outfit text-[#04192D]/40 text-xs mt-3">
-            Formación: IA para Negocios
-          </p>
+          <img
+            src="/certificado-oficial.jpg"
+            alt="Certificado Oficial - Formación IA para Negocios"
+            className="w-full rounded-2xl shadow-2xl"
+          />
         </div>
       </div>
     </section>

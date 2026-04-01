@@ -111,7 +111,7 @@ const HeroSection = () => {
             className="font-outfit font-black text-white uppercase tracking-fire leading-none mb-6 md:mb-8"
             style={{ fontSize: "clamp(32px, 7vw, 70px)" }}
           >
-            FORMACIÓN:{" "}
+            FORMACIÓN<br />
             <span className="text-[#fc6c04]">IA PARA NEGOCIOS</span>
           </h1>
 

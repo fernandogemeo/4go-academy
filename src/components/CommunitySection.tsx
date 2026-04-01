@@ -120,11 +120,6 @@ const CommunitySection = () => {
             {/* Stats row */}
             <div className="relative z-10 flex gap-6 mt-8 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
               <div>
-                <p className="font-outfit font-black text-white" style={{ fontSize: "28px" }}>+10K</p>
-                <p className="font-outfit text-xs text-white/45 uppercase tracking-fire mt-0.5">Miembros activos</p>
-              </div>
-              <div style={{ width: "1px", background: "rgba(255,255,255,0.08)" }} />
-              <div>
                 <p className="font-outfit font-black text-[#fc6c04]" style={{ fontSize: "28px" }}>24/7</p>
                 <p className="font-outfit text-xs text-white/45 uppercase tracking-fire mt-0.5">Siempre disponible</p>
               </div>
