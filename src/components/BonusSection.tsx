@@ -91,7 +91,7 @@ const BonusSection = () => {
             className="font-outfit font-black text-white uppercase tracking-fire leading-none max-w-5xl mx-auto"
             style={{ fontSize: "clamp(28px, 5vw, 64px)" }}
           >
-            1 año de acceso a{" "}
+            1 Anõ de acceso a todos los cursos de{" "}
             <span
               className="relative inline-block"
               style={{
@@ -99,9 +99,8 @@ const BonusSection = () => {
                 textShadow: "0 0 40px rgba(252,108,4,0.45)",
               }}
             >
-              TODOS
-            </span>{" "}
-            los cursos de 4GO Academy
+              4Go Plus
+            </span>
           </h2>
 
           <p
