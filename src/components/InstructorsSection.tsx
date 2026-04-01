@@ -1,3 +1,9 @@
+import davidPadilla from "@/assets/david-padilla.jpeg"
+import juanQuintero from "@/assets/juan-quintero.png"
+import xaviYustiz from "@/assets/xavi-yustiz.png"
+import noraVargas from "@/assets/nora-vargas.png"
+import jaimeRios from "@/assets/jaime-rios.png"
+
 const instructors = [
   {
     name: "David Rodríguez",
@@ -5,19 +11,14 @@ const instructors = [
     photo: "https://ia.university/wp-content/uploads/elementor/thumbs/IA_University_Equipo-5-rdzj0g7f1j2u0f83rc632vkr475xd32hi39vc7vd68.webp",
   },
   {
-    name: "Sebastián Rivera",
-    role: "CEO Go Rentals · Experto en Growth Marketing",
-    photo: "https://ia.university/wp-content/uploads/elementor/thumbs/IA_University_Equipo-4-rdzj09mjpottr5hntrbp3f8iyi2cv7cd56pgza54ds.webp",
+    name: "David Padilla",
+    role: "Especialista en N8N",
+    photo: davidPadilla,
   },
   {
-    name: "Pedro Uribe",
-    role: "Ex-director Global Marketing Americas · Microsoft",
-    photo: "https://ia.university/wp-content/uploads/elementor/thumbs/IA_University_Equipo-3-rdzj07qvc0r93xke4qifyfplrqbmft4wgxei0q7wq8.webp",
-  },
-  {
-    name: "Diego Camacho",
-    role: "Comité de Américas IA · Google",
-    photo: "https://ia.university/wp-content/uploads/elementor/thumbs/IA_University_Equipo-1-rdzj03zikom3thpuqovxognre6u5l0pz4esk3mdhf4.webp",
+    name: "Juan Quintero",
+    role: "Especialista en Tribe Marketing & optimización de procesos con IA",
+    photo: juanQuintero,
   },
   {
     name: "John Castaño",
@@ -25,19 +26,19 @@ const instructors = [
     photo: "https://ia.university/wp-content/uploads/elementor/thumbs/IA_University_John_Castano-rfq83puenbexb7ey2dheue5rpyaj2wul2bqdmxvj3k.webp",
   },
   {
-    name: "Luis Solarte",
-    role: "Especialista en Content Marketing",
-    photo: "https://ia.university/wp-content/uploads/elementor/thumbs/IA_University_Equipo-2-rdzj05v6ycoogpn4fpp6tg6okykw0exfso3j26ap2o.webp",
+    name: "Xavi Yustiz",
+    role: "Especialista en creación de contenido audiovisual con IA",
+    photo: xaviYustiz,
   },
   {
-    name: "Daniel Sánchez",
-    role: "Estratega Digital · IA Generativa",
-    photo: "https://ia.university/wp-content/uploads/elementor/thumbs/IA_University_Daniel_Sanchez-e1767124066972-rgxll4xwi1civgac6fmw8ms2g7i4m787cx3c2fofhs.webp",
+    name: "Nora Vargas",
+    role: "AI Content Designer en IA University",
+    photo: noraVargas,
   },
   {
-    name: "Juan Quintero",
-    role: "Experto en Tribe Marketing y procesos con IA",
-    photo: "https://ia.university/wp-content/uploads/elementor/thumbs/IA_University_Juan_Profesor-rfq7k2zrvwjasfxopvxyrcj5072iaiwfp558quzl2o.webp",
+    name: "Jaime Ríos",
+    role: "Gestor de contenido, especialista en creación audiovisual con IA",
+    photo: jaimeRios,
   },
 ]
 
