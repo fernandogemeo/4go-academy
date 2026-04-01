@@ -37,8 +37,8 @@ const ImpactNumbers = () => {
           {stats.map((stat, i) => (
             <div key={i} className="group">
               <div
-                className={`flex flex-col md:flex-row md:items-center gap-2 md:gap-8 py-6 cursor-default
-                  transition-transform duration-300 ease-out group-hover:translate-x-4
+                className={`flex flex-col items-center text-center gap-2 py-6 cursor-default
+                  transition-transform duration-300 ease-out
                   ${isInView ? "animate-slide-in-right" : "opacity-0"}`}
                 style={{ animationDelay: `${i * 0.12}s`, animationFillMode: "both" }}
               >
