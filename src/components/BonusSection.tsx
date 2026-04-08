@@ -150,7 +150,7 @@ const BonusVideo = () => {
       })
     })
     return () => stopProgressTracker()
-  }, [started, visible, startProgressTracker])
+  }, [started, visible])
 
   const startProgressTracker = useCallback(() => {
     stopProgressTracker()
