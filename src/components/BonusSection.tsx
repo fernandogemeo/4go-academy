@@ -85,13 +85,19 @@ const BonusVideo = () => {
   // Pause/resume based on visibility (only if not paused by user)
   useEffect(() => {
     const p = playerRef.current
-    if (!p || !started || paused) return
-    if (visible && !pausedByUser.current) {
-      try { p.playVideo() } catch {}
-    } else if (!visible) {
+    if (!p || !started) return
+
+    if (visible) {
+      if (pausedByUser.current) return
+      try {
+        p.playVideo()
+        p.unMute?.()
+        p.setVolume?.(100)
+      } catch {}
+    } else if (!pausedByUser.current) {
       try { p.pauseVideo() } catch {}
     }
-  }, [visible, started, paused])
+  }, [visible, started])
 
   // Create YT player
   useEffect(() => {
@@ -102,7 +108,7 @@ const BonusVideo = () => {
         videoId: YOUTUBE_ID,
         playerVars: {
           autoplay: 1,
-          mute: 0,
+          mute: 1,
           controls: 0,
           modestbranding: 1,
           rel: 0,
@@ -111,13 +117,15 @@ const BonusVideo = () => {
           disablekb: 1,
           fs: 0,
           playsinline: 1,
+          origin: window.location.origin,
         },
         events: {
           onReady: (e: any) => {
             try {
-              e.target.unMute()
               e.target.setVolume(100)
-              if (visible && !pausedByUser.current) e.target.playVideo()
+              if (visible && !pausedByUser.current) {
+                e.target.playVideo()
+              }
             } catch {}
           },
           onStateChange: (e: any) => {
@@ -142,7 +150,7 @@ const BonusVideo = () => {
       })
     })
     return () => stopProgressTracker()
-  }, [started])
+  }, [started, visible, startProgressTracker])
 
   const startProgressTracker = useCallback(() => {
     stopProgressTracker()
