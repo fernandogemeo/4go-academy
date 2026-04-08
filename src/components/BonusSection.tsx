@@ -146,7 +146,7 @@ const BonusVideo = () => {
   const stopProgressTracker = () => {
     if (progressTimer.current) {
       clearInterval(progressTimer.current)
-      progressTimer.current = undefined
+      progressTimer.current = null
     }
   }
 
