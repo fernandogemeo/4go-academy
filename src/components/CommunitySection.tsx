@@ -53,14 +53,14 @@ const CommunitySection = () => {
             Comunidad exclusiva
           </span>
           <h2
-            className="font-outfit font-black text-[#04192D] uppercase tracking-fire leading-none mt-3 max-w-3xl mx-auto"
+            className="font-outfit font-black text-[#080808] uppercase tracking-fire leading-none mt-3 max-w-3xl mx-auto"
             style={{ fontSize: "clamp(26px, 4vw, 54px)" }}
           >
             No caminas solo.{" "}
             <span className="text-[#fc6c04]">Vamos todos juntos.</span>
           </h2>
           <p
-            className="font-outfit text-[#04192D]/60 mt-5 max-w-2xl mx-auto leading-relaxed"
+            className="font-outfit text-[#080808]/60 mt-5 max-w-2xl mx-auto leading-relaxed"
             style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
           >
             Únete a una comunidad activa de emprendedores y profesionales que están transformando
@@ -80,7 +80,7 @@ const CommunitySection = () => {
             style={{
               animationDelay: "0s",
               animationFillMode: "both",
-              background: "linear-gradient(135deg, #04192D 0%, #071f36 100%)",
+              background: "linear-gradient(135deg, #080808 0%, #071f36 100%)",
               border: "1.5px solid rgba(252,108,4,0.25)",
             }}
           >
@@ -161,12 +161,12 @@ const CommunitySection = () => {
                   </div>
                   <div>
                     <h4
-                      className="font-outfit font-bold text-[#04192D] leading-tight mb-1"
+                      className="font-outfit font-bold text-[#080808] leading-tight mb-1"
                       style={{ fontSize: "14px" }}
                     >
                       {p.title}
                     </h4>
-                    <p className="font-outfit text-[#04192D]/55 leading-relaxed" style={{ fontSize: "12px" }}>
+                    <p className="font-outfit text-[#080808]/55 leading-relaxed" style={{ fontSize: "12px" }}>
                       {p.desc}
                     </p>
                   </div>
@@ -195,7 +195,7 @@ const CommunitySection = () => {
             <Users className="w-6 h-6 text-[#fc6c04]" />
           </div>
           <p
-            className="font-outfit font-semibold text-[#04192D] text-center md:text-left leading-relaxed"
+            className="font-outfit font-semibold text-[#080808] text-center md:text-left leading-relaxed"
             style={{ fontSize: "clamp(14px, 1.5vw, 17px)" }}
           >
             "La comunidad no es un bonus — es parte del aprendizaje. Cuando ves a otros implementar IA

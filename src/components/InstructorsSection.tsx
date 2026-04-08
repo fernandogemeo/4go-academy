@@ -132,7 +132,7 @@ const InstructorsSection = () => {
   }
 
   return (
-    <section className="py-20 md:py-28 bg-[#04192D] overflow-hidden">
+    <section className="py-20 md:py-28 bg-[#080808] overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 mb-14 text-center">
         <span className="font-outfit text-sm font-bold uppercase tracking-fire text-[#fc6c04]">
           Nuestro equipo docente

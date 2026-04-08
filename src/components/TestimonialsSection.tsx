@@ -48,13 +48,13 @@ const TestimonialsSection = () => {
             Quienes vivieron, aprueban
           </span>
           <h2
-            className="font-outfit font-black text-[#04192D] uppercase tracking-fire leading-none mt-3"
+            className="font-outfit font-black text-[#080808] uppercase tracking-fire leading-none mt-3"
             style={{ fontSize: "clamp(28px, 4vw, 50px)" }}
           >
             Lo que dicen nuestros{" "}
             <span className="text-[#fc6c04]">estudiantes.</span>
           </h2>
-          <p className="font-outfit text-[#04192D]/60 mt-4 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-outfit text-[#080808]/60 mt-4 max-w-2xl mx-auto leading-relaxed">
             Vea cómo ayudamos a nuestros estudiantes a avanzar en sus carreras y negocios.
           </p>
         </div>
@@ -64,7 +64,7 @@ const TestimonialsSection = () => {
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="rounded-2xl p-7 bg-[#04192D] flex flex-col"
+              className="rounded-2xl p-7 bg-[#080808] flex flex-col"
               style={{ border: "2px solid rgba(252,108,4,0.2)" }}
             >
               <p className="font-outfit text-sm text-white/70 leading-relaxed mb-6 italic flex-1">

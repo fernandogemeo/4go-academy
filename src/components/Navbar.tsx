@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-[#04192D]/95 backdrop-blur-md shadow-lg" : "bg-[#04192D]"
+        scrolled ? "bg-[#080808]/95 backdrop-blur-md shadow-lg" : "bg-[#080808]"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
@@ -71,7 +71,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#04192D] border-t border-white/10 px-4 pb-6">
+        <div className="md:hidden bg-[#080808] border-t border-white/10 px-4 pb-6">
           {links.map((l) => (
             <a
               key={l.href}

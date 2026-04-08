@@ -15,7 +15,7 @@ export default {
         "fire-hover": "#e05a00",
         "fire-light": "#FF9424",
         cream: "#ffffff",
-        nearblack: "#04192D",
+        nearblack: "#080808",
         "dark-charcoal": "#0F0F0F",
         graphite: "#141414",
         "ice-blue": "#e8f0f8",

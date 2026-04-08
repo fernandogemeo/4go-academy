@@ -56,7 +56,7 @@ const GptAgentSection = () => {
 
   return (
     <section className="relative overflow-hidden py-20 md:py-28"
-      style={{ background: "linear-gradient(180deg, #04192D 0%, #071f36 100%)" }}>
+      style={{ background: "linear-gradient(180deg, #080808 0%, #071f36 100%)" }}>
 
       {/* Decorative glow */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">

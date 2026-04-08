@@ -29,7 +29,7 @@ const ViralAgentSection = () => {
   const { ref, isInView } = useInView(0.07)
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: "#04192D" }}>
+    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: "#080808" }}>
 
       {/* ── Background radial glow ── */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">

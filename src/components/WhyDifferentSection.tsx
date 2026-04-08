@@ -32,7 +32,7 @@ const WhyDifferentSection = () => {
             Nuestra diferencia
           </span>
           <h2
-            className="font-outfit font-black text-[#04192D] uppercase tracking-fire leading-tight mt-3 max-w-3xl mx-auto"
+            className="font-outfit font-black text-[#080808] uppercase tracking-fire leading-tight mt-3 max-w-3xl mx-auto"
             style={{ fontSize: "clamp(24px, 3.5vw, 50px)" }}
           >
             ¿Por qué la Formación IA para Negocios es realmente diferente?
@@ -53,12 +53,12 @@ const WhyDifferentSection = () => {
                 <r.icon className="w-5 h-5 text-[#fc6c04]" />
               </div>
               <h3
-                className="font-outfit font-bold text-[#04192D] mb-2"
+                className="font-outfit font-bold text-[#080808] mb-2"
                 style={{ fontSize: "18px" }}
               >
                 {r.title}
               </h3>
-              <p className="font-outfit text-sm text-[#04192D]/65 leading-relaxed">
+              <p className="font-outfit text-sm text-[#080808]/65 leading-relaxed">
                 {r.desc}
               </p>
             </div>
