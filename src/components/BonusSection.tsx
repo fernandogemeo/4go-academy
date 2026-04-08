@@ -1,5 +1,6 @@
 import { useInView } from "@/hooks/useInView"
-import { Zap, Clock, Gift, Star } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { Zap, Clock, Gift, Star, Play } from "lucide-react"
 
 const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
@@ -31,6 +32,73 @@ const highlights = [
 ]
 
 const duplicated = [...courses, ...courses]
+
+const DRIVE_VIDEO_URL = "https://drive.google.com/uc?id=1KCM4fGtCp1njug_TjbyztUvpoCSuC1T-&export=download"
+
+const BonusVideo = () => {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [paused, setPaused] = useState(true)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          videoRef.current?.play().catch(() => {})
+        } else {
+          videoRef.current?.pause()
+        }
+      },
+      { threshold: 0.4 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  const togglePlay = () => {
+    const v = videoRef.current
+    if (!v) return
+    if (v.paused) v.play().catch(() => {})
+    else v.pause()
+  }
+
+  return (
+    <div ref={containerRef} className="max-w-3xl mx-auto px-4 pb-10 md:pb-14">
+      <div
+        className="rounded-2xl overflow-hidden relative cursor-pointer group"
+        style={{ border: "2px solid rgba(252,108,4,0.25)" }}
+        onClick={togglePlay}
+      >
+        <video
+          ref={videoRef}
+          src={DRIVE_VIDEO_URL}
+          className="w-full"
+          playsInline
+          muted
+          onPlay={() => setPaused(false)}
+          onPause={() => setPaused(true)}
+          style={{ display: "block" }}
+        />
+        {/* Play overlay */}
+        {paused && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity">
+            <div
+              className="w-20 h-20 rounded-full flex items-center justify-center"
+              style={{
+                background: "rgba(252, 108, 4, 0.9)",
+                boxShadow: "0 0 30px rgba(252, 108, 4, 0.7), 0 0 60px rgba(252, 108, 4, 0.4)",
+              }}
+            >
+              <Play className="w-8 h-8 text-white ml-1" fill="white" />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
 
 const BonusSection = () => {
   const { ref, isInView } = useInView(0.06)
@@ -302,22 +370,7 @@ const BonusSection = () => {
         </div>
 
         {/* ── Video ── */}
-        <div
-          className={`max-w-3xl mx-auto px-4 pb-10 md:pb-14 ${isInView ? "animate-fade-up" : "opacity-0"}`}
-          style={{ animationDelay: "0.35s", animationFillMode: "both" }}
-        >
-          <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(252,108,4,0.25)" }}>
-            <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
-              <iframe
-                src="https://drive.google.com/file/d/1KCM4fGtCp1njug_TjbyztUvpoCSuC1T-/preview"
-                title="Video bonus"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
-              />
-            </div>
-          </div>
-        </div>
+        <BonusVideo />
 
       </div>
 
