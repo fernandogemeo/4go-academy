@@ -102,7 +102,7 @@ const BonusVideo = () => {
         videoId: YOUTUBE_ID,
         playerVars: {
           autoplay: 1,
-          mute: 1,
+          mute: 0,
           controls: 0,
           modestbranding: 1,
           rel: 0,
@@ -227,7 +227,7 @@ const BonusVideo = () => {
                       }}
                     >
                       <RotateCcw className="w-4 h-4" />
-                      Assistir do início
+                      ASSISTIR DESDE EL INICIO
                     </button>
                     <button
                       onClick={handleResume}
@@ -238,7 +238,7 @@ const BonusVideo = () => {
                       }}
                     >
                       <PlayCircle className="w-4 h-4" />
-                      Retomar donde paré
+                      REANUDAR DONDE LO DEJÉ
                     </button>
                   </div>
                 </div>
