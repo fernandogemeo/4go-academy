@@ -18,7 +18,7 @@ export default {
         nearblack: "#080808",
         "dark-charcoal": "#0F0F0F",
         graphite: "#141414",
-        "ice-blue": "#e8f0f8",
+        "ice-gray": "#e8e8e8",
         gold: "#F4B503",
         green: "#00983A",
         "green-bright": "#04FB04",
