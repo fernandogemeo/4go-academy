@@ -9,7 +9,7 @@ const agents = [
     name: "Agente de Atención al Cliente",
     task: "Responde dudas, gestiona quejas y fideliza — sin que toques nada.",
     stat: "847 consultas hoy",
-    color: "#3B82F6",
+    color: "#888888",
   },
   {
     emoji: "📊",
@@ -56,7 +56,7 @@ const GptAgentSection = () => {
 
   return (
     <section className="relative overflow-hidden py-20 md:py-28"
-      style={{ background: "linear-gradient(180deg, #080808 0%, #071f36 100%)" }}>
+      style={{ background: "linear-gradient(180deg, #080808 0%, #0d0d0d 100%)" }}>
 
       {/* Decorative glow */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
@@ -64,7 +64,7 @@ const GptAgentSection = () => {
           position: "absolute", top: "40%", left: "50%",
           transform: "translate(-50%,-50%)",
           width: "800px", height: "500px",
-          background: "radial-gradient(ellipse at center, rgba(59,130,246,0.06) 0%, rgba(252,108,4,0.05) 60%, transparent 100%)",
+          background: "radial-gradient(ellipse at center, rgba(136,136,136,0.06) 0%, rgba(252,108,4,0.05) 60%, transparent 100%)",
           filter: "blur(60px)",
         }} />
       </div>
@@ -74,8 +74,8 @@ const GptAgentSection = () => {
         <span key={i} aria-hidden="true" className="absolute rounded-full pointer-events-none" style={{
           width: 4, height: 4,
           top: s.top, left: (s as any).left, right: (s as any).right,
-          background: "#3B82F6",
-          boxShadow: "0 0 8px rgba(59,130,246,0.9)",
+          background: "#888888",
+          boxShadow: "0 0 8px rgba(136,136,136,0.9)",
           animation: `gptSpark ${s.dur} ease-in-out infinite`,
           animationDelay: s.delay,
         }} />
@@ -88,7 +88,7 @@ const GptAgentSection = () => {
           style={{ animationFillMode: "both" }}>
 
           <span className="inline-flex items-center gap-2 font-outfit text-xs font-bold uppercase tracking-fire px-4 py-2 rounded-full mb-5"
-            style={{ background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.25)", color: "#60A5FA" }}>
+            style={{ background: "rgba(136,136,136,0.12)", border: "1px solid rgba(136,136,136,0.25)", color: "#aaaaaa" }}>
             <Bot className="w-3.5 h-3.5" />
             Herramienta exclusiva · Incluida en tu formación
           </span>
@@ -119,16 +119,16 @@ const GptAgentSection = () => {
             {/* Dashboard card */}
             <div className="rounded-2xl overflow-hidden"
               style={{
-                background: "#0a1628",
+                background: "#111111",
                 border: "1px solid rgba(255,255,255,0.08)",
                 boxShadow: "0 32px 64px -16px rgba(0,0,0,0.50)",
               }}>
 
               {/* Top bar */}
               <div className="flex items-center justify-between px-5 py-3.5"
-                style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "#071020" }}>
+                style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "#0a0a0a" }}>
                 <div className="flex items-center gap-2">
-                  <Bot className="w-4 h-4 text-[#60A5FA]" />
+                  <Bot className="w-4 h-4 text-[#aaaaaa]" />
                   <span className="font-outfit text-xs font-bold text-white/70 uppercase tracking-fire">Mis Agentes IA</span>
                 </div>
                 <div className="flex items-center gap-1.5">
