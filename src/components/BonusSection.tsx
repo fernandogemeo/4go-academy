@@ -35,43 +35,145 @@ const duplicated = [...courses, ...courses]
 
 const YOUTUBE_ID = "1jVkP4n3PeE"
 
+// Load YT IFrame API once
+let ytApiReady = false
+let ytApiCallbacks: (() => void)[] = []
+function loadYTApi(cb: () => void) {
+  if (ytApiReady) { cb(); return }
+  ytApiCallbacks.push(cb)
+  if (document.getElementById("yt-iframe-api")) return
+  const tag = document.createElement("script")
+  tag.id = "yt-iframe-api"
+  tag.src = "https://www.youtube.com/iframe_api"
+  document.head.appendChild(tag)
+  ;(window as any).onYouTubeIframeAPIReady = () => {
+    ytApiReady = true
+    ytApiCallbacks.forEach((fn) => fn())
+    ytApiCallbacks = []
+  }
+}
+
 const BonusVideo = () => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [started, setStarted] = useState(false)
-  const [progress, setProgress] = useState(0)
+  const playerDivRef = useRef<HTMLDivElement>(null)
+  const playerRef = useRef<any>(null)
+  const progressTimer = useRef<ReturnType<typeof setInterval>>()
 
-  // Autoplay when scrolled into view
+  const [started, setStarted] = useState(false)
+  const [paused, setPaused] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [visible, setVisible] = useState(false)
+  const pausedByUser = useRef(false)
+
+  // Track visibility
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started) {
-          setStarted(true)
-        }
-      },
+      ([entry]) => setVisible(entry.isIntersecting),
       { threshold: 0.4 }
     )
     obs.observe(el)
     return () => obs.disconnect()
-  }, [started])
+  }, [])
 
-  // Simulate progress bar (YouTube iframe API doesn't expose progress easily without full API setup)
+  // Auto-start on first visible
+  useEffect(() => {
+    if (visible && !started) setStarted(true)
+  }, [visible, started])
+
+  // Pause/resume based on visibility (only if not paused by user)
+  useEffect(() => {
+    const p = playerRef.current
+    if (!p || !started || paused) return
+    if (visible && !pausedByUser.current) {
+      try { p.playVideo() } catch {}
+    } else if (!visible) {
+      try { p.pauseVideo() } catch {}
+    }
+  }, [visible, started, paused])
+
+  // Create YT player
   useEffect(() => {
     if (!started) return
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) { clearInterval(interval); return 100 }
-        return prev + 0.15
+    loadYTApi(() => {
+      if (playerRef.current) return
+      playerRef.current = new (window as any).YT.Player(playerDivRef.current, {
+        videoId: YOUTUBE_ID,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          iv_load_policy: 3,
+          disablekb: 1,
+          fs: 0,
+          playsinline: 1,
+        },
+        events: {
+          onStateChange: (e: any) => {
+            const YT = (window as any).YT
+            if (e.data === YT.PlayerState.PLAYING) {
+              setPaused(false)
+              startProgressTracker()
+            } else if (e.data === YT.PlayerState.PAUSED) {
+              setPaused(true)
+              stopProgressTracker()
+            } else if (e.data === YT.PlayerState.ENDED) {
+              setPaused(true)
+              setProgress(100)
+              stopProgressTracker()
+            }
+          },
+        },
       })
-    }, 100)
-    return () => clearInterval(interval)
+    })
+    return () => stopProgressTracker()
   }, [started])
 
-  const ytSrc = started
-    ? `https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&loop=1&playlist=${YOUTUBE_ID}`
-    : undefined
+  const startProgressTracker = useCallback(() => {
+    stopProgressTracker()
+    progressTimer.current = setInterval(() => {
+      const p = playerRef.current
+      if (!p?.getCurrentTime || !p?.getDuration) return
+      const dur = p.getDuration()
+      if (dur > 0) setProgress((p.getCurrentTime() / dur) * 100)
+    }, 250)
+  }, [])
+
+  const stopProgressTracker = () => {
+    if (progressTimer.current) {
+      clearInterval(progressTimer.current)
+      progressTimer.current = undefined
+    }
+  }
+
+  const handleOverlayClick = () => {
+    const p = playerRef.current
+    if (!p) return
+    pausedByUser.current = true
+    try { p.pauseVideo() } catch {}
+  }
+
+  const handleResume = () => {
+    const p = playerRef.current
+    if (!p) return
+    pausedByUser.current = false
+    try { p.playVideo() } catch {}
+  }
+
+  const handleRestart = () => {
+    const p = playerRef.current
+    if (!p) return
+    pausedByUser.current = false
+    try {
+      p.seekTo(0, true)
+      p.playVideo()
+    } catch {}
+    setProgress(0)
+  }
 
   return (
     <div ref={containerRef} className="max-w-3xl mx-auto px-4 pb-10 md:pb-14">
@@ -81,7 +183,6 @@ const BonusVideo = () => {
       >
         <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#000" }}>
           {!started ? (
-            /* Thumbnail + play button */
             <div
               className="absolute inset-0 flex items-center justify-center cursor-pointer"
               onClick={() => setStarted(true)}
@@ -104,14 +205,44 @@ const BonusVideo = () => {
             </div>
           ) : (
             <>
-              <iframe
-                ref={iframeRef}
-                src={ytSrc}
-                title="Video bonus"
-                allow="autoplay; encrypted-media"
-                className="absolute inset-0 w-full h-full"
-                style={{ border: 0, pointerEvents: "none" }}
-              />
+              <div ref={playerDivRef} className="absolute inset-0 w-full h-full" />
+              {/* Clickable overlay to pause */}
+              {!paused && (
+                <div
+                  className="absolute inset-0 z-10 cursor-pointer"
+                  onClick={handleOverlayClick}
+                />
+              )}
+              {/* Paused overlay with options */}
+              {paused && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/50">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={handleRestart}
+                      className="flex items-center gap-2 font-outfit text-sm font-bold uppercase tracking-fire px-6 py-3 rounded-full text-white transition-all hover:scale-105"
+                      style={{
+                        background: "rgba(255,255,255,0.12)",
+                        border: "1px solid rgba(255,255,255,0.25)",
+                        backdropFilter: "blur(8px)",
+                      }}
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                      Assistir do início
+                    </button>
+                    <button
+                      onClick={handleResume}
+                      className="flex items-center gap-2 font-outfit text-sm font-bold uppercase tracking-fire px-6 py-3 rounded-full text-white transition-all hover:scale-105"
+                      style={{
+                        background: "rgba(252, 108, 4, 0.9)",
+                        boxShadow: "0 0 20px rgba(252, 108, 4, 0.5)",
+                      }}
+                    >
+                      <PlayCircle className="w-4 h-4" />
+                      Retomar donde paré
+                    </button>
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>
@@ -119,11 +250,12 @@ const BonusVideo = () => {
         {started && (
           <div className="w-full h-1" style={{ background: "rgba(255,255,255,0.1)" }}>
             <div
-              className="h-full transition-all duration-300"
+              className="h-full"
               style={{
                 width: `${progress}%`,
                 background: "linear-gradient(90deg, #fc6c04, #ff8c3a)",
                 boxShadow: "0 0 8px rgba(252, 108, 4, 0.6)",
+                transition: "width 0.25s linear",
               }}
             />
           </div>
