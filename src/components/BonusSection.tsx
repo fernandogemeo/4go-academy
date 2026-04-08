@@ -1,6 +1,6 @@
 import { useInView } from "@/hooks/useInView"
-import { useEffect, useRef, useState } from "react"
-import { Zap, Clock, Gift, Star, Play } from "lucide-react"
+import { useEffect, useRef, useState, useCallback } from "react"
+import { Zap, Clock, Gift, Star, Play, RotateCcw, PlayCircle } from "lucide-react"
 
 const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
