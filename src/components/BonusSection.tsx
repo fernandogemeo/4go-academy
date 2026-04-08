@@ -113,9 +113,20 @@ const BonusVideo = () => {
           playsinline: 1,
         },
         events: {
+          onReady: (e: any) => {
+            try {
+              e.target.unMute()
+              e.target.setVolume(100)
+              if (visible && !pausedByUser.current) e.target.playVideo()
+            } catch {}
+          },
           onStateChange: (e: any) => {
             const YT = (window as any).YT
             if (e.data === YT.PlayerState.PLAYING) {
+              try {
+                e.target.unMute()
+                e.target.setVolume(100)
+              } catch {}
               setPaused(false)
               startProgressTracker()
             } else if (e.data === YT.PlayerState.PAUSED) {
