@@ -77,7 +77,10 @@ const BonusVideo = () => {
     return () => obs.disconnect()
   }, [])
 
-  // No auto-start — require user click for guaranteed audio
+  // Preload YT API when section becomes visible
+  useEffect(() => {
+    if (visible && !started) loadYTApi(() => {})
+  }, [visible, started])
 
   // Pause/resume based on visibility (only if not paused by user)
   useEffect(() => {
