@@ -301,6 +301,24 @@ const BonusSection = () => {
           </div>
         </div>
 
+        {/* ── Video ── */}
+        <div
+          className={`max-w-3xl mx-auto px-4 pb-10 md:pb-14 ${isInView ? "animate-fade-up" : "opacity-0"}`}
+          style={{ animationDelay: "0.35s", animationFillMode: "both" }}
+        >
+          <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(252,108,4,0.25)" }}>
+            <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+              <iframe
+                src="https://drive.google.com/file/d/1KCM4fGtCp1njug_TjbyztUvpoCSuC1T-/preview"
+                title="Video bonus"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
+              />
+            </div>
+          </div>
+        </div>
+
       </div>
 
       {/* ── Keyframes ── */}
