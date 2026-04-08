@@ -22,11 +22,11 @@ const GuaranteeSection = () => {
               style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
             >
               Garantía Incondicional{" "}
-              <span className="text-[#00983A]">7 días</span>
+              <span className="text-[#fc6c04]">7 días</span>
             </h2>
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#00983A]/20 flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-6 h-6 text-[#00983A]" />
+              <div className="w-12 h-12 rounded-xl bg-[#fc6c04]/20 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-6 h-6 text-[#fc6c04]" />
               </div>
               <p className="font-outfit text-base text-white/70 leading-relaxed">
                 Si por alguna razón no te identificas con la Formación o te arrepientes, tienes la <strong className="text-white">garantía incondicional de 7 días.</strong> Accede a nuestra plataforma y si no te gusta, solo pide la devolución de tu dinero dentro de los primeros 7 días. Sin preguntas, sin complicaciones.
