@@ -33,66 +33,99 @@ const highlights = [
 
 const duplicated = [...courses, ...courses]
 
-const DRIVE_VIDEO_URL = "https://drive.google.com/uc?id=1KCM4fGtCp1njug_TjbyztUvpoCSuC1T-&export=download"
+const YOUTUBE_ID = "1jVkP4n3PeE"
 
 const BonusVideo = () => {
-  const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [paused, setPaused] = useState(true)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const [started, setStarted] = useState(false)
+  const [progress, setProgress] = useState(0)
 
+  // Autoplay when scrolled into view
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          videoRef.current?.play().catch(() => {})
-        } else {
-          videoRef.current?.pause()
+        if (entry.isIntersecting && !started) {
+          setStarted(true)
         }
       },
       { threshold: 0.4 }
     )
     obs.observe(el)
     return () => obs.disconnect()
-  }, [])
+  }, [started])
 
-  const togglePlay = () => {
-    const v = videoRef.current
-    if (!v) return
-    if (v.paused) v.play().catch(() => {})
-    else v.pause()
-  }
+  // Simulate progress bar (YouTube iframe API doesn't expose progress easily without full API setup)
+  useEffect(() => {
+    if (!started) return
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) { clearInterval(interval); return 100 }
+        return prev + 0.15
+      })
+    }, 100)
+    return () => clearInterval(interval)
+  }, [started])
+
+  const ytSrc = started
+    ? `https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&loop=1&playlist=${YOUTUBE_ID}`
+    : undefined
 
   return (
     <div ref={containerRef} className="max-w-3xl mx-auto px-4 pb-10 md:pb-14">
       <div
-        className="rounded-2xl overflow-hidden relative cursor-pointer group"
+        className="rounded-2xl overflow-hidden relative"
         style={{ border: "2px solid rgba(252,108,4,0.25)" }}
-        onClick={togglePlay}
       >
-        <video
-          ref={videoRef}
-          src={DRIVE_VIDEO_URL}
-          className="w-full"
-          playsInline
-          muted
-          onPlay={() => setPaused(false)}
-          onPause={() => setPaused(true)}
-          style={{ display: "block" }}
-        />
-        {/* Play overlay */}
-        {paused && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity">
+        <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#000" }}>
+          {!started ? (
+            /* Thumbnail + play button */
             <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
+              className="absolute inset-0 flex items-center justify-center cursor-pointer"
+              onClick={() => setStarted(true)}
               style={{
-                background: "rgba(252, 108, 4, 0.9)",
-                boxShadow: "0 0 30px rgba(252, 108, 4, 0.7), 0 0 60px rgba(252, 108, 4, 0.4)",
+                backgroundImage: `url(https://img.youtube.com/vi/${YOUTUBE_ID}/maxresdefault.jpg)`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
             >
-              <Play className="w-8 h-8 text-white ml-1" fill="white" />
+              <div className="absolute inset-0 bg-black/40" />
+              <div
+                className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center"
+                style={{
+                  background: "rgba(252, 108, 4, 0.9)",
+                  boxShadow: "0 0 30px rgba(252, 108, 4, 0.7), 0 0 60px rgba(252, 108, 4, 0.4)",
+                }}
+              >
+                <Play className="w-8 h-8 text-white ml-1" fill="white" />
+              </div>
             </div>
+          ) : (
+            <>
+              <iframe
+                ref={iframeRef}
+                src={ytSrc}
+                title="Video bonus"
+                allow="autoplay; encrypted-media"
+                className="absolute inset-0 w-full h-full"
+                style={{ border: 0, pointerEvents: "none" }}
+              />
+            </>
+          )}
+        </div>
+        {/* Progress bar */}
+        {started && (
+          <div className="w-full h-1" style={{ background: "rgba(255,255,255,0.1)" }}>
+            <div
+              className="h-full transition-all duration-300"
+              style={{
+                width: `${progress}%`,
+                background: "linear-gradient(90deg, #fc6c04, #ff8c3a)",
+                boxShadow: "0 0 8px rgba(252, 108, 4, 0.6)",
+              }}
+            />
           </div>
         )}
       </div>
