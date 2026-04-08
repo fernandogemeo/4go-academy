@@ -77,10 +77,7 @@ const BonusVideo = () => {
     return () => obs.disconnect()
   }, [])
 
-  // Auto-start on first visible
-  useEffect(() => {
-    if (visible && !started) setStarted(true)
-  }, [visible, started])
+  // No auto-start — require user click for guaranteed audio
 
   // Pause/resume based on visibility (only if not paused by user)
   useEffect(() => {
