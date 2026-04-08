@@ -57,7 +57,7 @@ const BonusVideo = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const playerDivRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<any>(null)
-  const progressTimer = useRef<ReturnType<typeof setInterval>>()
+  const progressTimer = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const [started, setStarted] = useState(false)
   const [paused, setPaused] = useState(false)
