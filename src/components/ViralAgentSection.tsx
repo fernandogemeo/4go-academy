@@ -117,7 +117,7 @@ const ViralAgentSection = () => {
 
                 {/* Video bg gradient (representing a reel) */}
                 <div className="absolute inset-0" style={{
-                  background: "linear-gradient(160deg, #1a0a00 0%, #0d0d0d 40%, #0a0f1a 100%)",
+                  background: "linear-gradient(160deg, #1a0a00 0%, #0d0d0d 40%, #0d0d0d 100%)",
                 }} />
 
                 {/* Fake video content */}
