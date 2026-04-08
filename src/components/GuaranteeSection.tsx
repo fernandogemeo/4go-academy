@@ -5,7 +5,7 @@ const GuaranteeSection = () => {
   const { ref, isInView } = useInView()
 
   return (
-    <section id="garantia" className="py-20 md:py-28 bg-[#04192D]">
+    <section id="garantia" className="py-20 md:py-28 bg-[#080808]">
       <div className="container mx-auto px-4 max-w-4xl" ref={ref}>
         <div
           className={`flex flex-col md:flex-row items-center gap-10 ${

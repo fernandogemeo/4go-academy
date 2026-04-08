@@ -288,7 +288,7 @@ const BonusSection = () => {
   const { ref, isInView } = useInView(0.06)
 
   return (
-    <section className="relative overflow-hidden" style={{ background: "#04192D" }}>
+    <section className="relative overflow-hidden" style={{ background: "#080808" }}>
 
       {/* ── Urgency top ribbon ── */}
       <div

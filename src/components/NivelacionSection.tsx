@@ -35,7 +35,7 @@ const NivelacionSection = () => {
       {/* Top divider wave */}
       <div className="w-full overflow-hidden leading-[0]" style={{ lineHeight: 0 }}>
         <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block" preserveAspectRatio="none" style={{ height: "48px" }}>
-          <path d="M0 48 C360 0 1080 0 1440 48 L1440 0 L0 0 Z" fill="#04192D" />
+          <path d="M0 48 C360 0 1080 0 1440 48 L1440 0 L0 0 Z" fill="#080808" />
         </svg>
       </div>
 
@@ -53,7 +53,7 @@ const NivelacionSection = () => {
             </span>
 
             <h2
-              className="font-outfit font-black text-[#04192D] uppercase tracking-fire leading-none mt-5 max-w-4xl mx-auto"
+              className="font-outfit font-black text-[#080808] uppercase tracking-fire leading-none mt-5 max-w-4xl mx-auto"
               style={{ fontSize: "clamp(28px, 4.5vw, 60px)" }}
             >
               ¿No sabes nada de tecnología?{" "}
@@ -61,12 +61,12 @@ const NivelacionSection = () => {
             </h2>
 
             <p
-              className="font-outfit text-[#04192D]/60 mt-5 max-w-2xl mx-auto leading-relaxed"
+              className="font-outfit text-[#080808]/60 mt-5 max-w-2xl mx-auto leading-relaxed"
               style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
             >
               Si tienes 40, 50 o 70 años y la tecnología no es lo tuyo, esto es exactamente para ti.
               Sabemos lo importante que es aprender a un ritmo tranquilo, sin sentirte perdido.
-              Por eso creamos este módulo especial: <strong className="text-[#04192D]/80">para que nadie empiece desde el miedo.</strong>
+              Por eso creamos este módulo especial: <strong className="text-[#080808]/80">para que nadie empiece desde el miedo.</strong>
             </p>
           </div>
 
@@ -115,7 +115,7 @@ const NivelacionSection = () => {
               {/* Floating badge — bottom right */}
               <div
                 className="absolute bottom-4 right-4 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-[0_12px_32px_-8px_rgba(4,25,45,0.35)]"
-                style={{ background: "#04192D", border: "1px solid rgba(252,108,4,0.30)" }}
+                style={{ background: "#080808", border: "1px solid rgba(252,108,4,0.30)" }}
               >
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
@@ -135,7 +135,7 @@ const NivelacionSection = () => {
                 style={{ background: "rgba(255,255,255,0.95)", border: "1px solid rgba(4,25,45,0.08)" }}
               >
                 <Smile className="w-4 h-4 text-[#fc6c04] shrink-0" />
-                <span className="font-outfit text-xs font-semibold text-[#04192D]">Para cualquier edad</span>
+                <span className="font-outfit text-xs font-semibold text-[#080808]">Para cualquier edad</span>
               </div>
             </div>
 
@@ -145,7 +145,7 @@ const NivelacionSection = () => {
               style={{ animationDelay: "0.15s", animationFillMode: "both" }}
             >
               <p
-                className="font-outfit font-bold text-[#04192D] leading-tight"
+                className="font-outfit font-bold text-[#080808] leading-tight"
                 style={{ fontSize: "clamp(18px, 2vw, 22px)" }}
               >
                 Lo que aprenderás en el módulo de nivelación:
@@ -172,10 +172,10 @@ const NivelacionSection = () => {
                     {step.num}
                   </div>
                   <div>
-                    <p className="font-outfit font-bold text-[#04192D]" style={{ fontSize: "15px" }}>
+                    <p className="font-outfit font-bold text-[#080808]" style={{ fontSize: "15px" }}>
                       {step.title}
                     </p>
-                    <p className="font-outfit text-[#04192D]/55 mt-1 leading-relaxed" style={{ fontSize: "13px" }}>
+                    <p className="font-outfit text-[#080808]/55 mt-1 leading-relaxed" style={{ fontSize: "13px" }}>
                       {step.desc}
                     </p>
                   </div>
@@ -191,8 +191,8 @@ const NivelacionSection = () => {
                 }}
               >
                 <Shield className="w-5 h-5 text-[#fc6c04] shrink-0" />
-                <p className="font-outfit text-[#04192D]/70 leading-snug" style={{ fontSize: "13px" }}>
-                  <strong className="text-[#04192D]">Nunca pararás de aprender.</strong>{" "}
+                <p className="font-outfit text-[#080808]/70 leading-snug" style={{ fontSize: "13px" }}>
+                  <strong className="text-[#080808]">Nunca pararás de aprender.</strong>{" "}
                   Cada clase está pensada para que salgas con algo concreto aplicado — sin importar tu edad o experiencia.
                 </p>
               </div>
@@ -222,7 +222,7 @@ const NivelacionSection = () => {
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
-            <p className="font-outfit text-sm text-[#04192D]/45 mt-3">
+            <p className="font-outfit text-sm text-[#080808]/45 mt-3">
               Incluido en tu formación · Sin costo adicional
             </p>
           </div>
@@ -233,7 +233,7 @@ const NivelacionSection = () => {
       {/* Bottom divider wave */}
       <div className="w-full overflow-hidden leading-[0]" style={{ lineHeight: 0 }}>
         <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block" preserveAspectRatio="none" style={{ height: "48px" }}>
-          <path d="M0 0 C360 48 1080 48 1440 0 L1440 48 L0 48 Z" fill="#04192D" />
+          <path d="M0 0 C360 48 1080 48 1440 0 L1440 48 L0 48 Z" fill="#080808" />
         </svg>
       </div>
 
