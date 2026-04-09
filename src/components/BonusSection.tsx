@@ -105,6 +105,7 @@ const BonusVideo = () => {
     loadYTApi(() => {
       if (playerRef.current) return
       playerRef.current = new (window as any).YT.Player(playerDivRef.current, {
+        host: 'https://www.youtube-nocookie.com',
         videoId: YOUTUBE_ID,
         playerVars: {
           autoplay: 1,
