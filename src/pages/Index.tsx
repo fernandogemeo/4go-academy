@@ -16,6 +16,7 @@ import CertificateSection from "@/components/CertificateSection"
 import TestimonialsSection from "@/components/TestimonialsSection"
 import FaqSection from "@/components/FaqSection"
 import Footer from "@/components/Footer"
+import WhatsAppButton from "@/components/WhatsAppButton"
 
 const Index = () => {
   return (
