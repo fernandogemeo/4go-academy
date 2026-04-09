@@ -1,5 +1,5 @@
 import { useInView } from "@/hooks/useInView"
-import { useEffect, useRef, useState, useCallback } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Zap, Clock, Gift, Star, Play, RotateCcw, PlayCircle } from "lucide-react"
 
 const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
@@ -34,36 +34,89 @@ const highlights = [
 const duplicated = [...courses, ...courses]
 
 const YOUTUBE_ID = "1jVkP4n3PeE"
-
-// Load YT IFrame API once
-let ytApiReady = false
-let ytApiCallbacks: (() => void)[] = []
-function loadYTApi(cb: () => void) {
-  if (ytApiReady) { cb(); return }
-  ytApiCallbacks.push(cb)
-  if (document.getElementById("yt-iframe-api")) return
-  const tag = document.createElement("script")
-  tag.id = "yt-iframe-api"
-  tag.src = "https://www.youtube.com/iframe_api"
-  document.head.appendChild(tag)
-  ;(window as any).onYouTubeIframeAPIReady = () => {
-    ytApiReady = true
-    ytApiCallbacks.forEach((fn) => fn())
-    ytApiCallbacks = []
-  }
-}
+const YOUTUBE_EMBED_ORIGIN = "https://www.youtube-nocookie.com"
 
 const BonusVideo = () => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const playerDivRef = useRef<HTMLDivElement>(null)
-  const playerRef = useRef<any>(null)
-  const progressTimer = useRef<ReturnType<typeof setInterval> | null>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const playerIdRef = useRef(`bonus-video-${Math.random().toString(36).slice(2)}`)
+  const handshakeTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const playerReadyRef = useRef(false)
+  const playerInfoRef = useRef({ currentTime: 0, duration: 0 })
 
   const [started, setStarted] = useState(false)
   const [paused, setPaused] = useState(false)
   const [progress, setProgress] = useState(0)
   const [visible, setVisible] = useState(false)
+  const [playerReady, setPlayerReady] = useState(false)
+  const [hasPlaybackStarted, setHasPlaybackStarted] = useState(false)
   const pausedByUser = useRef(false)
+
+  const stopHandshake = () => {
+    if (handshakeTimerRef.current) {
+      clearInterval(handshakeTimerRef.current)
+      handshakeTimerRef.current = null
+    }
+  }
+
+  const sendPlayerMessage = (payload: Record<string, unknown>) => {
+    const iframe = iframeRef.current
+    if (!iframe?.contentWindow) return
+    iframe.contentWindow.postMessage(JSON.stringify(payload), "*")
+  }
+
+  const sendPlayerCommand = (func: string, args: unknown[] = []) => {
+    sendPlayerMessage({ event: "command", func, args })
+  }
+
+  const syncProgress = (currentTime?: number, duration?: number) => {
+    if (typeof currentTime === "number") playerInfoRef.current.currentTime = currentTime
+    if (typeof duration === "number") playerInfoRef.current.duration = duration
+
+    const { currentTime: time, duration: total } = playerInfoRef.current
+    if (total > 0) setProgress((time / total) * 100)
+  }
+
+  const applyPlayerState = (state?: number) => {
+    if (state === 1) {
+      setPaused(false)
+      setHasPlaybackStarted(true)
+      sendPlayerCommand("unMute")
+      sendPlayerCommand("setVolume", [100])
+    } else if (state === 2) {
+      setPaused(true)
+    } else if (state === 0) {
+      setPaused(true)
+      setProgress(100)
+    }
+  }
+
+  const primePlayer = () => {
+    stopHandshake()
+
+    let attempts = 0
+    const ping = () => {
+      sendPlayerMessage({
+        event: "listening",
+        id: playerIdRef.current,
+        channel: "widget",
+      })
+      sendPlayerCommand("addEventListener", ["onReady"])
+      sendPlayerCommand("addEventListener", ["onStateChange"])
+
+      attempts += 1
+      if (attempts >= 20 || playerReadyRef.current) stopHandshake()
+    }
+
+    ping()
+    handshakeTimerRef.current = setInterval(() => {
+      if (playerReadyRef.current) {
+        stopHandshake()
+        return
+      }
+      ping()
+    }, 400)
+  }
 
   // Track visibility
   useEffect(() => {
@@ -77,123 +130,93 @@ const BonusVideo = () => {
     return () => obs.disconnect()
   }, [])
 
-  // Preload YT API when section becomes visible
   useEffect(() => {
-    if (visible && !started) loadYTApi(() => {})
-  }, [visible, started])
+    playerReadyRef.current = playerReady
+  }, [playerReady])
+
+  useEffect(() => {
+    if (!started) return
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.source !== iframeRef.current?.contentWindow || typeof event.data !== "string") return
+
+      let payload: { event?: string; info?: unknown }
+      try {
+        payload = JSON.parse(event.data)
+      } catch {
+        return
+      }
+
+      if (payload.event === "onReady") {
+        setPlayerReady(true)
+        stopHandshake()
+        sendPlayerCommand("addEventListener", ["onStateChange"])
+        sendPlayerCommand("unMute")
+        sendPlayerCommand("setVolume", [100])
+
+        if (visible && !pausedByUser.current) {
+          sendPlayerCommand("playVideo")
+        }
+        return
+      }
+
+      if (payload.event === "onStateChange") {
+        applyPlayerState(typeof payload.info === "number" ? payload.info : undefined)
+        return
+      }
+
+      if (payload.event === "infoDelivery" && payload.info && typeof payload.info === "object") {
+        const info = payload.info as { currentTime?: number; duration?: number; playerState?: number }
+        syncProgress(info.currentTime, info.duration)
+        applyPlayerState(info.playerState)
+      }
+    }
+
+    window.addEventListener("message", handleMessage)
+    return () => {
+      window.removeEventListener("message", handleMessage)
+      stopHandshake()
+    }
+  }, [started, visible])
 
   // Pause/resume based on visibility (only if not paused by user)
   useEffect(() => {
-    const p = playerRef.current
-    if (!p || !started) return
+    if (!started || !playerReady) return
 
     if (visible) {
       if (pausedByUser.current) return
-      try {
-        p.playVideo()
-        p.unMute?.()
-        p.setVolume?.(100)
-      } catch {}
+      sendPlayerCommand("unMute")
+      sendPlayerCommand("setVolume", [100])
+      sendPlayerCommand("playVideo")
     } else if (!pausedByUser.current) {
-      try { p.pauseVideo() } catch {}
+      sendPlayerCommand("pauseVideo")
     }
-  }, [visible, started])
-
-  // Create YT player
-  useEffect(() => {
-    if (!started) return
-    loadYTApi(() => {
-      if (playerRef.current) return
-      playerRef.current = new (window as any).YT.Player(playerDivRef.current, {
-        host: 'https://www.youtube-nocookie.com',
-        videoId: YOUTUBE_ID,
-        playerVars: {
-          autoplay: 1,
-          mute: 1,
-          controls: 0,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0,
-          iv_load_policy: 3,
-          disablekb: 1,
-          fs: 0,
-          playsinline: 1,
-          origin: window.location.origin,
-        },
-        events: {
-          onReady: (e: any) => {
-            try {
-              e.target.setVolume(100)
-              if (visible && !pausedByUser.current) {
-                e.target.playVideo()
-              }
-            } catch {}
-          },
-          onStateChange: (e: any) => {
-            const YT = (window as any).YT
-            if (e.data === YT.PlayerState.PLAYING) {
-              try {
-                e.target.unMute()
-                e.target.setVolume(100)
-              } catch {}
-              setPaused(false)
-              startProgressTracker()
-            } else if (e.data === YT.PlayerState.PAUSED) {
-              setPaused(true)
-              stopProgressTracker()
-            } else if (e.data === YT.PlayerState.ENDED) {
-              setPaused(true)
-              setProgress(100)
-              stopProgressTracker()
-            }
-          },
-        },
-      })
-    })
-    return () => stopProgressTracker()
-  }, [started])
-
-  const startProgressTracker = useCallback(() => {
-    stopProgressTracker()
-    progressTimer.current = setInterval(() => {
-      const p = playerRef.current
-      if (!p?.getCurrentTime || !p?.getDuration) return
-      const dur = p.getDuration()
-      if (dur > 0) setProgress((p.getCurrentTime() / dur) * 100)
-    }, 250)
-  }, [])
-
-  const stopProgressTracker = () => {
-    if (progressTimer.current) {
-      clearInterval(progressTimer.current)
-      progressTimer.current = null
-    }
-  }
+  }, [visible, started, playerReady])
 
   const handleOverlayClick = () => {
-    const p = playerRef.current
-    if (!p) return
     pausedByUser.current = true
-    try { p.pauseVideo() } catch {}
+    sendPlayerCommand("pauseVideo")
   }
 
   const handleResume = () => {
-    const p = playerRef.current
-    if (!p) return
     pausedByUser.current = false
-    try { p.playVideo() } catch {}
+    sendPlayerCommand("unMute")
+    sendPlayerCommand("setVolume", [100])
+    sendPlayerCommand("playVideo")
   }
 
   const handleRestart = () => {
-    const p = playerRef.current
-    if (!p) return
     pausedByUser.current = false
-    try {
-      p.seekTo(0, true)
-      p.playVideo()
-    } catch {}
     setProgress(0)
+    sendPlayerCommand("seekTo", [0, true])
+    sendPlayerCommand("unMute")
+    sendPlayerCommand("setVolume", [100])
+    sendPlayerCommand("playVideo")
   }
+
+  const embedSrc = started
+    ? `${YOUTUBE_EMBED_ORIGIN}/embed/${YOUTUBE_ID}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1&fs=0&origin=${encodeURIComponent(window.location.origin)}&widget_referrer=${encodeURIComponent(window.location.href)}`
+    : ""
 
   return (
     <div ref={containerRef} className="max-w-3xl mx-auto px-4 pb-10 md:pb-14">
@@ -225,16 +248,25 @@ const BonusVideo = () => {
             </div>
           ) : (
             <>
-              <div ref={playerDivRef} className="absolute inset-0 w-full h-full" />
+              <iframe
+                ref={iframeRef}
+                id={playerIdRef.current}
+                title="Video de bonus"
+                src={embedSrc}
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                onLoad={primePlayer}
+              />
               {/* Clickable overlay to pause */}
-              {!paused && (
+              {!paused && hasPlaybackStarted && (
                 <div
                   className="absolute inset-0 z-10 cursor-pointer"
                   onClick={handleOverlayClick}
                 />
               )}
               {/* Paused overlay with options */}
-              {paused && (
+              {paused && hasPlaybackStarted && (
                 <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/50">
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button
