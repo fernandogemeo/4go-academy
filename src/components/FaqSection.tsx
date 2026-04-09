@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: "¿Cuánto tiempo tengo acceso al contenido?",
-    a: "Puedes aprender a tu ritmo y revisitar el contenido cuantas veces necesites.",
+    a: "Puedes verlo cuantas veces quieras durante un año. En caso de que asegures tu inscripción dentro de las primeras 24 horas, tendrás acceso durante dos años.",
   },
   {
     q: "¿Las sesiones en vivo son grabadas?",
