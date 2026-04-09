@@ -2,7 +2,7 @@ import { useState } from "react"
 import { X } from "lucide-react"
 
 const WA_URL =
-  "https://api.whatsapp.com/send/?phone=14844578395&text=Hola%2C+Necesito+informaci%C3%B3n+sobre+La+Formaci%C3%B3n+IA&type=phone_number&app_absent=0"
+  "https://api.whatsapp.com/send/?phone=14844578395&text=Hola%2C+Necesito+informacion%C3%B3n&type=phone_number&app_absent=0"
 
 const WhatsAppButton = () => {
   const [showTooltip, setShowTooltip] = useState(true)
