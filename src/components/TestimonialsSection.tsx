@@ -1,39 +1,46 @@
+import mariaG from "@/assets/maria_g.jpg"
+import carlosR from "@/assets/carlos_r.jpg"
+import andresM from "@/assets/andres_m.jpg"
+import lauraS from "@/assets/laura_s.jpg"
+import ricardoP from "@/assets/ricardo_p.jpg"
+import valentinaC from "@/assets/valentina_c.jpg"
+
 const testimonials = [
   {
     name: "María G.",
-    role: "Emprendedora · México",
+    role: "Empresaria · México",
     text: "Gracias a la formación pude automatizar procesos en mi negocio que antes me tomaban horas. ¡Totalmente recomendable!",
-    avatar: "MG",
+    photo: mariaG,
   },
   {
     name: "Carlos R.",
     role: "Consultor de Negocios · Colombia",
     text: "El contenido es práctico desde el primer módulo. En menos de una semana ya estaba usando IA en mis proyectos reales.",
-    avatar: "CR",
+    photo: carlosR,
   },
   {
     name: "Andrés M.",
     role: "Dueño de PYME · Argentina",
     text: "Pensé que era muy difícil, pero el módulo de nivelación me dio la confianza que necesitaba. Excelente formación.",
-    avatar: "AM",
+    photo: andresM,
   },
   {
     name: "Laura S.",
     role: "Consultora de Marketing · España",
     text: "Las sesiones en vivo son increíbles. Puedes hacer preguntas en tiempo real y aplicar todo inmediatamente.",
-    avatar: "LS",
+    photo: lauraS,
   },
   {
     name: "Ricardo P.",
     role: "Gerente Comercial · Chile",
     text: "La certificación de IA University abrió puertas que yo no imaginaba. Mis clientes ven la diferencia.",
-    avatar: "RP",
+    photo: ricardoP,
   },
   {
     name: "Valentina C.",
     role: "Freelancer · Perú",
     text: "Empecé sin saber nada de IA y hoy cobro el doble por mis servicios. Esta formación cambió mi carrera.",
-    avatar: "VC",
+    photo: valentinaC,
   },
 ]
 
@@ -71,12 +78,11 @@ const TestimonialsSection = () => {
                 "{t.text}"
               </p>
               <div className="flex items-center gap-3">
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-white font-outfit font-bold text-sm shrink-0"
-                  style={{ backgroundColor: "#fc6c04" }}
-                >
-                  {t.avatar}
-                </div>
+                <img
+                  src={t.photo}
+                  alt={t.name}
+                  className="w-12 h-12 rounded-full object-cover shrink-0"
+                />
                 <div>
                   <p className="font-outfit font-bold text-white text-sm">{t.name}</p>
                   <p className="font-outfit text-white/40 text-xs">{t.role}</p>
