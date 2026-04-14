@@ -4,7 +4,7 @@ import { TrendingUp, TrendingDown, DollarSign, BarChart2, ArrowRightLeft, AlertC
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const DATA = {
-  "4GO Academy":  { google: 943.35,  meta: 9205.21, api: 913.07 },
+  "4GO Academy":  { google: 943.35,  meta: 9205.21, api: 883.22 },
   "IA University":{ google: 3039.27, meta: 9287.24, api: 0 },
 }
 
