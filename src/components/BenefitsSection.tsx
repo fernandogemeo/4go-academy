@@ -38,7 +38,7 @@ const BenefitsSection = () => {
   const { ref, isInView } = useInView()
 
   return (
-    <section className="py-20 md:py-28 bg-[#04192D]">
+    <section className="py-20 md:py-28 bg-[#080808]">
       <div className="container mx-auto px-4" ref={ref}>
 
         {/* Heading */}
@@ -68,12 +68,12 @@ const BenefitsSection = () => {
                 <b.icon className="w-5 h-5 text-[#fc6c04]" />
               </div>
               <h3
-                className="font-outfit font-bold text-[#04192D] mb-2"
+                className="font-outfit font-bold text-[#080808] mb-2"
                 style={{ fontSize: "18px" }}
               >
                 {b.title}
               </h3>
-              <p className="font-outfit text-sm text-[#04192D]/65 leading-relaxed">
+              <p className="font-outfit text-sm text-[#080808]/65 leading-relaxed">
                 {b.desc}
               </p>
             </div>

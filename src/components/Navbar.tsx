@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 
-const HOTMART_URL = "https://pay.hotmart.com/N95283619Y?off=hyfkll71&checkoutMode=10"
+const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
 const links = [
   { label: "Tecnologías", href: "#tecnologias" },
@@ -25,17 +25,16 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-[#04192D]/95 backdrop-blur-md shadow-lg" : "bg-[#04192D]"
+        scrolled ? "bg-[#080808]/95 backdrop-blur-md shadow-lg" : "bg-[#080808]"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         {/* Logo */}
-        <a href="#" className="shrink-0">
+        <a href="#" className="shrink-0 mr-[50px]">
           <img
-            src="/logo-navbar.png"
+            src="/logo-navbar.png?v=2"
             alt="iau · 4GO Academy"
             className="h-8 md:h-9 w-auto object-contain"
-            style={{ mixBlendMode: "lighten" }}
           />
         </a>
 
@@ -72,7 +71,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#04192D] border-t border-white/10 px-4 pb-6">
+        <div className="md:hidden bg-[#080808] border-t border-white/10 px-4 pb-6">
           {links.map((l) => (
             <a
               key={l.href}

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useInView } from "@/hooks/useInView"
 import { ChevronDown } from "lucide-react"
 
-const HOTMART_URL = "https://pay.hotmart.com/N95283619Y?off=hyfkll71&checkoutMode=10"
+const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
 const faqs = [
   {
@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: "¿Cuánto tiempo tengo acceso al contenido?",
-    a: "Puedes aprender a tu ritmo y revisitar el contenido cuantas veces necesites.",
+    a: "Puedes verlo cuantas veces quieras durante un año. En caso de que asegures tu inscripción dentro de las primeras 24 horas, tendrás acceso durante dos años.",
   },
   {
     q: "¿Las sesiones en vivo son grabadas?",
@@ -45,7 +45,7 @@ const FaqSection = () => {
             Preguntas frecuentes
           </span>
           <h2
-            className="font-outfit font-black text-[#04192D] uppercase tracking-fire leading-none mt-3"
+            className="font-outfit font-black text-[#080808] uppercase tracking-fire leading-none mt-3"
             style={{ fontSize: "clamp(24px, 3.5vw, 50px)" }}
           >
             Resuelve tus dudas.
@@ -57,13 +57,13 @@ const FaqSection = () => {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="border border-[#04192D]/15 rounded-xl overflow-hidden bg-white"
+              className="border border-[#080808]/15 rounded-xl overflow-hidden bg-white"
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 text-left hover:bg-[#04192D]/5 transition-colors"
+                className="w-full flex items-center justify-between p-5 text-left hover:bg-[#080808]/5 transition-colors"
               >
-                <span className="font-outfit text-base font-semibold text-[#04192D] pr-4">
+                <span className="font-outfit text-base font-semibold text-[#080808] pr-4">
                   {faq.q}
                 </span>
                 <ChevronDown
@@ -73,8 +73,8 @@ const FaqSection = () => {
                 />
               </button>
               {open === i && (
-                <div className="px-5 pb-5 border-t border-[#04192D]/10">
-                  <p className="font-outfit text-sm text-[#04192D]/65 leading-relaxed pt-4">
+                <div className="px-5 pb-5 border-t border-[#080808]/10">
+                  <p className="font-outfit text-sm text-[#080808]/65 leading-relaxed pt-4">
                     {faq.a}
                   </p>
                 </div>
@@ -85,7 +85,7 @@ const FaqSection = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-12">
-          <p className="font-outfit text-sm text-[#04192D]/60 mb-4">
+          <p className="font-outfit text-sm text-[#080808]/60 mb-4">
             ¿Tienes más preguntas?
           </p>
           <a

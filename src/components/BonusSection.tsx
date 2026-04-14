@@ -1,7 +1,8 @@
 import { useInView } from "@/hooks/useInView"
-import { Zap, Clock, Gift, Star } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { Zap, Clock, Gift, Star, Play, RotateCcw, PlayCircle } from "lucide-react"
 
-const HOTMART_URL = "https://pay.hotmart.com/N95283619Y?off=hyfkll71&checkoutMode=10"
+const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
 const courses = [
   { src: "https://4goacademy.com/wp-content/uploads/2024/11/CO-M1-768x1365.jpg",  alt: "Comunicación" },
@@ -32,11 +33,295 @@ const highlights = [
 
 const duplicated = [...courses, ...courses]
 
+const YOUTUBE_ID = "1jVkP4n3PeE"
+const YOUTUBE_EMBED_ORIGIN = "https://www.youtube-nocookie.com"
+
+const BonusVideo = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const playerIdRef = useRef(`bonus-video-${Math.random().toString(36).slice(2)}`)
+  const handshakeTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const playerReadyRef = useRef(false)
+  const playerInfoRef = useRef({ currentTime: 0, duration: 0 })
+
+  const [started, setStarted] = useState(false)
+  const [paused, setPaused] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [visible, setVisible] = useState(false)
+  const [playerReady, setPlayerReady] = useState(false)
+  const [hasPlaybackStarted, setHasPlaybackStarted] = useState(false)
+  const pausedByUser = useRef(false)
+
+  const stopHandshake = () => {
+    if (handshakeTimerRef.current) {
+      clearInterval(handshakeTimerRef.current)
+      handshakeTimerRef.current = null
+    }
+  }
+
+  const sendPlayerMessage = (payload: Record<string, unknown>) => {
+    const iframe = iframeRef.current
+    if (!iframe?.contentWindow) return
+    iframe.contentWindow.postMessage(JSON.stringify(payload), "*")
+  }
+
+  const sendPlayerCommand = (func: string, args: unknown[] = []) => {
+    sendPlayerMessage({ event: "command", func, args })
+  }
+
+  const syncProgress = (currentTime?: number, duration?: number) => {
+    if (typeof currentTime === "number") playerInfoRef.current.currentTime = currentTime
+    if (typeof duration === "number") playerInfoRef.current.duration = duration
+
+    const { currentTime: time, duration: total } = playerInfoRef.current
+    if (total > 0) setProgress((time / total) * 100)
+  }
+
+  const applyPlayerState = (state?: number) => {
+    if (state === 1) {
+      setPaused(false)
+      setHasPlaybackStarted(true)
+      sendPlayerCommand("unMute")
+      sendPlayerCommand("setVolume", [100])
+    } else if (state === 2) {
+      setPaused(true)
+    } else if (state === 0) {
+      setPaused(true)
+      setProgress(100)
+    }
+  }
+
+  const primePlayer = () => {
+    stopHandshake()
+
+    let attempts = 0
+    const ping = () => {
+      sendPlayerMessage({
+        event: "listening",
+        id: playerIdRef.current,
+        channel: "widget",
+      })
+      sendPlayerCommand("addEventListener", ["onReady"])
+      sendPlayerCommand("addEventListener", ["onStateChange"])
+
+      attempts += 1
+      if (attempts >= 20 || playerReadyRef.current) stopHandshake()
+    }
+
+    ping()
+    handshakeTimerRef.current = setInterval(() => {
+      if (playerReadyRef.current) {
+        stopHandshake()
+        return
+      }
+      ping()
+    }, 400)
+  }
+
+  // Track visibility
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.4 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  useEffect(() => {
+    playerReadyRef.current = playerReady
+  }, [playerReady])
+
+  useEffect(() => {
+    if (!started) return
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.source !== iframeRef.current?.contentWindow || typeof event.data !== "string") return
+
+      let payload: { event?: string; info?: unknown }
+      try {
+        payload = JSON.parse(event.data)
+      } catch {
+        return
+      }
+
+      if (payload.event === "onReady") {
+        setPlayerReady(true)
+        stopHandshake()
+        sendPlayerCommand("addEventListener", ["onStateChange"])
+        sendPlayerCommand("unMute")
+        sendPlayerCommand("setVolume", [100])
+
+        if (visible && !pausedByUser.current) {
+          sendPlayerCommand("playVideo")
+        }
+        return
+      }
+
+      if (payload.event === "onStateChange") {
+        applyPlayerState(typeof payload.info === "number" ? payload.info : undefined)
+        return
+      }
+
+      if (payload.event === "infoDelivery" && payload.info && typeof payload.info === "object") {
+        const info = payload.info as { currentTime?: number; duration?: number; playerState?: number }
+        syncProgress(info.currentTime, info.duration)
+        applyPlayerState(info.playerState)
+      }
+    }
+
+    window.addEventListener("message", handleMessage)
+    return () => {
+      window.removeEventListener("message", handleMessage)
+      stopHandshake()
+    }
+  }, [started, visible])
+
+  // Pause/resume based on visibility (only if not paused by user)
+  useEffect(() => {
+    if (!started || !playerReady) return
+
+    if (visible) {
+      if (pausedByUser.current) return
+      sendPlayerCommand("unMute")
+      sendPlayerCommand("setVolume", [100])
+      sendPlayerCommand("playVideo")
+    } else if (!pausedByUser.current) {
+      sendPlayerCommand("pauseVideo")
+    }
+  }, [visible, started, playerReady])
+
+  const handleOverlayClick = () => {
+    pausedByUser.current = true
+    sendPlayerCommand("pauseVideo")
+  }
+
+  const handleResume = () => {
+    pausedByUser.current = false
+    sendPlayerCommand("unMute")
+    sendPlayerCommand("setVolume", [100])
+    sendPlayerCommand("playVideo")
+  }
+
+  const handleRestart = () => {
+    pausedByUser.current = false
+    setProgress(0)
+    sendPlayerCommand("seekTo", [0, true])
+    sendPlayerCommand("unMute")
+    sendPlayerCommand("setVolume", [100])
+    sendPlayerCommand("playVideo")
+  }
+
+  const embedSrc = started
+    ? `${YOUTUBE_EMBED_ORIGIN}/embed/${YOUTUBE_ID}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1&fs=0&origin=${encodeURIComponent(window.location.origin)}&widget_referrer=${encodeURIComponent(window.location.href)}`
+    : ""
+
+  return (
+    <div ref={containerRef} className="max-w-3xl mx-auto px-4 pb-10 md:pb-14">
+      <div
+        className="rounded-2xl overflow-hidden relative"
+        style={{ border: "2px solid rgba(252,108,4,0.25)" }}
+      >
+        <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#000" }}>
+          {!started ? (
+            <div
+              className="absolute inset-0 flex items-center justify-center cursor-pointer"
+              onClick={() => setStarted(true)}
+              style={{
+                backgroundImage: `url(https://img.youtube.com/vi/${YOUTUBE_ID}/maxresdefault.jpg)`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div className="absolute inset-0 bg-black/40" />
+              <div
+                className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center"
+                style={{
+                  background: "rgba(252, 108, 4, 0.9)",
+                  boxShadow: "0 0 30px rgba(252, 108, 4, 0.7), 0 0 60px rgba(252, 108, 4, 0.4)",
+                }}
+              >
+                <Play className="w-8 h-8 text-white ml-1" fill="white" />
+              </div>
+            </div>
+          ) : (
+            <>
+              <iframe
+                ref={iframeRef}
+                id={playerIdRef.current}
+                title="Video de bonus"
+                src={embedSrc}
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                onLoad={primePlayer}
+              />
+              {/* Clickable overlay to pause */}
+              {!paused && hasPlaybackStarted && (
+                <div
+                  className="absolute inset-0 z-10 cursor-pointer"
+                  onClick={handleOverlayClick}
+                />
+              )}
+              {/* Paused overlay with options */}
+              {paused && hasPlaybackStarted && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/50">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={handleRestart}
+                      className="flex items-center gap-2 font-outfit text-sm font-bold uppercase tracking-fire px-6 py-3 rounded-full text-white transition-all hover:scale-105"
+                      style={{
+                        background: "rgba(255,255,255,0.12)",
+                        border: "1px solid rgba(255,255,255,0.25)",
+                        backdropFilter: "blur(8px)",
+                      }}
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                      ASSISTIR DESDE EL INICIO
+                    </button>
+                    <button
+                      onClick={handleResume}
+                      className="flex items-center gap-2 font-outfit text-sm font-bold uppercase tracking-fire px-6 py-3 rounded-full text-white transition-all hover:scale-105"
+                      style={{
+                        background: "rgba(252, 108, 4, 0.9)",
+                        boxShadow: "0 0 20px rgba(252, 108, 4, 0.5)",
+                      }}
+                    >
+                      <PlayCircle className="w-4 h-4" />
+                      REANUDAR DONDE LO DEJÉ
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        {/* Progress bar */}
+        {started && (
+          <div className="w-full h-1" style={{ background: "rgba(255,255,255,0.1)" }}>
+            <div
+              className="h-full"
+              style={{
+                width: `${progress}%`,
+                background: "linear-gradient(90deg, #fc6c04, #ff8c3a)",
+                boxShadow: "0 0 8px rgba(252, 108, 4, 0.6)",
+                transition: "width 0.25s linear",
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 const BonusSection = () => {
   const { ref, isInView } = useInView(0.06)
 
   return (
-    <section className="relative overflow-hidden" style={{ background: "#04192D" }}>
+    <section className="relative overflow-hidden" style={{ background: "#080808" }}>
 
       {/* ── Urgency top ribbon ── */}
       <div
@@ -91,7 +376,7 @@ const BonusSection = () => {
             className="font-outfit font-black text-white uppercase tracking-fire leading-none max-w-5xl mx-auto"
             style={{ fontSize: "clamp(28px, 5vw, 64px)" }}
           >
-            1 año de acceso a{" "}
+            1 Año de acceso a toda la{" "}
             <span
               className="relative inline-block"
               style={{
@@ -99,9 +384,8 @@ const BonusSection = () => {
                 textShadow: "0 0 40px rgba(252,108,4,0.45)",
               }}
             >
-              TODOS
-            </span>{" "}
-            los cursos de 4GO Academy
+              4Go Plus
+            </span>
           </h2>
 
           <p
@@ -109,7 +393,7 @@ const BonusSection = () => {
             style={{ fontSize: "clamp(15px, 1.6vw, 19px)" }}
           >
             Al inscribirte hoy en la Formación IA para Negocios, recibes acceso completo
-            a toda la plataforma 4GO Academy por <strong className="text-white">1 año entero.</strong>{" "}
+            a toda la plataforma con todos los entrenamientos de <strong className="text-white">4GO Plus por 1 año entero.</strong>{" "}
             Mejora todas las áreas de tu carrera y negocio.
           </p>
 
@@ -301,6 +585,9 @@ const BonusSection = () => {
             </div>
           </div>
         </div>
+
+        {/* ── Video ── */}
+        <BonusVideo />
 
       </div>
 

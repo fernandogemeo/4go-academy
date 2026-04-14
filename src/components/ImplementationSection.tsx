@@ -48,7 +48,7 @@ const ImplementationSection = () => {
   const { ref, isInView } = useInView(0.08)
 
   return (
-    <section className="py-20 md:py-28 bg-[#04192D] relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-[#080808] relative overflow-hidden">
 
       {/* Background decorative text */}
       <div

@@ -38,7 +38,7 @@ const FeaturesSection = () => {
   const { ref, isInView } = useInView()
 
   return (
-    <section id="formacion" className="py-20 md:py-28 bg-[#04192D]">
+    <section id="formacion" className="py-20 md:py-28 bg-[#080808]">
       <div className="container mx-auto px-4" ref={ref}>
 
         {/* Heading */}

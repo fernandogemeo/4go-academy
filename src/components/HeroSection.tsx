@@ -1,4 +1,4 @@
-const HOTMART_URL = "https://pay.hotmart.com/N95283619Y?off=hyfkll71&checkoutMode=10"
+const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
 /* Floating particle dots */
 const particles = [
@@ -28,7 +28,7 @@ const HeroSection = () => {
       {/* ── Dark overlay for readability ── */}
       <div
         className="absolute inset-0"
-        style={{ background: "rgba(4, 25, 45, 0.72)" }}
+        style={{ background: "rgba(8, 8, 8, 0.72)" }}
       />
 
       {/* ── Radial vignette ── */}
@@ -36,7 +36,7 @@ const HeroSection = () => {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, rgba(4,25,45,0.55) 100%)",
+            "radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, rgba(8,8,8,0.55) 100%)",
         }}
       />
 

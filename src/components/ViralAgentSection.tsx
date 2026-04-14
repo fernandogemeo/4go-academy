@@ -1,7 +1,7 @@
 import { useInView } from "@/hooks/useInView"
 import { Heart, Bookmark, Share2, MessageCircle, Zap, Play } from "lucide-react"
 
-const HOTMART_URL = "https://pay.hotmart.com/N95283619Y?off=hyfkll71&checkoutMode=10"
+const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
 /* Floating metric bubbles */
 const floaters = [
@@ -29,7 +29,7 @@ const ViralAgentSection = () => {
   const { ref, isInView } = useInView(0.07)
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: "#04192D" }}>
+    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: "#080808" }}>
 
       {/* ── Background radial glow ── */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
@@ -117,7 +117,7 @@ const ViralAgentSection = () => {
 
                 {/* Video bg gradient (representing a reel) */}
                 <div className="absolute inset-0" style={{
-                  background: "linear-gradient(160deg, #1a0a00 0%, #0d0d0d 40%, #0a0f1a 100%)",
+                  background: "linear-gradient(160deg, #1a0a00 0%, #0d0d0d 40%, #0d0d0d 100%)",
                 }} />
 
                 {/* Fake video content */}

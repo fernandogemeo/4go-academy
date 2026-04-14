@@ -1,7 +1,7 @@
 import { useInView } from "@/hooks/useInView"
 import { Check } from "lucide-react"
 
-const HOTMART_URL = "https://pay.hotmart.com/N95283619Y?off=hyfkll71&checkoutMode=10"
+const HOTMART_URL = "https://pay.hotmart.com/U105005359X?checkoutMode=10"
 
 const included = [
   "18 horas de formación en IA para Negocios",
@@ -26,7 +26,7 @@ const PricingSection = () => {
             Oferta especial
           </span>
           <h2
-            className="font-outfit font-black text-[#04192D] uppercase tracking-fire leading-none mt-3"
+            className="font-outfit font-black text-[#080808] uppercase tracking-fire leading-none mt-3"
             style={{ fontSize: "clamp(24px, 3.5vw, 50px)" }}
           >
             Elige comenzar hoy.
@@ -35,7 +35,7 @@ const PricingSection = () => {
 
         {/* Card */}
         <div
-          className={`max-w-lg mx-auto rounded-2xl p-6 md:p-10 bg-[#04192D] ${
+          className={`max-w-lg mx-auto rounded-2xl p-8 md:p-10 bg-[#080808] ${
             isInView ? "animate-fade-up" : "opacity-0"
           }`}
           style={{ border: "2px solid #fc6c04" }}
