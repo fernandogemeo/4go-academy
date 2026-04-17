@@ -4,8 +4,8 @@ import { TrendingUp, TrendingDown, DollarSign, BarChart2, ArrowRightLeft, AlertC
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const DATA = {
-  "4GO Academy":  { google: 943.35,  meta: 9205.21, api: 883.22 },
-  "IA University":{ google: 3039.27, meta: 9287.24, api: 0 },
+  "4GO Academy":  { google: 943.35,  meta: 9205.21, api: 927.15 },
+  "IA University":{ google: 3039.27, meta: 8488.39, api: 111.00 },
 }
 
 // Investment
@@ -19,7 +19,7 @@ const totalMeta   = DATA["4GO Academy"].meta   + DATA["IA University"].meta
 const totalApi    = DATA["4GO Academy"].api    + DATA["IA University"].api
 
 // Revenue & results
-const STUDENTS    = 320
+const STUDENTS    = 358
 const PRICE_USD   = 250
 const revenue     = STUDENTS * PRICE_USD          // $80,000
 const profit      = revenue - grandTotal           // $57,524.93
@@ -75,7 +75,7 @@ const ExchangeWidget = () => (
       </div>
       <div className="text-right">
         <p className="font-outfit font-black text-white leading-none" style={{ fontSize: "22px" }}>
-          <span className="text-[#fc6c04]">3.586</span>
+          <span className="text-[#fc6c04]">3.591,55</span>
         </p>
         <p className="font-outfit text-[10px] text-white/30 mt-0.5">por 1 USD</p>
       </div>
