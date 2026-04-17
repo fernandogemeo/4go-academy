@@ -5,7 +5,7 @@ import { TrendingUp, TrendingDown, DollarSign, BarChart2, ArrowRightLeft, AlertC
 
 const DATA = {
   "4GO Academy":  { google: 943.35,  meta: 9205.21, api: 927.15 },
-  "IA University":{ google: 3039.27, meta: 8488.39, api: 111.00 },
+  "IA University":{ google: 3039.27, meta: 9513.87, api: 111.00 },
 }
 
 // Investment
