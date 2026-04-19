@@ -19,7 +19,7 @@ const totalMeta   = DATA["4GO Academy"].meta   + DATA["IA University"].meta
 const totalApi    = DATA["4GO Academy"].api    + DATA["IA University"].api
 
 // Revenue & results
-const STUDENTS    = 358
+const STUDENTS    = 362
 const PRICE_USD   = 250
 const revenue     = STUDENTS * PRICE_USD          // $80,000
 const profit      = revenue - grandTotal           // $57,524.93
