@@ -94,6 +94,21 @@ const YOUTUBE = [
   },
 ]
 
+const DAILY_SALES = [
+  { day: "08 Abr", date: "08/04", sales: 88 },
+  { day: "09 Abr", date: "09/04", sales: 130 },
+  { day: "10 Abr", date: "10/04", sales: 31 },
+  { day: "11 Abr", date: "11/04", sales: 8 },
+  { day: "12 Abr", date: "12/04", sales: 10 },
+  { day: "13 Abr", date: "13/04", sales: 48 },
+  { day: "14 Abr", date: "14/04", sales: 13 },
+  { day: "15 Abr", date: "15/04", sales: 7 },
+  { day: "16 Abr", date: "16/04", sales: 22 },
+  { day: "17 Abr", date: "17/04", sales: 12 },
+  { day: "18 Abr", date: "18/04", sales: 2 },
+]
+const DAILY_MAX = Math.max(...DAILY_SALES.map(d => d.sales))
+
 const COUNTRIES = [
   { flag: "🇨🇴", name: "Colombia", count: 200 },
   { flag: "🇲🇽", name: "México", count: 50 },
@@ -364,6 +379,101 @@ const IA04 = () => {
           </div>
         </div>
       </div>
+
+      {/* Daily sales line chart */}
+      <Card>
+        <SectionTitle icon={TrendingUp} label="Ventas diarias" />
+        <div className="relative" style={{ height: "300px" }}>
+          <svg width="100%" height="100%" viewBox="0 0 800 300" preserveAspectRatio="none" className="overflow-visible">
+            {/* Grid lines */}
+            {[0, 25, 50, 75, 100, 125].map((v, i) => {
+              const y = 260 - (v / DAILY_MAX) * 230
+              return (
+                <g key={i}>
+                  <line x1="40" y1={y} x2="770" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                  <text x="30" y={y + 4} textAnchor="end" fill="rgba(255,255,255,0.3)" fontSize="10" fontFamily="Outfit">{v}</text>
+                </g>
+              )
+            })}
+
+            {/* Area fill */}
+            <defs>
+              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#00983A" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#00983A" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path
+              d={`M${DAILY_SALES.map((d, i) => {
+                const x = 40 + (i / (DAILY_SALES.length - 1)) * 730
+                const y = 260 - (d.sales / DAILY_MAX) * 230
+                return `${x},${y}`
+              }).join(" L")} L${40 + 730},260 L40,260 Z`}
+              fill="url(#areaGradient)"
+            />
+
+            {/* Line */}
+            <path
+              d={`M${DAILY_SALES.map((d, i) => {
+                const x = 40 + (i / (DAILY_SALES.length - 1)) * 730
+                const y = 260 - (d.sales / DAILY_MAX) * 230
+                return `${x},${y}`
+              }).join(" L")}`}
+              fill="none"
+              stroke="#00983A"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            {/* Data points + labels */}
+            {DAILY_SALES.map((d, i) => {
+              const x = 40 + (i / (DAILY_SALES.length - 1)) * 730
+              const y = 260 - (d.sales / DAILY_MAX) * 230
+              return (
+                <g key={i}>
+                  <circle cx={x} cy={y} r="5" fill="#04192D" stroke="#00983A" strokeWidth="2.5" />
+                  <text x={x} y={y - 14} textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" fontFamily="Outfit">{d.sales}</text>
+                  {/* Vertical grid */}
+                  <line x1={x} y1={260} x2={x} y2={265} stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                  <text x={x} y={285} textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="10" fontFamily="Outfit">{d.day}</text>
+                </g>
+              )
+            })}
+          </svg>
+        </div>
+
+        {/* Cumulative row */}
+        <div className="mt-4 flex items-center gap-2 px-4 py-3 rounded-xl bg-white/5">
+          <TrendingUp className="w-4 h-4 text-[#00983A] shrink-0" />
+          <p className="font-outfit text-xs text-white/60">
+            Pico de ventas: <strong className="text-white">09 Abr — 130 ventas</strong> · Acumulado total: <strong className="text-white">{fmtInt(DAILY_SALES.reduce((s, d) => s + d.sales, 0))}</strong> transacciones registradas
+          </p>
+        </div>
+      </Card>
+
+      {/* Alumnos por país */}
+      <Card>
+        <SectionTitle icon={Users} label="Alumnos por país" />
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <KpiCard label="Total países" value={COUNTRIES.length.toString()} sub="Presencia internacional" color="blue" />
+          <KpiCard label="Total alumnos" value={fmtInt(COUNTRIES_TOTAL)} sub="Registrados por país" color="green" />
+          <KpiCard label="Top país" value="Colombia" sub={`${COUNTRIES[0].count} alumnos · ${((COUNTRIES[0].count / COUNTRIES_TOTAL) * 100).toFixed(1)}%`} color="orange" />
+        </div>
+        <div className="space-y-3">
+          {COUNTRIES.map((c, i) => (
+            <div key={i} className="flex items-center gap-3">
+              <span className="text-2xl leading-none w-8 text-center">{c.flag}</span>
+              <span className="font-outfit text-sm text-white w-44 truncate">{c.name}</span>
+              <div className="flex-1 rounded-full overflow-hidden" style={{ height: "8px", background: "rgba(255,255,255,0.08)" }}>
+                <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${(c.count / COUNTRIES[0].count) * 100}%`, background: i === 0 ? "#fc6c04" : i < 3 ? "#00983A" : i < 8 ? "#1877F2" : "rgba(255,255,255,0.25)" }} />
+              </div>
+              <span className="font-outfit text-sm font-bold text-white w-10 text-right">{c.count}</span>
+              <span className="font-outfit text-xs text-white/40 w-14 text-right">{((c.count / COUNTRIES_TOTAL) * 100).toFixed(1)}%</span>
+            </div>
+          ))}
+        </div>
+      </Card>
 
       {/* ── SECCIÓN 3: INVERSIÓN EN TRÁFICO ── */}
       <div>
@@ -803,36 +913,7 @@ const IA04 = () => {
         )}
       </div>
 
-      {/* ── SECCIÓN 7: ALUMNOS POR PAÍS ── */}
-      <div>
-        <p className="font-outfit text-xs font-bold uppercase tracking-fire text-[#fc6c04] mb-4">
-          07 — Alumnos por país
-        </p>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          <KpiCard label="Total países" value={COUNTRIES.length.toString()} sub="Presencia internacional" color="blue" />
-          <KpiCard label="Total alumnos" value={fmtInt(COUNTRIES_TOTAL)} sub="Registrados por país" color="green" />
-          <KpiCard label="Top país" value="Colombia" sub={`${COUNTRIES[0].count} alumnos · ${((COUNTRIES[0].count / COUNTRIES_TOTAL) * 100).toFixed(1)}%`} color="orange" />
-        </div>
-
-        <Card>
-          <SectionTitle icon={Users} label="Distribución por país" />
-          <div className="space-y-3">
-            {COUNTRIES.map((c, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <span className="text-2xl leading-none w-8 text-center">{c.flag}</span>
-                <span className="font-outfit text-sm text-white w-44 truncate">{c.name}</span>
-                <div className="flex-1 rounded-full overflow-hidden" style={{ height: "8px", background: "rgba(255,255,255,0.08)" }}>
-                  <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${(c.count / COUNTRIES[0].count) * 100}%`, background: i === 0 ? "#fc6c04" : i < 3 ? "#00983A" : i < 8 ? "#1877F2" : "rgba(255,255,255,0.25)" }} />
-                </div>
-                <span className="font-outfit text-sm font-bold text-white w-10 text-right">{c.count}</span>
-                <span className="font-outfit text-xs text-white/40 w-14 text-right">{((c.count / COUNTRIES_TOTAL) * 100).toFixed(1)}%</span>
-              </div>
-            ))}
-          </div>
-        </Card>
-      </div>
-
-      {/* ── SECCIÓN 8: RESUMEN FINAL ── */}
+      {/* ── SECCIÓN 7: RESUMEN FINAL ── */}
       <div>
         <p className="font-outfit text-xs font-bold uppercase tracking-fire text-[#fc6c04] mb-4">
           06 — Resumen final
