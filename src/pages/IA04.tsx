@@ -131,34 +131,36 @@ const COUNTRIES = [
 const COUNTRIES_TOTAL = COUNTRIES.reduce((s, c) => s + c.count, 0)
 
 const HOTMART = {
-  totalVentas: 330,
-  alContado: 286,
-  cuotas4: 43,
-  ingresoNeto: 34691,
-  facturacionBruta: 75222,
+  totalVentas: 373,
+  alContado: 310,
+  cuotas4: 61,
+  ingresoNeto: 38155,
+  facturacionBruta: 82757,
   vendedoras: [
-    { name: "Link principal", code: "none", total: 222, contado: 222, cuotas: 0, neto: 25396, bruto: 55026, pct: 67.3, color: "#6b7280" },
-    { name: "Victoria", code: "Vi", total: 33, contado: 19, cuotas: 13, neto: 2976, bruto: 6463, pct: 10.0, color: "#00983A" },
-    { name: "Janis", code: "Ja", total: 31, contado: 20, cuotas: 11, neto: 2764, bruto: 6005, pct: 9.4, color: "#00983A" },
-    { name: "DUNEIKAL", code: "Du", total: 26, contado: 13, cuotas: 13, neto: 1944, bruto: 4231, pct: 7.9, color: "#fc6c04" },
-    { name: "Andrea", code: "An", total: 11, contado: 7, cuotas: 4, neto: 942, bruto: 2047, pct: 3.3, color: "#fc6c04" },
-    { name: "Stephanie", code: "St", total: 3, contado: 3, cuotas: 0, neto: 346, bruto: 750, pct: 0.9, color: "#a78bfa" },
-    { name: "Daniela", code: "Da", total: 3, contado: 2, cuotas: 1, neto: 262, bruto: 569, pct: 0.9, color: "#a78bfa" },
-    { name: "Lucy", code: "Lu", total: 1, contado: 0, cuotas: 1, neto: 60, bruto: 131, pct: 0.3, color: "#1877F2" },
+    { name: "Link principal", code: "none", total: 232, contado: 231, cuotas: 1, neto: 26467, bruto: 57346, pct: 62.2, color: "#6b7280" },
+    { name: "Victoria", code: "Vi", empresa: "4GO Academy", total: 44, contado: 24, cuotas: 19, neto: 3740, bruto: 8128, pct: 11.8, color: "#fc6c04" },
+    { name: "Duneikal", code: "Du", empresa: "4GO Academy", total: 36, contado: 20, cuotas: 16, neto: 2845, bruto: 6188, pct: 9.7, color: "#fc6c04" },
+    { name: "Janis", code: "Ja", empresa: "4GO Academy", total: 34, contado: 20, cuotas: 14, neto: 2867, bruto: 6232, pct: 9.1, color: "#fc6c04" },
+    { name: "Andrea", code: "An", empresa: "IA University", total: 14, contado: 10, cuotas: 4, neto: 1288, bruto: 2797, pct: 3.8, color: "#00983A" },
+    { name: "Stephanie", code: "St", empresa: "IA University", total: 4, contado: 3, cuotas: 1, neto: 377, bruto: 818, pct: 1.1, color: "#00983A" },
+    { name: "Francy", code: "Fr", empresa: "IA University", total: 3, contado: 1, cuotas: 2, neto: 178, bruto: 388, pct: 0.8, color: "#00983A" },
+    { name: "Daniela", code: "Da", empresa: "IA University", total: 3, contado: 2, cuotas: 1, neto: 262, bruto: 569, pct: 0.8, color: "#00983A" },
+    { name: "Lucy", code: "Lu", empresa: "4GO Academy", total: 2, contado: 0, cuotas: 2, neto: 91, bruto: 200, pct: 0.5, color: "#fc6c04" },
+    { name: "Sergio", code: "Se", empresa: "IA University", total: 1, contado: 0, cuotas: 1, neto: 41, bruto: 90, pct: 0.3, color: "#00983A" },
   ],
   metodosPago: [
-    { name: "Tarjeta de crédito", count: 251, pct: 76.1 },
-    { name: "PSE", count: 21, pct: 6.4 },
-    { name: "Nequi", count: 20, pct: 6.1 },
-    { name: "PayPal", count: 12, pct: 3.6 },
-    { name: "Bancolombia", count: 8, pct: 2.4 },
-    { name: "Baloto", count: 6, pct: 1.8 },
-    { name: "Mercado Pago", count: 4, pct: 1.2 },
-    { name: "Yape / PagoEfectivo / otros", count: 8, pct: 2.4 },
+    { name: "Tarjeta de crédito", count: 283, pct: 75.9 },
+    { name: "PSE", count: 23, pct: 6.2 },
+    { name: "Nequi", count: 20, pct: 5.4 },
+    { name: "PayPal", count: 14, pct: 3.8 },
+    { name: "Baloto", count: 12, pct: 3.2 },
+    { name: "Bancolombia", count: 8, pct: 2.1 },
+    { name: "Mercado Pago", count: 5, pct: 1.3 },
+    { name: "Yape / PagoEfectivo / otros", count: 8, pct: 2.1 },
   ],
   codigos: [
-    { code: "csuchyxr", tipo: "Al contado", desc: "Oferta base — pago único", ventas: 286, pct: 86.7, valor: 114.61 },
-    { code: "2usjqn8b", tipo: "4 cuotas", desc: "Accede a la Formación: IA para Negocios", ventas: 43, pct: 13.0, valor: 43.91 },
+    { code: "csuchyxr", tipo: "Al contado", desc: "Oferta base — pago único", ventas: 310, pct: 83.6, valor: 114.61 },
+    { code: "2usjqn8b", tipo: "4 cuotas", desc: "Accede a la Formación: IA para Negocios", ventas: 61, pct: 16.4, valor: 43.91 },
     { code: "klefyui0", tipo: "Variante", desc: "Accede a la Formación: IA para Negocios", ventas: 1, pct: 0.3, valor: 115.48 },
   ],
 }
@@ -780,12 +782,11 @@ const IA04 = () => {
           <div className="mt-6 space-y-6">
 
             {/* KPIs */}
-            <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-              <KpiCard label="Total ventas" value={HOTMART.totalVentas.toString()} sub="100% aprobadas" color="orange" />
-              <KpiCard label="Al contado" value={HOTMART.alContado.toString()} sub="csuchyxr" />
-              <KpiCard label="4 cuotas" value={HOTMART.cuotas4.toString()} sub="2usjqn8b" />
-              <KpiCard label="Ingreso neto" value={`$${fmtInt(HOTMART.ingresoNeto)}`} sub="USD líquido" color="green" />
-              <KpiCard label="Facturación bruta" value={`$${fmtInt(HOTMART.facturacionBruta)}`} sub="USD sin impuestos" color="green" />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <KpiCard label="Al contado" value={HOTMART.alContado.toString()} sub={`${((HOTMART.alContado / HOTMART.totalVentas) * 100).toFixed(1)}% del total`} />
+              <KpiCard label="4 cuotas" value={HOTMART.cuotas4.toString()} sub={`${((HOTMART.cuotas4 / HOTMART.totalVentas) * 100).toFixed(1)}% del total`} />
+              <KpiCard label="Sin vendedor (link principal)" value={HOTMART.vendedoras[0].total.toString()} sub={`${((HOTMART.vendedoras[0].total / HOTMART.totalVentas) * 100).toFixed(1)}% del total`} color="green" />
+              <KpiCard label="Con vendedoras" value={(HOTMART.totalVentas - HOTMART.vendedoras[0].total).toString()} sub={`${(((HOTMART.totalVentas - HOTMART.vendedoras[0].total) / HOTMART.totalVentas) * 100).toFixed(1)}% del total`} color="orange" />
             </div>
 
             {/* Vendedoras table */}
@@ -806,7 +807,7 @@ const IA04 = () => {
                         <td className="font-outfit text-sm font-semibold text-white py-4 pr-4">
                           <span className="flex items-center gap-2">
                             <span className="w-6 h-6 rounded-full shrink-0 flex items-center justify-center text-[10px] font-bold text-white" style={{ background: v.color }}>{v.code.slice(0, 2)}</span>
-                            {v.name}
+                            <span>{v.name} <span className="text-xs text-white/40">· {(v as any).empresa}</span></span>
                           </span>
                         </td>
                         <td className="font-outfit text-sm text-white/70 text-right py-4 px-3">{v.total}</td>
@@ -849,51 +850,27 @@ const IA04 = () => {
                 </div>
               </Card>
 
-              {/* Códigos de oferta */}
-              <Card>
-                <SectionTitle icon={Target} label="Códigos de oferta" />
-                <div className="space-y-4">
-                  {HOTMART.codigos.map((c, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="font-outfit text-sm font-black text-[#00983A]">{c.code}</span>
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ background: i === 0 ? "rgba(0,152,58,0.2)" : i === 1 ? "rgba(24,119,242,0.2)" : "rgba(167,139,250,0.2)", color: i === 0 ? "#00983A" : i === 1 ? "#1877F2" : "#a78bfa" }}>{c.tipo}</span>
-                        {i === 2 && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-white/10 text-white/60">Nuevo</span>}
-                      </div>
-                      <p className="font-outfit text-xs text-white/40 mb-3">{c.desc}</p>
-                      <div className="flex items-center gap-6">
-                        <div>
-                          <p className="font-outfit text-[10px] text-white/30 uppercase">Ventas</p>
-                          <p className="font-outfit text-lg font-black text-white">{c.ventas}</p>
-                        </div>
-                        <div>
-                          <p className="font-outfit text-[10px] text-white/30 uppercase">% del total</p>
-                          <p className="font-outfit text-lg font-black text-white">{c.pct}%</p>
-                        </div>
-                        <div>
-                          <p className="font-outfit text-[10px] text-white/30 uppercase">{i === 1 ? "Por cuota prom." : "Neto prom."}</p>
-                          <p className="font-outfit text-lg font-black text-[#fc6c04]">${fmt(c.valor)}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
             </div>
 
             {/* Ranking vendedoras bar chart */}
             <Card>
               <SectionTitle icon={BarChart2} label="Ranking vendedoras (excl. link principal)" />
-              <div className="grid grid-cols-7 gap-3 items-end" style={{ height: "200px" }}>
+              <div className="grid grid-cols-9 gap-3 items-end" style={{ height: "220px" }}>
                 {HOTMART.vendedoras.filter(v => v.name !== "Link principal").map((v, i) => {
                   const maxVal = HOTMART.vendedoras.filter(x => x.name !== "Link principal")[0].total
                   const contadoPct = (v.contado / maxVal) * 100
                   const cuotasPct = (v.cuotas / maxVal) * 100
                   return (
                     <div key={i} className="flex flex-col items-center gap-1 h-full justify-end">
+                      <span className="font-outfit text-xs font-bold text-white">{v.total}</span>
                       <div className="w-full flex flex-col items-center gap-0.5">
-                        <div className="w-8 rounded-t" style={{ height: `${Math.max(cuotasPct * 1.5, 2)}px`, background: "#1877F2" }} />
-                        <div className="w-8 rounded-b" style={{ height: `${Math.max(contadoPct * 1.5, 2)}px`, background: "#00983A" }} />
+                        <div className="w-10 rounded-t" style={{ height: `${Math.max(cuotasPct * 1.5, 2)}px`, background: "#1877F2" }} />
+                        <div className="w-10 rounded-b" style={{ height: `${Math.max(contadoPct * 1.5, 2)}px`, background: "#00983A" }} />
+                      </div>
+                      <div className="flex gap-1 mt-0.5">
+                        <span className="font-outfit text-[9px] text-[#00983A]">{v.contado}</span>
+                        <span className="font-outfit text-[9px] text-white/20">/</span>
+                        <span className="font-outfit text-[9px] text-[#1877F2]">{v.cuotas}</span>
                       </div>
                       <span className="font-outfit text-[10px] text-white/50 text-center">{v.name}</span>
                     </div>
