@@ -12,17 +12,16 @@ const LAUNCH = {
 
 const SALES = {
   firstDay: 84,
-  week: 278,
-  total: 362,
-  conversion: 1.59,
+  week: 287,
+  total: 371,
 }
 
 const REVENUE = {
-  main: 90500.00,
-  gross: 90500.00,
+  main: LAUNCH.price * 371,
+  gross: LAUNCH.price * 371,
 }
 
-const REFUNDS = { count: 6, pct: 1.7 }
+const REFUNDS = { count: 6 }
 
 const ADS = {
   leadFb: 17693.60,
@@ -94,6 +93,27 @@ const YOUTUBE = [
     views: 9152, watchHours: 3524.42, subscribers: 81,
   },
 ]
+
+const COUNTRIES = [
+  { flag: "🇨🇴", name: "Colombia", count: 200 },
+  { flag: "🇲🇽", name: "México", count: 50 },
+  { flag: "🇵🇪", name: "Perú", count: 24 },
+  { flag: "🇩🇴", name: "República Dominicana", count: 19 },
+  { flag: "🇺🇸", name: "Estados Unidos", count: 19 },
+  { flag: "🇪🇨", name: "Ecuador", count: 16 },
+  { flag: "🇨🇱", name: "Chile", count: 10 },
+  { flag: "🇦🇷", name: "Argentina", count: 10 },
+  { flag: "🇬🇹", name: "Guatemala", count: 6 },
+  { flag: "🇵🇦", name: "Panamá", count: 5 },
+  { flag: "🇻🇪", name: "Venezuela", count: 3 },
+  { flag: "🇵🇷", name: "Puerto Rico", count: 3 },
+  { flag: "🇨🇷", name: "Costa Rica", count: 2 },
+  { flag: "🇮🇱", name: "Israel", count: 1 },
+  { flag: "🇪🇸", name: "España", count: 1 },
+  { flag: "🇨🇦", name: "Canadá", count: 1 },
+  { flag: "🇧🇴", name: "Bolivia", count: 1 },
+]
+const COUNTRIES_TOTAL = COUNTRIES.reduce((s, c) => s + c.count, 0)
 
 const HOTMART = {
   totalVentas: 330,
@@ -306,7 +326,7 @@ const IA04 = () => {
             sub={`$${ROAS.toFixed(2)} por cada $1`}
             color="orange"
           />
-          <KpiCard label="Conversión" value={`${SALES.conversion}%`} sub={`${fmtInt(LEADS.total)} leads → ${SALES.total} ventas`} />
+          <KpiCard label="Conversión" value={`${((SALES.total / LEADS.total) * 100).toFixed(2)}%`} sub={`${fmtInt(LEADS.total)} leads → ${SALES.total} ventas`} />
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -337,7 +357,7 @@ const IA04 = () => {
 
           {/* Refunds, Checkout, Visitantes */}
           <div className="grid grid-cols-2 gap-4">
-            <KpiCard label="Reembolsos" value={REFUNDS.count.toString()} sub={`${REFUNDS.pct}% de las ventas`} color="red" />
+            <KpiCard label="Reembolsos" value={REFUNDS.count.toString()} sub={`${((REFUNDS.count / SALES.total) * 100).toFixed(1)}% de las ventas`} color="red" />
             <KpiCard label="Checkout primer día" value={fmtInt(OTHER.checkoutFirstDay)} sub={`${((SALES.firstDay / OTHER.checkoutFirstDay) * 100).toFixed(1)}% conversión`} />
             <KpiCard label="Visitantes únicos (Página de Ventas)" value={fmtInt(OTHER.salesPageVisitors)} sub="Página de ventas" />
             <KpiCard label="% Visitantes / Leads" value={`${((OTHER.salesPageVisitors / LEADS.total) * 100).toFixed(1)}%`} sub={`${fmtInt(OTHER.salesPageVisitors)} de ${fmtInt(LEADS.total)} leads`} />
@@ -783,7 +803,36 @@ const IA04 = () => {
         )}
       </div>
 
-      {/* ── SECCIÓN 7: RESUMEN FINAL ── */}
+      {/* ── SECCIÓN 7: ALUMNOS POR PAÍS ── */}
+      <div>
+        <p className="font-outfit text-xs font-bold uppercase tracking-fire text-[#fc6c04] mb-4">
+          07 — Alumnos por país
+        </p>
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <KpiCard label="Total países" value={COUNTRIES.length.toString()} sub="Presencia internacional" color="blue" />
+          <KpiCard label="Total alumnos" value={fmtInt(COUNTRIES_TOTAL)} sub="Registrados por país" color="green" />
+          <KpiCard label="Top país" value="Colombia" sub={`${COUNTRIES[0].count} alumnos · ${((COUNTRIES[0].count / COUNTRIES_TOTAL) * 100).toFixed(1)}%`} color="orange" />
+        </div>
+
+        <Card>
+          <SectionTitle icon={Users} label="Distribución por país" />
+          <div className="space-y-3">
+            {COUNTRIES.map((c, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <span className="text-2xl leading-none w-8 text-center">{c.flag}</span>
+                <span className="font-outfit text-sm text-white w-44 truncate">{c.name}</span>
+                <div className="flex-1 rounded-full overflow-hidden" style={{ height: "8px", background: "rgba(255,255,255,0.08)" }}>
+                  <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${(c.count / COUNTRIES[0].count) * 100}%`, background: i === 0 ? "#fc6c04" : i < 3 ? "#00983A" : i < 8 ? "#1877F2" : "rgba(255,255,255,0.25)" }} />
+                </div>
+                <span className="font-outfit text-sm font-bold text-white w-10 text-right">{c.count}</span>
+                <span className="font-outfit text-xs text-white/40 w-14 text-right">{((c.count / COUNTRIES_TOTAL) * 100).toFixed(1)}%</span>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
+
+      {/* ── SECCIÓN 8: RESUMEN FINAL ── */}
       <div>
         <p className="font-outfit text-xs font-bold uppercase tracking-fire text-[#fc6c04] mb-4">
           06 — Resumen final
