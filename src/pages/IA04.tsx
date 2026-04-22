@@ -143,8 +143,8 @@ const COUNTRIES_TOTAL = COUNTRIES.reduce((s, c) => s + c.count, 0)
 
 const HOTMART = {
   totalVentas: 373,
-  alContado: 310,
-  cuotas4: 61,
+  alContado: 311,
+  cuotas4: 62,
   ingresoNeto: 38155,
   facturacionBruta: 82757,
   vendedoras: [
