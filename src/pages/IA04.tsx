@@ -13,12 +13,12 @@ const LAUNCH = {
 const SALES = {
   firstDay: 84,
   week: 287,
-  total: 371,
+  total: 373,
 }
 
 const REVENUE = {
-  main: LAUNCH.price * 371,
-  gross: LAUNCH.price * 371,
+  main: LAUNCH.price * 373,
+  gross: LAUNCH.price * 373,
 }
 
 const REFUNDS = { count: 6 }
@@ -105,12 +105,12 @@ const DAILY_SALES = [
   { day: "15 Abr", date: "15/04", sales: 7 },
   { day: "16 Abr", date: "16/04", sales: 22 },
   { day: "17 Abr", date: "17/04", sales: 12 },
-  { day: "18 Abr", date: "18/04", sales: 2 },
+  { day: "18 Abr", date: "18/04", sales: 4 },
 ]
 const DAILY_MAX = Math.max(...DAILY_SALES.map(d => d.sales))
 
 const COUNTRIES = [
-  { flag: "🇨🇴", name: "Colombia", count: 200 },
+  { flag: "🇨🇴", name: "Colombia", count: 202 },
   { flag: "🇲🇽", name: "México", count: 50 },
   { flag: "🇵🇪", name: "Perú", count: 24 },
   { flag: "🇩🇴", name: "República Dominicana", count: 19 },
