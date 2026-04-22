@@ -21,7 +21,7 @@ const totalComisiones = DATA["4GO Academy"].comisiones + DATA["IA University"].c
 const totalOtros  = DATA["4GO Academy"].otros  + DATA["IA University"].otros
 
 // Revenue & results
-const STUDENTS    = 362
+const STUDENTS    = 373
 const PRICE_USD   = 250
 const revenue     = STUDENTS * PRICE_USD          // $80,000
 const profit      = revenue - grandTotal           // $57,524.93
