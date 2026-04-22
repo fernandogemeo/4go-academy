@@ -37,7 +37,18 @@ const ADS = {
   grandTotal: 23735.48,
 }
 
-const ROAS = REVENUE.gross / ADS.grandTotal
+const COMISIONES = {
+  equipo4go: { ventas: 118, valorBRL: 30, totalBRL: 3540, totalUSD: 708 },
+  equipoIA: { ventas: 25, valorBRL: 30, totalBRL: 750, totalUSD: 150 },
+  clint: { totalUSD: 53, pagadoPor: "4GO Academy" },
+  programaEnVivo: { totalUSD: 376.47, pagadoPor: "IA University" },
+  apiIA: { totalUSD: 2.60, pagadoPor: "IA University" },
+  totalUSD: 1290.07,
+}
+
+const INVERSION_TOTAL = ADS.grandTotal + COMISIONES.totalUSD
+
+const ROAS = REVENUE.gross / INVERSION_TOTAL
 
 const LEADS = {
   organic: 630,
@@ -893,7 +904,78 @@ const IA04 = () => {
       {/* ── SECCIÓN 7: RESUMEN FINAL ── */}
       <div>
         <p className="font-outfit text-xs font-bold uppercase tracking-fire text-[#fc6c04] mb-4">
-          06 — Resumen final
+          06 — Otras despesas del lanzamiento
+        </p>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* COLUNA 4GO ACADEMY */}
+          <Card>
+            <p className="font-outfit text-sm font-bold text-[#fc6c04] text-center mb-4 uppercase tracking-fire">4GO Academy</p>
+            <table className="w-full">
+              <tbody>
+                <tr className="border-b border-white/10">
+                  <td className="font-outfit text-sm text-white/60 py-3">Comisiones equipo ventas</td>
+                  <td className="font-outfit text-sm font-bold text-white text-right py-3">${fmt(COMISIONES.equipo4go.totalUSD)}</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="font-outfit text-xs text-white/40 py-1 pl-4">↳ {COMISIONES.equipo4go.ventas} ventas</td>
+                  <td></td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="font-outfit text-sm text-white/60 py-3">Espacio adicional Clint</td>
+                  <td className="font-outfit text-sm font-bold text-white text-right py-3">${fmt(COMISIONES.clint.totalUSD)}</td>
+                </tr>
+                <tr className="border-t-2 border-[#fc6c04]/30">
+                  <td className="font-outfit text-sm font-bold text-[#fc6c04] py-3">Total 4GO Academy</td>
+                  <td className="font-outfit text-sm font-black text-[#fc6c04] text-right py-3">${fmt(COMISIONES.equipo4go.totalUSD + COMISIONES.clint.totalUSD)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </Card>
+
+          {/* COLUNA IA UNIVERSITY */}
+          <Card>
+            <p className="font-outfit text-sm font-bold text-[#a78bfa] text-center mb-4 uppercase tracking-fire">IA University</p>
+            <table className="w-full">
+              <tbody>
+                <tr className="border-b border-white/10">
+                  <td className="font-outfit text-sm text-white/60 py-3">Comisiones equipo ventas</td>
+                  <td className="font-outfit text-sm font-bold text-white text-right py-3">${fmt(COMISIONES.equipoIA.totalUSD)}</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="font-outfit text-xs text-white/40 py-1 pl-4">↳ {COMISIONES.equipoIA.ventas} ventas</td>
+                  <td></td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="font-outfit text-sm text-white/60 py-3">Programa en vivo</td>
+                  <td className="font-outfit text-sm font-bold text-white text-right py-3">${fmt(COMISIONES.programaEnVivo.totalUSD)}</td>
+                </tr>
+                <tr className="border-b border-white/10">
+                  <td className="font-outfit text-sm text-white/60 py-3">Envío API</td>
+                  <td className="font-outfit text-sm font-bold text-white text-right py-3">${fmt(COMISIONES.apiIA.totalUSD)}</td>
+                </tr>
+                <tr className="border-t-2 border-[#a78bfa]/30">
+                  <td className="font-outfit text-sm font-bold text-[#a78bfa] py-3">Total IA University</td>
+                  <td className="font-outfit text-sm font-black text-[#a78bfa] text-right py-3">${fmt(COMISIONES.equipoIA.totalUSD + COMISIONES.programaEnVivo.totalUSD + COMISIONES.apiIA.totalUSD)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </Card>
+        </div>
+
+        {/* TOTAL GERAL */}
+        <Card>
+          <div className="text-center mt-2">
+            <p className="font-outfit text-xs text-white/40 uppercase tracking-fire mb-2">Total otras despesas del lanzamiento</p>
+            <p className="font-outfit font-black text-[#fc6c04]" style={{ fontSize: "clamp(28px, 4vw, 40px)" }}>
+              ${fmt(COMISIONES.totalUSD)}
+            </p>
+          </div>
+        </Card>
+      </div>
+
+      <div className="mt-10">
+        <p className="font-outfit text-xs font-bold uppercase tracking-fire text-[#fc6c04] mb-4">
+          07 — Resumen final
         </p>
         <div className="grid md:grid-cols-3 gap-6">
           <Card>
@@ -908,15 +990,16 @@ const IA04 = () => {
             <div className="text-center">
               <p className="font-outfit text-xs text-white/40 uppercase tracking-fire mb-2">Total invertido</p>
               <p className="font-outfit font-black text-[#fc6c04]" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>
-                ${fmt(ADS.grandTotal)}
+                ${fmt(INVERSION_TOTAL)}
               </p>
+              <p className="font-outfit text-xs text-white/40 mt-1">Tráfico + API + Comisiones</p>
             </div>
           </Card>
           <Card>
             <div className="text-center">
               <p className="font-outfit text-xs text-white/40 uppercase tracking-fire mb-2">Resultado neto</p>
               <p className="font-outfit font-black text-white" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>
-                ${fmt(REVENUE.gross - ADS.grandTotal)}
+                ${fmt(REVENUE.gross - INVERSION_TOTAL)}
               </p>
             </div>
           </Card>

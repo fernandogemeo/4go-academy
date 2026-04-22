@@ -4,19 +4,21 @@ import { TrendingUp, TrendingDown, DollarSign, BarChart2, ArrowRightLeft, AlertC
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const DATA = {
-  "4GO Academy":  { google: 943.35,  meta: 9205.21, api: 927.15 },
-  "IA University":{ google: 3039.27, meta: 9513.87, api: 111.00 },
+  "4GO Academy":  { google: 943.35,  meta: 9205.21, api: 927.15, comisiones: 708, otros: 53 },
+  "IA University":{ google: 3039.27, meta: 9513.87, api: 113.60, comisiones: 150, otros: 376.47 },
 }
 
 // Investment
-const total4GO    = DATA["4GO Academy"].google   + DATA["4GO Academy"].meta   + DATA["4GO Academy"].api
-const totalIAU    = DATA["IA University"].google + DATA["IA University"].meta + DATA["IA University"].api
+const total4GO    = DATA["4GO Academy"].google   + DATA["4GO Academy"].meta   + DATA["4GO Academy"].api   + DATA["4GO Academy"].comisiones   + DATA["4GO Academy"].otros
+const totalIAU    = DATA["IA University"].google + DATA["IA University"].meta + DATA["IA University"].api + DATA["IA University"].comisiones + DATA["IA University"].otros
 const grandTotal  = total4GO + totalIAU
 const invDiff     = totalIAU - total4GO
 
 const totalGoogle = DATA["4GO Academy"].google + DATA["IA University"].google
 const totalMeta   = DATA["4GO Academy"].meta   + DATA["IA University"].meta
 const totalApi    = DATA["4GO Academy"].api    + DATA["IA University"].api
+const totalComisiones = DATA["4GO Academy"].comisiones + DATA["IA University"].comisiones
+const totalOtros  = DATA["4GO Academy"].otros  + DATA["IA University"].otros
 
 // Revenue & results
 const STUDENTS    = 362
@@ -198,17 +200,17 @@ const DonutChart = ({ slices, centerLabel }: { slices: { label: string; value: n
 
 const InvestmentTable = () => (
   <div className="overflow-x-auto">
-    <table className="w-full min-w-[520px]">
+    <table className="w-full min-w-[700px]">
       <thead>
         <tr className="border-b border-white/10">
-          {["Empresa", "Google Ads", "Meta Ads", "API Disparos", "Total"].map((h, i) => (
-            <th key={i} className={`font-outfit text-xs font-bold uppercase tracking-fire pb-3 ${i === 0 ? "text-left pr-4" : "text-right px-4"} ${i === 4 ? "text-[#fc6c04]" : "text-white/40"}`}>{h}</th>
+          {["Empresa", "Google Ads", "Meta Ads", "API Disparos", "Comisiones", "Otros costos", "Total"].map((h, i) => (
+            <th key={i} className={`font-outfit text-xs font-bold uppercase tracking-fire pb-3 ${i === 0 ? "text-left pr-4" : "text-right px-3"} ${i === 6 ? "text-[#fc6c04]" : "text-white/40"}`}>{h}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {(["4GO Academy", "IA University"] as const).map((company, i) => {
-          const d = DATA[company]; const tot = d.google + d.meta + d.api
+          const d = DATA[company]; const tot = d.google + d.meta + d.api + d.comisiones + d.otros
           return (
             <tr key={i} className="border-b border-white/5 hover:bg-white/3 transition-colors">
               <td className="font-outfit text-sm font-semibold text-white py-4 pr-4">
@@ -217,19 +219,23 @@ const InvestmentTable = () => (
                   {company}
                 </span>
               </td>
-              <td className="font-outfit text-sm text-white/70 text-right py-4 px-4">${fmt(d.google)}</td>
-              <td className="font-outfit text-sm text-white/70 text-right py-4 px-4">${fmt(d.meta)}</td>
-              <td className="font-outfit text-sm text-white/40 text-right py-4 px-4">${fmt(d.api)}</td>
-              <td className="font-outfit text-sm font-bold text-white text-right py-4 pl-4">${fmt(tot)}</td>
+              <td className="font-outfit text-sm text-white/70 text-right py-4 px-3">${fmt(d.google)}</td>
+              <td className="font-outfit text-sm text-white/70 text-right py-4 px-3">${fmt(d.meta)}</td>
+              <td className="font-outfit text-sm text-white/70 text-right py-4 px-3">${fmt(d.api)}</td>
+              <td className="font-outfit text-sm text-white/70 text-right py-4 px-3">${fmt(d.comisiones)}</td>
+              <td className="font-outfit text-sm text-white/70 text-right py-4 px-3">${fmt(d.otros)}</td>
+              <td className="font-outfit text-sm font-bold text-white text-right py-4 pl-3">${fmt(tot)}</td>
             </tr>
           )
         })}
         <tr className="bg-white/5">
           <td className="font-outfit text-xs font-bold uppercase tracking-fire text-[#fc6c04] py-4 pr-4">Total combinado</td>
-          <td className="font-outfit text-sm font-bold text-white text-right py-4 px-4">${fmt(totalGoogle)}</td>
-          <td className="font-outfit text-sm font-bold text-white text-right py-4 px-4">${fmt(totalMeta)}</td>
-          <td className="font-outfit text-sm font-bold text-white/40 text-right py-4 px-4">${fmt(totalApi)}</td>
-          <td className="font-outfit text-base font-black text-[#fc6c04] text-right py-4 pl-4">${fmt(grandTotal)}</td>
+          <td className="font-outfit text-sm font-bold text-white text-right py-4 px-3">${fmt(totalGoogle)}</td>
+          <td className="font-outfit text-sm font-bold text-white text-right py-4 px-3">${fmt(totalMeta)}</td>
+          <td className="font-outfit text-sm font-bold text-white text-right py-4 px-3">${fmt(totalApi)}</td>
+          <td className="font-outfit text-sm font-bold text-white text-right py-4 px-3">${fmt(totalComisiones)}</td>
+          <td className="font-outfit text-sm font-bold text-white text-right py-4 px-3">${fmt(totalOtros)}</td>
+          <td className="font-outfit text-base font-black text-[#fc6c04] text-right py-4 pl-3">${fmt(grandTotal)}</td>
         </tr>
       </tbody>
     </table>
