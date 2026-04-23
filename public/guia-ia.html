@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Práctica de IA para Iniciantes — 4GO Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #080808;
+    color: #fff;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  /* Cover */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(252,108,4,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 70px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: rgba(252,108,4,0.15);
+    border: 1px solid rgba(252,108,4,0.3);
+    color: #fc6c04;
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .cover h1 {
+    font-size: clamp(36px, 7vw, 64px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .cover h1 span { color: #fc6c04; }
+  .cover p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.5);
+    max-width: 480px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .cover-logo {
+    position: relative;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+  }
+
+  /* Sections */
+  .section {
+    padding: 80px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .section-number {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #fc6c04;
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .section h2 span { color: #fc6c04; }
+  .section .intro {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+  .section h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    margin-top: 36px;
+    color: #fff;
+  }
+  .section h3:first-of-type { margin-top: 0; }
+  .section p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 16px;
+  }
+
+  /* Tool cards */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .tool-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+    transition: border-color 0.3s;
+  }
+  .tool-card:hover { border-color: rgba(252,108,4,0.3); }
+  .tool-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fc6c04;
+    margin-bottom: 4px;
+  }
+  .tool-category {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 10px;
+  }
+  .tool-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+  }
+  .tool-tag {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 12px;
+    border-radius: 70px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .tag-free { background: rgba(0,152,58,0.15); color: #00983A; border: 1px solid rgba(0,152,58,0.3); }
+  .tag-paid { background: rgba(252,108,4,0.12); color: #fc6c04; border: 1px solid rgba(252,108,4,0.25); }
+
+  /* Prompt blocks */
+  .prompt-block {
+    background: rgba(252,108,4,0.06);
+    border: 1px solid rgba(252,108,4,0.15);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .prompt-label {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fc6c04;
+    margin-bottom: 12px;
+  }
+  .prompt-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .prompt-use {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* Tip box */
+  .tip-box {
+    background: rgba(0,152,58,0.08);
+    border: 1px solid rgba(0,152,58,0.2);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .tip-box strong { color: #00983A; }
+  .tip-box p { color: rgba(255,255,255,0.6); font-size: 14px; margin: 0; }
+
+  /* Warning box */
+  .warn-box {
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .warn-box strong { color: #f59e0b; }
+  .warn-box p { color: rgba(255,255,255,0.6); font-size: 14px; margin: 0; }
+
+  /* Steps */
+  .steps { margin: 24px 0; }
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fc6c04, #e05a00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 900;
+    color: #fff;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    margin: 0;
+  }
+
+  /* Checklist */
+  .checklist { margin: 20px 0; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .check-icon {
+    color: #fc6c04;
+    font-size: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .check-item p { margin: 0; font-size: 15px; color: rgba(255,255,255,0.7); }
+
+  /* Table */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14px;
+  }
+  .compare-table th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .compare-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.65);
+  }
+  .compare-table tr:hover { background: rgba(255,255,255,0.02); }
+  .compare-table .winner { color: #fc6c04; font-weight: 700; }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 80px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(circle, rgba(252,108,4,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 48px;
+    border-radius: 70px;
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #fc6c04 0%, #e05a00 100%);
+    box-shadow: 0 8px 40px -8px rgba(252,108,4,0.55);
+    transition: transform 0.3s;
+  }
+  .cta-btn:hover { transform: scale(1.04); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px;
+    color: rgba(255,255,255,0.2);
+  }
+
+  @media (max-width: 640px) {
+    .tool-grid { grid-template-columns: 1fr; }
+    .section { padding: 50px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ COVER ═══════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">&#127873; Regalo exclusivo</div>
+  <h1>Guía Práctica de <span>IA</span> para Iniciantes</h1>
+  <p>Las mejores herramientas, prompts listos para usar y estrategias reales para transformar tu negocio con inteligencia artificial.</p>
+  <div class="cover-logo">4GO Academy &mdash; 2026</div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════ INTRO ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">Introducción</div>
+  <h2>¿Por qué <span>necesitas IA</span> en tu negocio hoy?</h2>
+  <p class="intro">La inteligencia artificial ya no es ciencia ficción. Hoy es la herramienta más poderosa que existe para emprendedores, freelancers y dueños de negocio que quieren hacer más en menos tiempo.</p>
+
+  <p>El problema no es la falta de herramientas. El problema es saber <strong style="color:#fff">cuáles usar</strong>, <strong style="color:#fff">cómo usarlas</strong> y <strong style="color:#fff">en qué orden aplicarlas</strong>.</p>
+  <p>Esta guía fue creada para darte exactamente eso: un camino claro, práctico y directo para empezar a usar IA de verdad en tu día a día.</p>
+  <p>No necesitas saber programar. No necesitas experiencia previa. Solo necesitas seguir los pasos.</p>
+
+  <div class="tip-box">
+    <p><strong>&#128161; Tip:</strong> Guarda esta guía en tus favoritos. Es un recurso que vas a consultar una y otra vez.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 01 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">01 &mdash; Herramientas</div>
+  <h2>Las <span>10 herramientas</span> de IA que realmente importan</h2>
+  <p class="intro">No necesitas 50 herramientas. Necesitas las correctas. Aquí están las que usamos todos los días en 4GO Academy.</p>
+
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-category">Asistente de IA #1</div>
+      <div class="tool-name">Claude</div>
+      <div class="tool-desc">El asistente de IA más potente para escribir, analizar datos, crear estrategias y resolver problemas complejos. Superior a ChatGPT en razonamiento y textos largos.</div>
+      <span class="tool-tag tag-paid">Gratis + Pro</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Investigación profunda</div>
+      <div class="tool-name">Perplexity</div>
+      <div class="tool-desc">Busca en internet con IA. Perfecto para investigación de mercado, análisis de competencia y encontrar datos actualizados con fuentes verificadas.</div>
+      <span class="tool-tag tag-free">Gratis</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Automatización</div>
+      <div class="tool-name">n8n</div>
+      <div class="tool-desc">Conecta todas tus herramientas y crea flujos automáticos sin programar. Envía emails, actualiza bases de datos, publica en redes — todo en automático.</div>
+      <span class="tool-tag tag-free">Gratis (self-hosted)</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Crear sitios web</div>
+      <div class="tool-name">Lovable</div>
+      <div class="tool-desc">Crea sitios web profesionales con IA en minutos. Solo describe lo que necesitas y la IA genera el código completo, listo para publicar.</div>
+      <span class="tool-tag tag-free">Gratis</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Edición de video</div>
+      <div class="tool-name">CapCut</div>
+      <div class="tool-desc">Editor de video con IA que genera subtítulos automáticos, elimina fondos y aplica efectos profesionales. Ideal para contenido en redes sociales.</div>
+      <span class="tool-tag tag-free">Gratis</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Audio y voz</div>
+      <div class="tool-name">ElevenLabs</div>
+      <div class="tool-desc">Genera voces ultra-realistas en cualquier idioma. Perfecto para videos, podcasts, audiolibros y contenido sin necesidad de grabar tu propia voz.</div>
+      <span class="tool-tag tag-paid">Gratis + Pro</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Imágenes con IA</div>
+      <div class="tool-name">Qwen / GPT Image</div>
+      <div class="tool-desc">Genera imágenes profesionales para redes sociales, anuncios y presentaciones. Desde fotos realistas hasta ilustraciones creativas.</div>
+      <span class="tool-tag tag-free">Gratis</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Chatbot para WhatsApp</div>
+      <div class="tool-name">Dealism</div>
+      <div class="tool-desc">Crea un agente de ventas con IA que atiende clientes por WhatsApp 24/7. Responde preguntas, califica leads y cierra ventas mientras duermes.</div>
+      <span class="tool-tag tag-paid">Pago</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Organización inteligente</div>
+      <div class="tool-name">NotebookLM</div>
+      <div class="tool-desc">Sube tus documentos, PDFs o notas y la IA te genera resúmenes, responde preguntas y hasta crea podcasts automáticos sobre tu contenido.</div>
+      <span class="tool-tag tag-free">Gratis</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Música con IA</div>
+      <div class="tool-name">Suno</div>
+      <div class="tool-desc">Crea canciones y jingles originales con IA. Solo describe el estilo y la letra, y genera música profesional para tu marca en segundos.</div>
+      <span class="tool-tag tag-free">Gratis</span>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>&#9888;&#65039; Importante:</strong> No intentes usar todas al mismo tiempo. Empieza con Claude + una herramienta específica para tu necesidad principal. Domina esas dos primero.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 02 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">02 &mdash; Prompts</div>
+  <h2><span>Prompts profesionales</span> listos para copiar y usar</h2>
+  <p class="intro">Un buen prompt es la diferencia entre una respuesta genérica y un resultado que transforma tu negocio. Aquí tienes los que usamos todos los días.</p>
+
+  <h3>&#128640; Para crear contenido para redes sociales</h3>
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Generador de carrusel</div>
+    <div class="prompt-text">Actúa como un experto en marketing digital y copywriting para redes sociales.
+
+Crea un carrusel de [X] slides para Instagram sobre el tema: [TEMA].
+
+Mi público objetivo es: [DESCRIPCIÓN DEL PÚBLICO].
+El tono debe ser: profesional pero cercano.
+
+Cada slide debe tener:
+- Un título impactante (máximo 6 palabras)
+- Un texto corto de apoyo (máximo 2 líneas)
+- El último slide debe ser un CTA claro
+
+No uses jerga técnica. Usa lenguaje que cualquier persona entienda.</div>
+    <div class="prompt-use">&#10148; Úsalo en: Claude o ChatGPT</div>
+  </div>
+
+  <h3>&#128200; Para analizar tu negocio</h3>
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Análisis de negocio</div>
+    <div class="prompt-text">Actúa como un consultor de negocios con 20 años de experiencia.
+
+Mi negocio es: [DESCRIPCIÓN].
+Mi facturación actual es: [VALOR].
+Mi principal problema hoy es: [PROBLEMA].
+
+Hazme un diagnóstico completo con:
+1. Los 3 mayores cuellos de botella que ves
+2. Oportunidades que estoy dejando pasar
+3. Un plan de acción de 30 días con pasos específicos
+4. Herramientas de IA que podrían resolver cada problema
+
+Sé directo y específico. No quiero teoría, quiero acciones.</div>
+    <div class="prompt-use">&#10148; Úsalo en: Claude (mejor para análisis largos)</div>
+  </div>
+
+  <h3>&#9993;&#65039; Para escribir emails que venden</h3>
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Email de ventas</div>
+    <div class="prompt-text">Escribe un email de ventas para mi producto/servicio:
+
+Producto: [NOMBRE Y DESCRIPCIÓN]
+Precio: [VALOR]
+Público: [QUIÉN ES MI CLIENTE IDEAL]
+Problema que resuelve: [PROBLEMA PRINCIPAL]
+
+El email debe:
+- Empezar con un gancho que genere curiosidad
+- Contar una mini-historia o caso real
+- Presentar la solución de forma natural
+- Tener un CTA claro al final
+- Máximo 300 palabras
+- Tono: cercano, como si hablaras con un amigo</div>
+    <div class="prompt-use">&#10148; Úsalo en: Claude</div>
+  </div>
+
+  <h3>&#128269; Para investigar tu mercado</h3>
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Investigación de mercado</div>
+    <div class="prompt-text">Necesito una investigación de mercado completa sobre: [NICHO/INDUSTRIA].
+
+Incluye:
+1. Tamaño del mercado y tendencias actuales
+2. Los 5 principales competidores y qué hacen bien
+3. Gaps y oportunidades que nadie está aprovechando
+4. Perfil detallado del cliente ideal (demografía, dolor, deseo)
+5. Canales de adquisición más efectivos para este mercado
+6. Rango de precios que el mercado acepta
+
+Usa datos reales y fuentes verificables cuando sea posible.</div>
+    <div class="prompt-use">&#10148; Úsalo en: Perplexity (busca datos actualizados en internet)</div>
+  </div>
+
+  <h3>&#129302; Para crear tu chatbot de ventas</h3>
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Script de chatbot</div>
+    <div class="prompt-text">Crea un script de chatbot para WhatsApp que venda mi [PRODUCTO/SERVICIO].
+
+Información del producto:
+- Nombre: [NOMBRE]
+- Precio: [VALOR]
+- Beneficios principales: [3 BENEFICIOS]
+- Objeciones comunes: [3 OBJECIONES]
+
+El chatbot debe:
+1. Saludar de forma natural y humana
+2. Hacer 2-3 preguntas de calificación
+3. Presentar la solución según las respuestas
+4. Manejar objeciones con empatía
+5. Dirigir al link de pago
+6. Hacer seguimiento si no responde en 24h
+
+Tono: profesional pero cercano. Nunca debe parecer un robot.</div>
+    <div class="prompt-use">&#10148; Úsalo en: Claude, luego implementa en Dealism</div>
+  </div>
+
+  <div class="tip-box">
+    <p><strong>&#128161; Tip Pro:</strong> Siempre personaliza los prompts con datos reales de tu negocio. Cuanto más contexto le des a la IA, mejor será el resultado. No tengas miedo de escribir prompts largos — la IA trabaja mejor con más información.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 03 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">03 &mdash; Estrategias</div>
+  <h2>Cómo <span>automatizar</span> tu negocio en 5 pasos</h2>
+  <p class="intro">La automatización no es complicada. Solo necesitas seguir un proceso lógico. Aquí está el framework que usamos con nuestros alumnos.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Mapea tus tareas repetitivas</h4>
+        <p>Durante 1 semana, anota todo lo que haces más de 2 veces. Responder mensajes, crear contenido, enviar cotizaciones, agendar citas. Esas son tus candidatas a automatización.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Prioriza por impacto</h4>
+        <p>De tu lista, elige las 3 tareas que más tiempo te quitan. Esas son las primeras que vas a automatizar. No intentes automatizar todo al mismo tiempo.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Elige la herramienta correcta</h4>
+        <p>¿Es contenido? Usa Claude. ¿Es atención al cliente? Usa Dealism. ¿Es conectar herramientas? Usa n8n. Cada tarea tiene su herramienta ideal (revisa la sección 01).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Crea tu primer flujo</h4>
+        <p>Empieza simple. Un ejemplo: cuando alguien te escribe por WhatsApp, el chatbot responde, califica al lead y te envía un resumen. Solo eso ya te ahorra 2-3 horas al día.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Mide, ajusta, escala</h4>
+        <p>Después de 1 semana, revisa los resultados. ¿Cuánto tiempo ahorraste? ¿Cuántos clientes atendiste? Ajusta lo que no funciona y automatiza la siguiente tarea de tu lista.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <p><strong>&#128161; Resultado esperado:</strong> Siguiendo estos 5 pasos, nuestros alumnos ahorran en promedio 15-20 horas por semana. Eso es como ganar 2 días extra de trabajo cada semana.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 04 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">04 &mdash; Comparativo</div>
+  <h2>¿Qué herramienta usar <span>para cada tarea</span>?</h2>
+  <p class="intro">La pregunta más común que recibimos es "¿cuál es la mejor?". La respuesta: depende de lo que quieras hacer.</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Tarea</th>
+        <th>Herramienta mediocre</th>
+        <th>La mejor opción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Escribir textos largos</td><td>ChatGPT</td><td class="winner">Claude</td></tr>
+      <tr><td>Analizar datos</td><td>ChatGPT</td><td class="winner">Claude</td></tr>
+      <tr><td>Investigar mercado</td><td>Google</td><td class="winner">Perplexity</td></tr>
+      <tr><td>Crear imágenes</td><td>Midjourney</td><td class="winner">Qwen / GPT Image</td></tr>
+      <tr><td>Editar videos</td><td>Descript</td><td class="winner">CapCut</td></tr>
+      <tr><td>Generar voces</td><td>MiniMax</td><td class="winner">ElevenLabs</td></tr>
+      <tr><td>Automatizar flujos</td><td>Zapier</td><td class="winner">n8n</td></tr>
+      <tr><td>Chatbot WhatsApp</td><td>Chatbot tradicional</td><td class="winner">Dealism</td></tr>
+      <tr><td>Crear sitios web</td><td>Wix</td><td class="winner">Lovable</td></tr>
+      <tr><td>Organizar información</td><td>Notion AI</td><td class="winner">NotebookLM</td></tr>
+      <tr><td>Crear música</td><td>Lyria</td><td class="winner">Suno</td></tr>
+      <tr><td>Copywriting avanzado</td><td>Jasper</td><td class="winner">Claude con Prompts</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════ SECTION 05 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">05 &mdash; Plan de acción</div>
+  <h2>Tu plan de <span>7 días</span> para empezar</h2>
+  <p class="intro">No te abrumes. Sigue este plan día por día y al final de la semana ya estarás usando IA de forma productiva.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Día 1: Crea tu cuenta en Claude</h4>
+        <p>Entra a claude.ai, crea tu cuenta gratuita y haz tu primera conversación. Pídele que analice tu negocio usando el prompt de la sección 02.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Día 2: Crea tu primer contenido con IA</h4>
+        <p>Usa el prompt de carrusel para crear un post para tus redes sociales. Publícalo. Observa la diferencia en calidad vs lo que hacías antes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Día 3: Investiga tu mercado</h4>
+        <p>Abre Perplexity y usa el prompt de investigación de mercado. Vas a descubrir cosas sobre tu competencia que no sabías.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Día 4: Escribe 5 emails con IA</h4>
+        <p>Usa Claude para escribir emails de ventas, bienvenida y seguimiento. Guarda los que más te gusten como plantillas.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Día 5: Crea tu primer video con CapCut</h4>
+        <p>Graba un video corto de 60 segundos hablando sobre tu negocio. Usa CapCut para agregar subtítulos automáticos y efectos.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h4>Día 6: Mapea tus automatizaciones</h4>
+        <p>Sigue el paso 1 de la sección 03. Anota todas tus tareas repetitivas y elige las 3 que más tiempo te quitan.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-content">
+        <h4>Día 7: Evalúa y planifica</h4>
+        <p>Revisa todo lo que hiciste esta semana. ¿Cuánto tiempo ahorraste? ¿Qué resultados obtuviste? Decide cuál será tu próximo paso.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>&#9888;&#65039; No caigas en la trampa:</strong> Muchas personas pasan semanas "aprendiendo" sobre IA sin nunca usarla. La clave es la acción. Abre Claude ahora mismo y empieza con el Día 1.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 06 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">06 &mdash; Instagram con IA</div>
+  <h2>Cómo crear <span>contenido para Instagram</span> en minutos</h2>
+  <p class="intro">El contenido es el combustible de tu negocio en redes. Con IA puedes crear en 30 minutos lo que antes te tomaba todo el día.</p>
+
+  <h3>&#127912; El sistema de contenido que usamos en 4GO Academy</h3>
+  <p>Publicamos contenido todos los días. ¿Cómo lo hacemos? Con un sistema de 4 pasos que cualquiera puede replicar:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Genera ideas con IA</h4>
+        <p>Pídele a Claude que te dé 20 ideas de posts basadas en tu nicho, los dolores de tu audiencia y las tendencias actuales. En 30 segundos tienes contenido para todo el mes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Escribe el copy</h4>
+        <p>Elige una idea y usa Claude para escribir el texto del post: headline gancho, cuerpo con valor y CTA. Siempre adapta el tono a tu marca.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Crea el visual</h4>
+        <p>Usa Qwen o GPT Image para generar imágenes. Para carruseles, describe cada slide y la IA genera el diseño completo listo para publicar.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Programa y publica</h4>
+        <p>Sube todo y programa. Con n8n puedes automatizar la publicación para que se postee solo a la hora perfecta.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>&#128203; Tipos de contenido que más funcionan</h3>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-category">Alto engagement</div>
+      <div class="tool-name">Carruseles educativos</div>
+      <div class="tool-desc">Posts de 5-10 slides que enseñan algo paso a paso. Son los que más se guardan y comparten. Ejemplo: "5 herramientas de IA que nadie te enseñó".</div>
+      <span class="tool-tag tag-free">Alcance orgánico alto</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Viralización</div>
+      <div class="tool-name">Reels con IA</div>
+      <div class="tool-desc">Videos cortos de 15-60 segundos. Graba tú hablando, usa CapCut para subtítulos y efectos. O genera la voz con ElevenLabs si no quieres aparecer.</div>
+      <span class="tool-tag tag-free">Mayor alcance</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Conversión</div>
+      <div class="tool-name">Posts de transformación</div>
+      <div class="tool-desc">"Antes usaba X, ahora uso Y". Muestra resultados reales. Estos posts generan comentarios y abren conversaciones en DM donde puedes vender.</div>
+      <span class="tool-tag tag-paid">Genera ventas</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Comunidad</div>
+      <div class="tool-name">Stories interactivos</div>
+      <div class="tool-desc">Encuestas, preguntas, quizzes. Usa Claude para generar preguntas interesantes sobre tu nicho. Los stories mantienen a tu audiencia activa y conectada.</div>
+      <span class="tool-tag tag-free">Fideliza audiencia</span>
+    </div>
+  </div>
+
+  <h3>&#128640; Prompt para generar un mes de contenido</h3>
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Calendario de contenido</div>
+    <div class="prompt-text">Actúa como un social media manager experto en Instagram.
+
+Mi negocio es: [DESCRIPCIÓN]
+Mi público objetivo: [QUIÉN ES]
+Mi objetivo principal: [VENDER / GENERAR LEADS / AUTORIDAD]
+
+Crea un calendario de contenido para 30 días con:
+- 3 publicaciones por semana (lunes, miércoles, viernes)
+- Alterna entre: carrusel educativo, reel, post de transformación y story interactivo
+- Para cada publicación incluye:
+  • Tipo de formato
+  • Título/gancho del post
+  • Resumen del contenido (3 bullets)
+  • CTA específico
+  • Hashtags relevantes (máximo 10)
+
+Organiza todo en una tabla con columnas: Día | Formato | Título | CTA</div>
+    <div class="prompt-use">&#10148; Úsalo en: Claude — genera el plan completo en 1 minuto</div>
+  </div>
+
+  <div class="tip-box">
+    <p><strong>&#128161; Regla de oro:</strong> El 80% de tu contenido debe dar valor (enseñar, inspirar, entretener). Solo el 20% debe vender directamente. Si inviertes los porcentajes, tu audiencia se va.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 07 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">07 &mdash; Atención al cliente</div>
+  <h2>IA para <span>atención y soporte</span> de clientes</h2>
+  <p class="intro">El 68% de los clientes abandonan una compra porque nadie les respondió a tiempo. Con IA puedes atender 24/7 sin contratar más personal.</p>
+
+  <h3>&#128172; El problema que todos tienen</h3>
+  <p>Te llegan mensajes por WhatsApp a las 11 de la noche. Te escriben preguntas que ya respondiste 100 veces. No puedes atender a todos y pierdes ventas. ¿Te suena?</p>
+  <p>La solución no es trabajar más horas. Es tener un <strong style="color:#fff">asistente de IA</strong> que trabaje por ti mientras duermes, comes o descansas.</p>
+
+  <h3>&#129302; Cómo funciona un chatbot de IA para ventas</h3>
+  <p>A diferencia de los chatbots antiguos que solo seguían un guión rígido, los chatbots con IA entienden contexto, responden de forma natural y se adaptan a cada conversación.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>El cliente te escribe</h4>
+        <p>Por WhatsApp, Instagram DM o tu sitio web. El chatbot de IA responde en menos de 5 segundos, a cualquier hora del día.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>La IA califica al lead</h4>
+        <p>Hace preguntas naturales para entender qué necesita, cuánto puede invertir y qué tan urgente es su problema. Sin que se sienta un interrogatorio.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Presenta tu solución</h4>
+        <p>Según las respuestas, recomienda tu producto o servicio más adecuado. Resuelve objeciones comunes (precio, tiempo, confianza) de forma empática.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Cierra o escala</h4>
+        <p>Si el cliente está listo, lo dirige al link de pago. Si necesita más información, transfiere la conversación a tu equipo humano con todo el contexto.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>&#128176; Casos de uso reales</h3>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-category">Restaurante</div>
+      <div class="tool-name">Reservas automáticas</div>
+      <div class="tool-desc">El chatbot recibe la reserva, confirma disponibilidad, envía el menú y manda un recordatorio 2 horas antes. Sin intervención humana.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">E-commerce</div>
+      <div class="tool-name">Soporte post-venta</div>
+      <div class="tool-desc">Responde preguntas sobre envíos, devoluciones y estado del pedido. Reduce tickets de soporte en un 70%.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Servicios profesionales</div>
+      <div class="tool-name">Agendamiento inteligente</div>
+      <div class="tool-desc">El chatbot muestra horarios disponibles, agenda la cita, envía confirmación y hace seguimiento si el cliente no asiste.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Infoproductos</div>
+      <div class="tool-name">Vendedor 24/7</div>
+      <div class="tool-desc">Responde dudas sobre el curso, maneja objeciones de precio, ofrece planes de pago y dirige al checkout. Vende mientras duermes.</div>
+    </div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Entrenar tu chatbot</div>
+    <div class="prompt-text">Necesito crear la base de conocimiento para un chatbot de WhatsApp de mi negocio.
+
+Mi negocio: [DESCRIPCIÓN]
+Productos/servicios: [LISTA CON PRECIOS]
+Preguntas frecuentes: [LAS 10 PREGUNTAS QUE MÁS RECIBO]
+Objeciones comunes: [PRECIO, TIEMPO, CONFIANZA, ETC.]
+Tono de comunicación: [FORMAL / CERCANO / DIVERTIDO]
+
+Genera:
+1. Un mensaje de bienvenida natural (no robótico)
+2. Respuestas para las 10 preguntas frecuentes
+3. Guiones para manejar cada objeción
+4. Un flujo de calificación (3 preguntas clave)
+5. Mensajes de cierre y redirección al pago
+6. Mensaje de seguimiento para clientes que no respondieron en 24h
+
+Todo debe sonar humano y empático. Nunca debe parecer un bot.</div>
+    <div class="prompt-use">&#10148; Úsalo en: Claude, luego copia las respuestas a Dealism o tu plataforma de chatbot</div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>&#9888;&#65039; Clave:</strong> El chatbot NO reemplaza a tu equipo. Lo complementa. Se encarga de las preguntas repetitivas y los primeros contactos. Tu equipo se enfoca en cerrar las ventas importantes.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 08 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">08 &mdash; Crear páginas web</div>
+  <h2>Crea tu <span>página web profesional</span> con IA en minutos</h2>
+  <p class="intro">Antes necesitabas un diseñador, un programador y semanas de trabajo. Hoy puedes tener un sitio web profesional en menos de 1 hora, sin saber código.</p>
+
+  <h3>&#127760; Las 3 opciones que recomendamos</h3>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-category">La más poderosa</div>
+      <div class="tool-name">Lovable</div>
+      <div class="tool-desc">Describe tu sitio en español y la IA genera todo el código. Páginas de venta, landing pages, dashboards. Resultado profesional, sin tocar una línea de código. Es la que usamos en 4GO Academy.</div>
+      <span class="tool-tag tag-free">Gratis para empezar</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">La más elegante</div>
+      <div class="tool-name">Framer</div>
+      <div class="tool-desc">Ideal para portfolios y sitios con diseño premium. Interfaz visual con IA que sugiere layouts y animaciones. Perfecto si tu marca necesita verse exclusiva.</div>
+      <span class="tool-tag tag-paid">Gratis + Pro</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">La más flexible</div>
+      <div class="tool-name">Claude + Cursor</div>
+      <div class="tool-desc">Para quienes quieren más control. Claude genera el código y Cursor (editor con IA) te ayuda a editarlo. Resultado 100% personalizado sin límites.</div>
+      <span class="tool-tag tag-paid">Gratis + Pro</span>
+    </div>
+  </div>
+
+  <h3>&#128640; Cómo crear tu landing page con Lovable (paso a paso)</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Entra a lovable.dev y crea tu proyecto</h4>
+        <p>Solo necesitas una cuenta de Google. Es gratis para empezar.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Describe tu página en español</h4>
+        <p>"Quiero una landing page para mi curso de cocina. Colores cálidos, sección de testimonios, precios y un botón de WhatsApp." La IA genera todo en segundos.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Ajusta con instrucciones simples</h4>
+        <p>"Cambia el color del botón a naranja", "Agrega una sección de FAQ", "Pon la foto de perfil arriba". Hablas con la IA como si fuera tu diseñador.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Publica con un clic</h4>
+        <p>Lovable te da un dominio gratis o puedes conectar tu dominio propio. Tu sitio está en vivo en menos de 1 hora.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Generar tu landing page</div>
+    <div class="prompt-text">Crea una landing page profesional para:
+
+Negocio: [NOMBRE Y DESCRIPCIÓN]
+Producto/servicio: [QUÉ VENDES]
+Público objetivo: [A QUIÉN LE VENDES]
+Objetivo de la página: [VENDER / CAPTAR LEADS / AGENDAR CITAS]
+
+La página debe incluir:
+1. Hero section con headline impactante y CTA principal
+2. Sección de beneficios (3-5 beneficios clave)
+3. Cómo funciona (3 pasos simples)
+4. Testimonios de clientes
+5. Precios o planes
+6. FAQ (5 preguntas frecuentes)
+7. CTA final con botón de WhatsApp
+8. Footer con redes sociales
+
+Estilo visual: moderno, limpio, profesional.
+Color principal: [TU COLOR]
+Tono: confiable y cercano.</div>
+    <div class="prompt-use">&#10148; Úsalo directamente en Lovable — pega este prompt y la IA construye toda la página</div>
+  </div>
+
+  <div class="tip-box">
+    <p><strong>&#128161; Dato real:</strong> La página de ventas de nuestra formación de IA fue creada 100% con Lovable + Claude. Generó más de $85,000 USD en ventas en 9 días. La IA no es un juguete — es una herramienta de negocio.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 09 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">09 &mdash; Claude a fondo</div>
+  <h2>Por qué <span>Claude</span> es la IA más poderosa del mercado</h2>
+  <p class="intro">Si solo pudieras usar una herramienta de IA, debería ser Claude. Aquí te explicamos por qué y cómo sacarle el máximo provecho.</p>
+
+  <h3>&#129504; ¿Qué hace Claude diferente?</h3>
+  <p>Claude es creado por Anthropic, una de las empresas de IA más avanzadas del mundo. A diferencia de ChatGPT, Claude fue diseñado para ser <strong style="color:#fff">más preciso</strong>, <strong style="color:#fff">más seguro</strong> y <strong style="color:#fff">capaz de razonar</strong> a un nivel que otros modelos no alcanzan.</p>
+
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-category">Ventaja #1</div>
+      <div class="tool-name">Razonamiento superior</div>
+      <div class="tool-desc">Claude piensa paso a paso antes de responder. Analiza problemas complejos, encuentra errores en tu lógica y te da respuestas que realmente tienen sentido.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Ventaja #2</div>
+      <div class="tool-name">Textos de alta calidad</div>
+      <div class="tool-desc">Escribe textos que suenan humanos, no robóticos. Emails, artículos, copies de venta, guiones — todo con un tono natural que puedes publicar directamente.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Ventaja #3</div>
+      <div class="tool-name">Ventana de contexto enorme</div>
+      <div class="tool-desc">Puedes pegar documentos completos, libros enteros o bases de datos. Claude los analiza y responde preguntas sobre todo el contenido sin perder detalle.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-category">Ventaja #4</div>
+      <div class="tool-name">Código y automatización</div>
+      <div class="tool-desc">Genera código funcional en cualquier lenguaje. Crea scripts, automatizaciones, sitios web completos. Es como tener un programador senior trabajando para ti gratis.</div>
+    </div>
+  </div>
+
+  <h3>&#128293; Los 5 usos más potentes de Claude para tu negocio</h3>
+
+  <div class="checklist">
+    <div class="check-item">
+      <span class="check-icon">&#10095;</span>
+      <p><strong style="color:#fff">Estratega de negocio:</strong> Pégale tus datos de ventas, tu embudo y tus métricas. Claude los analiza y te dice exactamente dónde estás perdiendo dinero y cómo solucionarlo.</p>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">&#10095;</span>
+      <p><strong style="color:#fff">Copywriter profesional:</strong> Escribe páginas de venta, secuencias de email, guiones de video y posts para redes. Con el prompt correcto, produce textos que venden.</p>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">&#10095;</span>
+      <p><strong style="color:#fff">Analista de datos:</strong> Sube tu Excel o CSV y pídele que encuentre patrones, tendencias y oportunidades. Crea gráficos, tablas y reportes en segundos.</p>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">&#10095;</span>
+      <p><strong style="color:#fff">Asistente legal/contable:</strong> Redacta contratos, analiza documentos legales, calcula impuestos y genera reportes financieros. No reemplaza a tu abogado, pero te ahorra horas de trabajo previo.</p>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">&#10095;</span>
+      <p><strong style="color:#fff">Creador de sistemas:</strong> Diseña procesos, SOPs, manuales de operación y flujos de trabajo para tu equipo. Documenta todo tu negocio en horas, no en meses.</p>
+    </div>
+  </div>
+
+  <h3>&#128273; Claude Pro vs Claude Gratis</h3>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Característica</th>
+        <th>Gratis</th>
+        <th>Pro ($20/mes)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Mensajes por día</td><td>~30</td><td class="winner">Ilimitados*</td></tr>
+      <tr><td>Modelo más inteligente (Opus)</td><td>No</td><td class="winner">Sí</td></tr>
+      <tr><td>Subir archivos y PDFs</td><td>Limitado</td><td class="winner">Sin límite</td></tr>
+      <tr><td>Proyectos organizados</td><td>No</td><td class="winner">Sí</td></tr>
+      <tr><td>Generación de imágenes</td><td>No</td><td class="winner">Sí</td></tr>
+      <tr><td>Acceso prioritario</td><td>No</td><td class="winner">Sí</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px; color:rgba(255,255,255,0.3); margin-top:8px;">*Uso justo. Suficiente para uso profesional intensivo.</p>
+
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt &mdash; Configura Claude como tu asistente personal</div>
+    <div class="prompt-text">A partir de ahora vas a ser mi asistente personal de negocios.
+
+Sobre mí:
+- Mi nombre: [NOMBRE]
+- Mi negocio: [DESCRIPCIÓN]
+- Mi rol: [CEO / FREELANCER / EMPRENDEDOR]
+- Mi público: [A QUIÉN LE VENDO]
+- Mis herramientas: [LAS QUE USO DÍA A DÍA]
+- Mi objetivo este mes: [META ESPECÍFICA]
+
+Reglas:
+1. Siempre sé directo y práctico. No quiero teoría, quiero acciones.
+2. Cuando te pida algo, dame la versión final lista para usar.
+3. Si ves un error en mi estrategia, dímelo directamente.
+4. Recuerda el contexto de conversaciones anteriores.
+5. Sugiere mejoras que yo no haya pedido si ves una oportunidad clara.
+
+Confirma que entendiste y hazme 3 preguntas para conocer mejor mi negocio.</div>
+    <div class="prompt-use">&#10148; Pega esto al inicio de cada conversación nueva con Claude para resultados 10x mejores</div>
+  </div>
+
+  <div class="tip-box">
+    <p><strong>&#128161; Nuestro consejo:</strong> Si solo vas a invertir en una herramienta de IA, invierte en Claude Pro. Los $20/mes se pagan solos con el tiempo que ahorras en la primera semana. En 4GO Academy, Claude es la base de todo lo que hacemos.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SECTION 10 ═══════════════════════════ -->
+<div class="section">
+  <div class="section-number">10 &mdash; Errores fatales</div>
+  <h2>Los <span>7 errores</span> que arruinan a los que empiezan con IA</h2>
+  <p class="intro">Sabemos esto porque los vemos todos los días. Evita estos errores y estarás por delante del 90% de las personas que intentan usar IA.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">&#10007;</div>
+      <div class="step-content">
+        <h4>Usar IA sin un objetivo claro</h4>
+        <p>"Voy a probar ChatGPT a ver qué pasa" no es una estrategia. Antes de abrir cualquier herramienta, define qué problema quieres resolver. La IA sin dirección es solo entretenimiento.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">&#10007;</div>
+      <div class="step-content">
+        <h4>Escribir prompts vagos</h4>
+        <p>"Escríbeme un texto" va a darte un resultado genérico. "Escríbeme un email de 200 palabras para vender mi curso de $297 a dueños de restaurantes en Colombia, tono cercano, con un caso de éxito" te da oro. La calidad del resultado es proporcional a la calidad de tu instrucción.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">&#10007;</div>
+      <div class="step-content">
+        <h4>Querer automatizar todo al mismo tiempo</h4>
+        <p>Empieza con UNA tarea. Domínala. Luego pasa a la siguiente. Las personas que intentan automatizar 10 cosas al mismo tiempo no terminan ninguna.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">&#10007;</div>
+      <div class="step-content">
+        <h4>Publicar contenido de IA sin editarlo</h4>
+        <p>La IA genera el 80%. Tú pones el 20% que lo hace único: tu voz, tu experiencia, tus datos reales. Nunca publiques un texto de IA tal cual — siempre personaliza.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">&#10007;</div>
+      <div class="step-content">
+        <h4>Usar solo ChatGPT porque "es el más famoso"</h4>
+        <p>ChatGPT fue el primero, no el mejor. Para cada tarea hay una herramienta superior. Es como usar solo un martillo cuando tienes una caja de herramientas completa.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">&#10007;</div>
+      <div class="step-content">
+        <h4>No medir resultados</h4>
+        <p>¿Cuánto tiempo ahorraste? ¿Cuántas ventas generó tu chatbot? ¿Cuánto engagement tuvo tu contenido con IA? Si no mides, no sabes si funciona. Pon números a todo.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">&#10007;</div>
+      <div class="step-content">
+        <h4>Aprender sin aplicar</h4>
+        <p>El error más común. Ves videos, lees guías (como esta), pero nunca abres Claude y empiezas. La IA se aprende haciendo, no leyendo. Cierra esta guía y abre Claude. Ahora.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ CTA FINAL ═══════════════════════════ -->
+<div class="cta-section">
+  <div class="section-number">Siguiente paso</div>
+  <h2 style="font-size: clamp(24px, 4vw, 36px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.15; margin-bottom: 16px;">
+    ¿Quieres <span style="color:#fc6c04">dominar</span> todo esto con acompañamiento?
+  </h2>
+  <p style="font-size: 16px; color: rgba(255,255,255,0.5); max-width: 520px; margin: 0 auto 20px;">
+    Esta guía es solo una muestra de lo que enseñamos dentro de <strong style="color:#fff">4GO Plus</strong> — nuestra plataforma con todos los cursos, incluyendo la formación completa de IA para Negocios.
+  </p>
+  <p style="font-size: 15px; color: rgba(255,255,255,0.4); max-width: 480px; margin: 0 auto 32px;">
+    Habla con alguien de nuestro equipo, resuelve tus dudas y descubre si 4GO Plus es para ti. Sin compromiso.
+  </p>
+  <a href="https://wa.me/573001234567?text=Hola!%20Acabo%20de%20leer%20la%20guía%20de%20IA%20y%20quiero%20saber%20más%20sobre%204GO%20Plus" target="_blank" rel="noopener noreferrer" class="cta-btn">
+    &#128172; Hablar con nuestro equipo
+  </a>
+  <p style="font-size: 13px; color: rgba(255,255,255,0.25); margin-top: 20px;">
+    Respuesta humana en menos de 5 minutos
+  </p>
+</div>
+
+</div><!-- .container -->
+
+<div class="footer">
+  <p>4GO Academy &copy; 2026 &mdash; Todos los derechos reservados</p>
+  <p style="margin-top: 8px;">Hecho con &#10084;&#65039; y mucha IA</p>
+</div>
+
+</body>
+</html>
