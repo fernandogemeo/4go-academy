@@ -11,14 +11,14 @@ const LAUNCH = {
 }
 
 const SALES = {
-  firstDay: 84,
+  firstDay: 88,
   week: 287,
-  total: 373,
+  total: 374,
 }
 
 const REVENUE = {
-  main: LAUNCH.price * 373,
-  gross: LAUNCH.price * 373,
+  main: LAUNCH.price * 374,
+  gross: LAUNCH.price * 374,
 }
 
 const REFUNDS = { count: 6 }
@@ -176,28 +176,30 @@ const YOUTUBE = [
 
 const DAILY_SALES = [
   { day: "08 Abr", date: "08/04", sales: 88 },
-  { day: "09 Abr", date: "09/04", sales: 130 },
+  { day: "09 Abr", date: "09/04", sales: 126 },
   { day: "10 Abr", date: "10/04", sales: 31 },
   { day: "11 Abr", date: "11/04", sales: 8 },
   { day: "12 Abr", date: "12/04", sales: 10 },
-  { day: "13 Abr", date: "13/04", sales: 48 },
+  { day: "13 Abr", date: "13/04", sales: 52 },
   { day: "14 Abr", date: "14/04", sales: 13 },
   { day: "15 Abr", date: "15/04", sales: 7 },
   { day: "16 Abr", date: "16/04", sales: 22 },
   { day: "17 Abr", date: "17/04", sales: 12 },
-  { day: "18 Abr", date: "18/04", sales: 4 },
+  { day: "18 Abr", date: "18/04", sales: 2 },
+  { day: "21 Abr", date: "21/04", sales: 2 },
+  { day: "23 Abr", date: "23/04", sales: 1 },
 ]
 const DAILY_MAX = Math.max(...DAILY_SALES.map(d => d.sales))
 
 const COUNTRIES = [
-  { flag: "🇨🇴", name: "Colombia", count: 202 },
+  { flag: "🇨🇴", name: "Colombia", count: 200 },
   { flag: "🇲🇽", name: "México", count: 50 },
   { flag: "🇵🇪", name: "Perú", count: 24 },
   { flag: "🇩🇴", name: "República Dominicana", count: 19 },
   { flag: "🇺🇸", name: "Estados Unidos", count: 19 },
-  { flag: "🇪🇨", name: "Ecuador", count: 16 },
+  { flag: "🇪🇨", name: "Ecuador", count: 17 },
+  { flag: "🇦🇷", name: "Argentina", count: 12 },
   { flag: "🇨🇱", name: "Chile", count: 10 },
-  { flag: "🇦🇷", name: "Argentina", count: 10 },
   { flag: "🇬🇹", name: "Guatemala", count: 6 },
   { flag: "🇵🇦", name: "Panamá", count: 5 },
   { flag: "🇻🇪", name: "Venezuela", count: 3 },
@@ -211,11 +213,11 @@ const COUNTRIES = [
 const COUNTRIES_TOTAL = COUNTRIES.reduce((s, c) => s + c.count, 0)
 
 const HOTMART = {
-  totalVentas: 373,
-  alContado: 311,
-  cuotas4: 62,
-  ingresoNeto: 38155,
-  facturacionBruta: 82757,
+  totalVentas: 374,
+  alContado: 224,
+  cuotas4: 150,
+  ingresoNeto: 38417,
+  facturacionBruta: 85847,
   vendedoras: [
     { name: "Link principal", code: "none", total: 232, contado: 231, cuotas: 1, neto: 26467, bruto: 57346, pct: 62.2, color: "#6b7280" },
     { name: "Victoria", code: "Vi", empresa: "4GO Academy", total: 44, contado: 24, cuotas: 19, neto: 3740, bruto: 8128, pct: 11.8, color: "#fc6c04" },
@@ -343,6 +345,7 @@ const IA04 = () => {
 
   const [showVentas, setShowVentas] = useState(false)
   const [showPesquisa, setShowPesquisa] = useState(false)
+  const [showPerfil, setShowPerfil] = useState(false)
 
   return (
   <div className="min-h-screen bg-[#04192D] font-outfit">
@@ -804,6 +807,150 @@ const IA04 = () => {
               <div style={{ width: `${(PESQUISA.invertir.no / PESQUISA.total) * 100}%`, background: "#ef4444" }} />
             </div>
           </Card>
+        </div>
+      )}
+
+      {/* ── BOTÓN PERFIL COMPRADOR ── */}
+      <button
+        onClick={() => setShowPerfil(!showPerfil)}
+        className="w-full py-4 rounded-2xl font-outfit text-base font-bold uppercase tracking-fire text-white flex items-center justify-center gap-3 transition-all"
+        style={{ background: "linear-gradient(135deg, #059669, #34d399)", border: "2px solid rgba(52,211,153,0.3)" }}
+      >
+        <Target className="w-5 h-5" />
+        Análisis de Perfil Comprador
+        <span className="text-white/60 text-sm">{showPerfil ? "▲" : "▼"}</span>
+      </button>
+
+      {showPerfil && (
+        <div className="space-y-6 animate-in fade-in duration-500">
+          <div className="p-5 rounded-2xl" style={{ background: "rgba(5,150,105,0.12)", border: "1px solid rgba(52,211,153,0.3)" }}>
+            <p className="font-outfit text-sm text-white/70 leading-relaxed">
+              <strong className="text-emerald-400">Cruce de datos:</strong>{" "}
+              De los 374 alumnos, <strong className="text-white">171 (45.7%)</strong> respondieron la encuesta de leads.
+              A continuación se compara el perfil de los <strong className="text-emerald-400">compradores</strong> vs los <strong className="text-white/50">leads generales</strong>.
+            </p>
+          </div>
+
+          {/* Tabla comparativa principal */}
+          <Card>
+            <SectionTitle icon={Target} label="Mayores diferenciadores de compra" />
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[600px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="font-outfit text-xs font-bold uppercase tracking-fire text-white/40 pb-3 text-left pr-4">Factor</th>
+                    <th className="font-outfit text-xs font-bold uppercase tracking-fire text-emerald-400 pb-3 text-right px-3">Compradores</th>
+                    <th className="font-outfit text-xs font-bold uppercase tracking-fire text-white/40 pb-3 text-right px-3">Leads</th>
+                    <th className="font-outfit text-xs font-bold uppercase tracking-fire text-white/40 pb-3 text-right pl-3">Dif.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { factor: "Tiene tarjeta de crédito", buyer: "59.1%", lead: "33.8%", diff: "+25.3pp", positive: true },
+                    { factor: "Dispuesto a invertir", buyer: "87.7%", lead: "69.3%", diff: "+18.4pp", positive: true },
+                    { factor: "Sin experiencia con IA", buyer: "20.0%", lead: "36.3%", diff: "-16.3pp", positive: false },
+                    { factor: "Nuevo (recién conoció)", buyer: "37.4%", lead: "52.8%", diff: "-15.4pp", positive: false },
+                    { factor: "Salario < $300", buyer: "10.5%", lead: "24.8%", diff: "-14.3pp", positive: false },
+                    { factor: "Vino de Facebook", buyer: "28.1%", lead: "40.2%", diff: "-12.1pp", positive: false },
+                    { factor: "Dueño de negocio", buyer: "24.6%", lead: "12.8%", diff: "+11.8pp", positive: true },
+                    { factor: "Usa IA en su negocio", buyer: "38.6%", lead: "27.0%", diff: "+11.6pp", positive: true },
+                    { factor: "Sigue hace +1 año", buyer: "21.6%", lead: "10.9%", diff: "+10.8pp", positive: true },
+                    { factor: "Área: Marketing", buyer: "35.1%", lead: "24.8%", diff: "+10.2pp", positive: true },
+                    { factor: "Vino de Instagram", buyer: "39.8%", lead: "31.8%", diff: "+7.9pp", positive: true },
+                    { factor: "Vino de YouTube", buyer: "28.7%", lead: "21.7%", diff: "+7.0pp", positive: true },
+                    { factor: "Edad 35-44", buyer: "27.6%", lead: "21.0%", diff: "+6.6pp", positive: true },
+                    { factor: "Quiere facturar más", buyer: "18.1%", lead: "12.3%", diff: "+5.8pp", positive: true },
+                  ].map((row, i) => (
+                    <tr key={i} className="border-b border-white/5 hover:bg-white/3 transition-colors">
+                      <td className="font-outfit text-sm text-white py-3 pr-4">{row.factor}</td>
+                      <td className="font-outfit text-sm font-bold text-emerald-400 text-right py-3 px-3">{row.buyer}</td>
+                      <td className="font-outfit text-sm text-white/50 text-right py-3 px-3">{row.lead}</td>
+                      <td className={`font-outfit text-sm font-bold text-right py-3 pl-3 ${row.positive ? "text-emerald-400" : "text-red-400"}`}>{row.diff}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+
+          {/* Perfil ideal */}
+          <Card>
+            <SectionTitle icon={Users} label="Perfil ideal del comprador IA04" />
+            <div className="space-y-3">
+              {[
+                { num: 1, text: "Tiene tarjeta de crédito", sub: "Mayor predictor de compra" },
+                { num: 2, text: "Gana más de $600/mes", sub: "No es de bajo ingreso ni desempleado" },
+                { num: 3, text: "Es dueño de negocio", sub: "No freelancer ni empleado" },
+                { num: 4, text: "Ya usa IA en su negocio", sub: "Busca mejorar, no empezar de cero" },
+                { num: 5, text: "Sigue la marca hace 4+ meses", sub: "Relación construida con el tiempo" },
+                { num: 6, text: "Llegó por Instagram o YouTube", sub: "Facebook trae volumen pero convierte peor" },
+                { num: 7, text: "Tiene 35-44 años", sub: "Sweet spot de edad" },
+                { num: 8, text: "Trabaja en Marketing o Ventas", sub: "Áreas con mayor conversión" },
+                { num: 9, text: "Quiere automatizar o facturar más", sub: "Motivación orientada a resultados" },
+                { num: 10, text: "Dijo 'Sí' a invertir en la encuesta", sub: "Intent signal confirmado" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3 p-3 rounded-xl bg-white/5">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <span className="font-outfit text-xs font-black text-emerald-400">{item.num}</span>
+                  </div>
+                  <div>
+                    <p className="font-outfit text-sm font-bold text-white">{item.text}</p>
+                    <p className="font-outfit text-xs text-white/40">{item.sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* Fuente comparativa */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card>
+              <SectionTitle icon={Search} label="Fuente — Compradores vs Leads" />
+              {[
+                { label: "Instagram", buyer: 39.8, lead: 31.8, color: "#E1306C" },
+                { label: "Facebook", buyer: 28.1, lead: 40.2, color: "#1877F2" },
+                { label: "YouTube", buyer: 28.7, lead: 21.7, color: "#FF0000" },
+                { label: "Otros", buyer: 3.4, lead: 6.3, color: "#6b7280" },
+              ].map((s, i) => (
+                <div key={i} className="mb-3 last:mb-0">
+                  <div className="flex justify-between mb-1">
+                    <span className="font-outfit text-xs font-semibold text-white/70">{s.label}</span>
+                    <span className="font-outfit text-xs text-white/40">
+                      <span className="text-emerald-400 font-bold">{s.buyer}%</span> vs {s.lead}%
+                    </span>
+                  </div>
+                  <div className="flex gap-1" style={{ height: "8px" }}>
+                    <div className="rounded-full" style={{ width: `${s.buyer}%`, background: s.color }} />
+                    <div className="rounded-full" style={{ width: `${s.lead}%`, background: "rgba(255,255,255,0.1)" }} />
+                  </div>
+                </div>
+              ))}
+            </Card>
+            <Card>
+              <SectionTitle icon={DollarSign} label="Salario — Compradores vs Leads" />
+              {[
+                { label: "Más de $2,000", buyer: 14.0, lead: 5.2, color: "#059669" },
+                { label: "$1,000 - $2,000", buyer: 18.1, lead: 13.7, color: "#10b981" },
+                { label: "$600 - $1,000", buyer: 24.0, lead: 18.6, color: "#34d399" },
+                { label: "$300 - $600", buyer: 19.3, lead: 23.9, color: "#f59e0b" },
+                { label: "Menos de $300", buyer: 10.5, lead: 24.8, color: "#ef4444" },
+                { label: "Desempleado", buyer: 7.6, lead: 13.8, color: "#6b7280" },
+              ].map((s, i) => (
+                <div key={i} className="mb-3 last:mb-0">
+                  <div className="flex justify-between mb-1">
+                    <span className="font-outfit text-xs font-semibold text-white/70">{s.label}</span>
+                    <span className="font-outfit text-xs text-white/40">
+                      <span className="text-emerald-400 font-bold">{s.buyer}%</span> vs {s.lead}%
+                    </span>
+                  </div>
+                  <div className="flex gap-1" style={{ height: "8px" }}>
+                    <div className="rounded-full" style={{ width: `${s.buyer * 2}%`, background: s.color }} />
+                    <div className="rounded-full" style={{ width: `${s.lead * 2}%`, background: "rgba(255,255,255,0.1)" }} />
+                  </div>
+                </div>
+              ))}
+            </Card>
+          </div>
         </div>
       )}
 
