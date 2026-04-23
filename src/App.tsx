@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import Index from "@/pages/Index"
 import Financiero from "@/pages/Financiero"
 import IA04 from "@/pages/IA04"
+import Ebook from "@/pages/Ebook"
 import NotFound from "@/pages/NotFound"
 
 const queryClient = new QueryClient()
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/financiero" element={<Financiero />} />
           <Route path="/ia04" element={<IA04 />} />
+          <Route path="/ebook" element={<Ebook />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
