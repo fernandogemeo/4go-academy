@@ -46,6 +46,75 @@ const COMISIONES = {
   totalUSD: 1290.07,
 }
 
+const PESQUISA = {
+  total: 10741,
+  fuente: [
+    { label: "Facebook", value: 4311, color: "#1877F2" },
+    { label: "Instagram", value: 3413, color: "#E1306C" },
+    { label: "YouTube", value: 2323, color: "#FF0000" },
+    { label: "Email", value: 402, color: "#6b7280" },
+    { label: "TikTok", value: 232, color: "#000000" },
+    { label: "Telegram", value: 45, color: "#0088cc" },
+  ],
+  edad: [
+    { label: "55+", value: 3998 },
+    { label: "45-54", value: 3786 },
+    { label: "35-44", value: 2254 },
+    { label: "25-34", value: 539 },
+    { label: "18-24", value: 94 },
+    { label: "Menos de 18", value: 52 },
+  ],
+  salario: [
+    { label: "Menos de $300", value: 2658 },
+    { label: "$300 - $600", value: 2562 },
+    { label: "$600 - $1,000", value: 1993 },
+    { label: "Desempleado", value: 1484 },
+    { label: "$1,000 - $2,000", value: 1470 },
+    { label: "Más de $2,000", value: 554 },
+  ],
+  tarjeta: { si: 3623, no: 7103 },
+  usaIA: [
+    { label: "Todavía no uso IA", value: 5334 },
+    { label: "Sí, en mi negocio", value: 2899 },
+    { label: "Sí, en mi trabajo", value: 2491 },
+  ],
+  experiencia: [
+    { label: "Ninguna experiencia", value: 3889 },
+    { label: "Usa pero no aplicó", value: 3079 },
+    { label: "Empezó sin resultados", value: 2869 },
+    { label: "Buenos resultados", value: 884 },
+  ],
+  motivo: [
+    { label: "Automatización", value: 4040 },
+    { label: "Productividad", value: 2802 },
+    { label: "Contenido con IA", value: 2573 },
+    { label: "Facturar más", value: 1324 },
+  ],
+  rol: [
+    { label: "Cuenta propia", value: 5908 },
+    { label: "Empleado", value: 3458 },
+    { label: "Dueño de negocio", value: 1371 },
+  ],
+  area: [
+    { label: "Marketing", value: 2667 },
+    { label: "Ventas", value: 2445 },
+    { label: "Otro", value: 2251 },
+    { label: "Operaciones", value: 1261 },
+    { label: "Finanzas", value: 1016 },
+    { label: "Dirección", value: 585 },
+    { label: "RRHH", value: 298 },
+    { label: "Compras", value: 214 },
+  ],
+  tiempoSiguiendo: [
+    { label: "Nuevo (esta inmersión)", value: 5673 },
+    { label: "1 a 3 meses", value: 2479 },
+    { label: "Más de 1 año", value: 1167 },
+    { label: "4 a 8 meses", value: 851 },
+    { label: "9 meses a 1 año", value: 555 },
+  ],
+  invertir: { si: 7433, no: 3291 },
+}
+
 const INVERSION_TOTAL = ADS.grandTotal + COMISIONES.totalUSD
 
 const ROAS = REVENUE.gross / INVERSION_TOTAL
@@ -69,7 +138,7 @@ const CLASSES = [
 
 const OTHER = {
   whatsapp: 22783,
-  research: 7660,
+  research: 10741,
   checkoutFirstDay: 2156,
   salesPageVisitors: 3523,
 }
@@ -273,6 +342,7 @@ const IA04 = () => {
   const totalYTReactions = YOUTUBE.reduce((s, c) => s + c.reactions, 0)
 
   const [showVentas, setShowVentas] = useState(false)
+  const [showPesquisa, setShowPesquisa] = useState(false)
 
   return (
   <div className="min-h-screen bg-[#04192D] font-outfit">
@@ -592,6 +662,150 @@ const IA04 = () => {
           </Card>
         </div>
       </div>
+
+      {/* ── BOTÓN PESQUISA LEADS ── */}
+      <button
+        onClick={() => setShowPesquisa(!showPesquisa)}
+        className="w-full py-4 rounded-2xl font-outfit text-base font-bold uppercase tracking-fire text-white flex items-center justify-center gap-3 transition-all"
+        style={{ background: "linear-gradient(135deg, #7c3aed, #a78bfa)", border: "2px solid rgba(167,139,250,0.3)" }}
+      >
+        <Search className="w-5 h-5" />
+        Datos de la Pesquisa de Leads (Captación)
+        <span className="text-white/60 text-sm">{showPesquisa ? "▲" : "▼"}</span>
+      </button>
+
+      {showPesquisa && (
+        <div className="space-y-6 animate-in fade-in duration-500">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <p className="font-outfit text-xs text-white/40">Encuesta respondida por <strong className="text-white/70">{fmtInt(PESQUISA.total)}</strong> de {fmtInt(OTHER.whatsapp)} leads ({((PESQUISA.total / OTHER.whatsapp) * 100).toFixed(1)}%)</p>
+            <a
+              href="/pesquisa-leads-ia04.csv"
+              download="pesquisa-leads-ia04.csv"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-outfit text-xs font-bold uppercase tracking-fire text-white transition-all hover:scale-105"
+              style={{ background: "linear-gradient(135deg, #7c3aed, #a78bfa)", border: "1px solid rgba(167,139,250,0.4)" }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Descargar datos completos (.csv)
+            </a>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Fuente */}
+            <Card>
+              <SectionTitle icon={Search} label="¿Cómo nos conociste?" />
+              {PESQUISA.fuente.map((f, i) => (
+                <BarRow key={i} label={f.label} value={f.value} max={PESQUISA.fuente[0].value} color={f.color} sub={`${((f.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+
+            {/* Edad */}
+            <Card>
+              <SectionTitle icon={Users} label="Rango de edad" />
+              {PESQUISA.edad.map((e, i) => (
+                <BarRow key={i} label={e.label} value={e.value} max={PESQUISA.edad[0].value} color="#a78bfa" sub={`${((e.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+
+            {/* Salario */}
+            <Card>
+              <SectionTitle icon={DollarSign} label="Rango salarial mensual" />
+              {PESQUISA.salario.map((s, i) => (
+                <BarRow key={i} label={s.label} value={s.value} max={PESQUISA.salario[0].value} color="#f59e0b" sub={`${((s.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+
+            {/* Tarjeta */}
+            <Card>
+              <SectionTitle icon={ShoppingCart} label="¿Tiene tarjeta de crédito?" />
+              <div className="flex gap-4">
+                <div className="flex-1 text-center p-4 rounded-xl bg-white/5">
+                  <p className="font-outfit text-xs text-white/40 uppercase tracking-fire mb-1">Sí</p>
+                  <p className="font-outfit font-black text-2xl text-[#00983A]">{fmtInt(PESQUISA.tarjeta.si)}</p>
+                  <p className="font-outfit text-xs text-white/40">{((PESQUISA.tarjeta.si / PESQUISA.total) * 100).toFixed(1)}%</p>
+                </div>
+                <div className="flex-1 text-center p-4 rounded-xl bg-white/5">
+                  <p className="font-outfit text-xs text-white/40 uppercase tracking-fire mb-1">No</p>
+                  <p className="font-outfit font-black text-2xl text-[#ef4444]">{fmtInt(PESQUISA.tarjeta.no)}</p>
+                  <p className="font-outfit text-xs text-white/40">{((PESQUISA.tarjeta.no / PESQUISA.total) * 100).toFixed(1)}%</p>
+                </div>
+              </div>
+              <div className="mt-3 flex rounded-full overflow-hidden" style={{ height: "10px" }}>
+                <div style={{ width: `${(PESQUISA.tarjeta.si / PESQUISA.total) * 100}%`, background: "#00983A" }} />
+                <div style={{ width: `${(PESQUISA.tarjeta.no / PESQUISA.total) * 100}%`, background: "#ef4444" }} />
+              </div>
+            </Card>
+
+            {/* Usa IA */}
+            <Card>
+              <SectionTitle icon={BarChart2} label="¿Usa inteligencia artificial?" />
+              {PESQUISA.usaIA.map((u, i) => (
+                <BarRow key={i} label={u.label} value={u.value} max={PESQUISA.usaIA[0].value} color={["#6b7280", "#1877F2", "#00983A"][i]} sub={`${((u.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+
+            {/* Experiencia */}
+            <Card>
+              <SectionTitle icon={TrendingUp} label="Nivel de experiencia con IA" />
+              {PESQUISA.experiencia.map((e, i) => (
+                <BarRow key={i} label={e.label} value={e.value} max={PESQUISA.experiencia[0].value} color={["#ef4444", "#f59e0b", "#fb923c", "#00983A"][i]} sub={`${((e.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+
+            {/* Motivo */}
+            <Card>
+              <SectionTitle icon={Target} label="¿Por qué quiere aprender IA?" />
+              {PESQUISA.motivo.map((m, i) => (
+                <BarRow key={i} label={m.label} value={m.value} max={PESQUISA.motivo[0].value} color={["#fc6c04", "#1877F2", "#a78bfa", "#00983A"][i]} sub={`${((m.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+
+            {/* Rol */}
+            <Card>
+              <SectionTitle icon={Users} label="Rol profesional" />
+              {PESQUISA.rol.map((r, i) => (
+                <BarRow key={i} label={r.label} value={r.value} max={PESQUISA.rol[0].value} color={["#fc6c04", "#1877F2", "#a78bfa"][i]} sub={`${((r.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+
+            {/* Área */}
+            <Card>
+              <SectionTitle icon={BarChart2} label="Área de trabajo" />
+              {PESQUISA.area.map((a, i) => (
+                <BarRow key={i} label={a.label} value={a.value} max={PESQUISA.area[0].value} color="#7c3aed" sub={`${((a.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+
+            {/* Tiempo siguiendo */}
+            <Card>
+              <SectionTitle icon={Calendar} label="Tiempo siguiendo la marca" />
+              {PESQUISA.tiempoSiguiendo.map((t, i) => (
+                <BarRow key={i} label={t.label} value={t.value} max={PESQUISA.tiempoSiguiendo[0].value} color={["#fc6c04", "#f59e0b", "#00983A", "#1877F2", "#a78bfa"][i]} sub={`${((t.value / PESQUISA.total) * 100).toFixed(1)}%`} />
+              ))}
+            </Card>
+          </div>
+
+          {/* Invertir */}
+          <Card>
+            <SectionTitle icon={DollarSign} label="¿Estaría dispuesto a invertir en IA?" />
+            <div className="flex gap-4">
+              <div className="flex-1 text-center p-6 rounded-xl bg-white/5">
+                <p className="font-outfit text-xs text-white/40 uppercase tracking-fire mb-1">Sí</p>
+                <p className="font-outfit font-black text-3xl text-[#00983A]">{fmtInt(PESQUISA.invertir.si)}</p>
+                <p className="font-outfit text-sm text-white/40">{((PESQUISA.invertir.si / PESQUISA.total) * 100).toFixed(1)}%</p>
+              </div>
+              <div className="flex-1 text-center p-6 rounded-xl bg-white/5">
+                <p className="font-outfit text-xs text-white/40 uppercase tracking-fire mb-1">No</p>
+                <p className="font-outfit font-black text-3xl text-[#ef4444]">{fmtInt(PESQUISA.invertir.no)}</p>
+                <p className="font-outfit text-sm text-white/40">{((PESQUISA.invertir.no / PESQUISA.total) * 100).toFixed(1)}%</p>
+              </div>
+            </div>
+            <div className="mt-3 flex rounded-full overflow-hidden" style={{ height: "12px" }}>
+              <div style={{ width: `${(PESQUISA.invertir.si / PESQUISA.total) * 100}%`, background: "#00983A" }} />
+              <div style={{ width: `${(PESQUISA.invertir.no / PESQUISA.total) * 100}%`, background: "#ef4444" }} />
+            </div>
+          </Card>
+        </div>
+      )}
 
       {/* ── SECCIÓN 5: CLASES ── */}
       <div>
