@@ -13,15 +13,15 @@ const LAUNCH = {
 const SALES = {
   firstDay: 88,
   week: 287,
-  total: 374,
+  total: 378,
 }
 
 const REVENUE = {
-  main: LAUNCH.price * 374,
-  gross: LAUNCH.price * 374,
+  main: LAUNCH.price * 378,
+  gross: LAUNCH.price * 378,
 }
 
-const REFUNDS = { count: 6 }
+const REFUNDS = { count: 7 }
 
 const ADS = {
   leadFb: 17693.60,
@@ -188,17 +188,21 @@ const DAILY_SALES = [
   { day: "18 Abr", date: "18/04", sales: 2 },
   { day: "21 Abr", date: "21/04", sales: 2 },
   { day: "23 Abr", date: "23/04", sales: 1 },
+  { day: "24 Abr", date: "24/04", sales: 1 },
+  { day: "25 Abr", date: "25/04", sales: 1 },
+  { day: "27 Abr", date: "27/04", sales: 1 },
+  { day: "28 Abr", date: "28/04", sales: 1 },
 ]
 const DAILY_MAX = Math.max(...DAILY_SALES.map(d => d.sales))
 
 const COUNTRIES = [
-  { flag: "🇨🇴", name: "Colombia", count: 200 },
+  { flag: "🇨🇴", name: "Colombia", count: 205 },
   { flag: "🇲🇽", name: "México", count: 50 },
   { flag: "🇵🇪", name: "Perú", count: 24 },
   { flag: "🇩🇴", name: "República Dominicana", count: 19 },
   { flag: "🇺🇸", name: "Estados Unidos", count: 19 },
   { flag: "🇪🇨", name: "Ecuador", count: 17 },
-  { flag: "🇦🇷", name: "Argentina", count: 12 },
+  { flag: "🇦🇷", name: "Argentina", count: 11 },
   { flag: "🇨🇱", name: "Chile", count: 10 },
   { flag: "🇬🇹", name: "Guatemala", count: 6 },
   { flag: "🇵🇦", name: "Panamá", count: 5 },
@@ -213,17 +217,17 @@ const COUNTRIES = [
 const COUNTRIES_TOTAL = COUNTRIES.reduce((s, c) => s + c.count, 0)
 
 const HOTMART = {
-  totalVentas: 374,
-  alContado: 224,
-  cuotas4: 150,
-  ingresoNeto: 38417,
-  facturacionBruta: 85847,
+  totalVentas: 378,
+  alContado: 320,
+  cuotas4: 58,
+  ingresoNeto: 38667,
+  facturacionBruta: 86766,
   vendedoras: [
-    { name: "Link principal", code: "none", total: 232, contado: 231, cuotas: 1, neto: 26467, bruto: 57346, pct: 62.2, color: "#6b7280" },
-    { name: "Victoria", code: "Vi", empresa: "4GO Academy", total: 44, contado: 24, cuotas: 19, neto: 3740, bruto: 8128, pct: 11.8, color: "#fc6c04" },
-    { name: "Duneikal", code: "Du", empresa: "4GO Academy", total: 36, contado: 20, cuotas: 16, neto: 2845, bruto: 6188, pct: 9.7, color: "#fc6c04" },
-    { name: "Janis", code: "Ja", empresa: "4GO Academy", total: 34, contado: 20, cuotas: 14, neto: 2867, bruto: 6232, pct: 9.1, color: "#fc6c04" },
-    { name: "Andrea", code: "An", empresa: "IA University", total: 14, contado: 10, cuotas: 4, neto: 1288, bruto: 2797, pct: 3.8, color: "#00983A" },
+    { name: "Link principal", code: "none", total: 232, contado: 231, cuotas: 1, neto: 26467, bruto: 57346, pct: 61.4, color: "#6b7280" },
+    { name: "Victoria", code: "Vi", empresa: "4GO Academy", total: 44, contado: 24, cuotas: 19, neto: 3740, bruto: 8128, pct: 11.6, color: "#fc6c04" },
+    { name: "Duneikal", code: "Du", empresa: "4GO Academy", total: 36, contado: 20, cuotas: 16, neto: 2845, bruto: 6188, pct: 9.5, color: "#fc6c04" },
+    { name: "Janis", code: "Ja", empresa: "4GO Academy", total: 34, contado: 20, cuotas: 14, neto: 2867, bruto: 6232, pct: 9.0, color: "#fc6c04" },
+    { name: "Andrea", code: "An", empresa: "IA University", total: 14, contado: 10, cuotas: 4, neto: 1288, bruto: 2797, pct: 3.7, color: "#00983A" },
     { name: "Stephanie", code: "St", empresa: "IA University", total: 4, contado: 3, cuotas: 1, neto: 377, bruto: 818, pct: 1.1, color: "#00983A" },
     { name: "Francy", code: "Fr", empresa: "IA University", total: 3, contado: 1, cuotas: 2, neto: 178, bruto: 388, pct: 0.8, color: "#00983A" },
     { name: "Daniela", code: "Da", empresa: "IA University", total: 3, contado: 2, cuotas: 1, neto: 262, bruto: 569, pct: 0.8, color: "#00983A" },
@@ -241,8 +245,8 @@ const HOTMART = {
     { name: "Yape / PagoEfectivo / otros", count: 8, pct: 2.1 },
   ],
   codigos: [
-    { code: "csuchyxr", tipo: "Al contado", desc: "Oferta base — pago único", ventas: 310, pct: 83.6, valor: 114.61 },
-    { code: "2usjqn8b", tipo: "4 cuotas", desc: "Accede a la Formación: IA para Negocios", ventas: 61, pct: 16.4, valor: 43.91 },
+    { code: "csuchyxr", tipo: "Al contado", desc: "Oferta base — pago único", ventas: 319, pct: 84.4, valor: 114.61 },
+    { code: "2usjqn8b", tipo: "4 cuotas", desc: "Accede a la Formación: IA para Negocios", ventas: 58, pct: 15.3, valor: 43.91 },
     { code: "klefyui0", tipo: "Variante", desc: "Accede a la Formación: IA para Negocios", ventas: 1, pct: 0.3, valor: 115.48 },
   ],
 }
