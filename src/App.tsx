@@ -6,6 +6,7 @@ import IA04 from "@/pages/IA04"
 import Francisco from "@/pages/Francisco"
 import Ebook from "@/pages/Ebook"
 import DonGuz from "@/pages/DonGuz"
+import BlackFriday from "@/pages/BlackFriday"
 import NotFound from "@/pages/NotFound"
 
 const queryClient = new QueryClient()
@@ -21,6 +22,7 @@ function App() {
           <Route path="/francisco" element={<Francisco />} />
           <Route path="/ebook" element={<Ebook />} />
           <Route path="/donguz" element={<DonGuz />} />
+          <Route path="/black" element={<BlackFriday />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
