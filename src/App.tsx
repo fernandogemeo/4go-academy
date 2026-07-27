@@ -7,6 +7,8 @@ import Francisco from "@/pages/Francisco"
 import Ebook from "@/pages/Ebook"
 import DonGuz from "@/pages/DonGuz"
 import BlackFriday from "@/pages/BlackFriday"
+import BlackPlanejamento from "@/pages/BlackPlanejamento"
+import BlackPlanejamentoEcoSpace from "@/pages/BlackPlanejamentoEcoSpace"
 import NotFound from "@/pages/NotFound"
 
 const queryClient = new QueryClient()
@@ -23,6 +25,8 @@ function App() {
           <Route path="/ebook" element={<Ebook />} />
           <Route path="/donguz" element={<DonGuz />} />
           <Route path="/black" element={<BlackFriday />} />
+          <Route path="/blackplanejamento" element={<BlackPlanejamento />} />
+          <Route path="/blackplanejamento-ecospace" element={<BlackPlanejamentoEcoSpace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
