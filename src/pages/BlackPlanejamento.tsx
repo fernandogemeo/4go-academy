@@ -629,7 +629,7 @@ export default function BlackPlanejamento() {
   const allReelsDone       = reelIds.every(id => checked[id])
   const allCaptacaoDone    = captacaoIds.every(id => checked[id])
   const allDepoimentosDone = depoimentoIds.every(id => checked[id])
-  const effectiveChecked = {
+  const effectiveChecked: Record<string, boolean> = {
     ...checked,
     "reels-block": allReelsDone,
     "captacao-block": allCaptacaoDone,
