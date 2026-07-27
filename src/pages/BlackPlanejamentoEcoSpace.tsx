@@ -125,7 +125,7 @@ const materialLinks = [
   { icon: Link,            label: "Pagina de Captura",         href: "#" },
   { icon: ShoppingCart,    label: "Finalizacion de Compra",    href: "#" },
   { icon: LayoutDashboard, label: "Dashboard de Captacion",    href: "#" },
-  { icon: FlaskConical,    label: "Encuesta",                  href: "#" },
+  { icon: FlaskConical,    label: "Encuesta",                  href: "https://form.fillout.com/t/uGEv7fmwijus" },
   { icon: Copy,            label: "Copy de los Anuncios",      href: "#" },
   { icon: Mic,             label: "Guion del Live",            href: "#" },
 ]
@@ -141,7 +141,7 @@ const weekPlan = [
   { week: 8, phase: "Ventas 🔥",     color: "#F97316", tasks: ["Apertura del carrito — Black Friday", "1 reel + 3–5 stories diarios + email diario", "Live de presentacion y apertura de carrito", "Recuperacion de carrito abandonado", "Live de cierre con Preguntas y Respuestas en las ultimas horas"] },
 ]
 
-const defaultEntregaveis = ["—", "—", "—", "—"]
+const defaultEntregaveis = ["—", "—", "—", "—", "—", "—"]
 
 const defaultNarrativa = [
   "🔥 El Mayor Black Friday de la Historia",
@@ -222,12 +222,17 @@ const depoimentoIds = Array.from({ length: 10 }, (_, i) => `depoimento-${i + 1}`
 
 // ─── GERA IDs de todas as tarefas ─────────────────────────────────────────────
 const allTaskIds = [
-  "reels-block",        // conclui quando todos os 20 conteúdos estão feitos
-  "captacao-block",     // conclui quando todos os 15 conteúdos estão feitos
-  "depoimentos-block",  // conclui quando todos os 10 depoimentos estão feitos
-  "cta-designer-ig",    // CTA Instagram produzido pela designer
-  "cta-designer-tt",    // CTA TikTok produzido pela designer
-  "cta-designer-tp",    // CTA Tráfego Pago produzido pela designer
+  "card-evento",
+  "card-produto",
+  "card-inversion",
+  "card-cpl",
+  "card-leads",
+  "reels-block",
+  "captacao-block",
+  "depoimentos-block",
+  "cta-designer-ig",
+  "cta-designer-tt",
+  "cta-designer-tp",
   ...defaultEntregaveis.map((_, i) => `entrega-${i}`),
   ...phases.flatMap(p => p.tasks.map((_, i) => `fase-${p.id}-${i}`)),
   ...contentItems.filter((_, i) => i >= 2).map((_, i) => `conteudo-${i + 2}`),
@@ -595,7 +600,14 @@ export default function BlackPlanejamentoEcoSpace() {
   })
 
   const [entregaveis, setEntregaveis] = useState<string[]>(() => {
-    try { return JSON.parse(localStorage.getItem("bf-ecospace-entregaveis-2026") || "null") || defaultEntregaveis }
+    try {
+      const stored = JSON.parse(localStorage.getItem("bf-ecospace-entregaveis-2026") || "null")
+      if (!stored) return [...defaultEntregaveis]
+      if (stored.length < defaultEntregaveis.length) {
+        return [...stored, ...defaultEntregaveis.slice(stored.length)]
+      }
+      return stored
+    }
     catch { return [...defaultEntregaveis] }
   })
 
@@ -747,7 +759,10 @@ export default function BlackPlanejamentoEcoSpace() {
           <motion.div variants={fadeUp} className="md:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-4">
 
             {/* Nome do evento — destaque grande */}
-            <div className="col-span-2 md:col-span-1 bg-gradient-to-br from-[#4B6BFB] to-[#8B5CF6] rounded-2xl p-6 flex flex-col justify-between text-white">
+            <div className={`col-span-2 md:col-span-1 bg-gradient-to-br from-[#4B6BFB] to-[#8B5CF6] rounded-2xl p-6 flex flex-col justify-between text-white relative ${checked["card-evento"] ? "ring-2 ring-green-400" : ""}`}>
+              <button onClick={() => toggle("card-evento")} className="absolute top-4 right-4 transition-transform active:scale-90">
+                {checked["card-evento"] ? <CheckCircle className="w-5 h-5 text-green-300" /> : <Circle className="w-5 h-5 text-white/40 hover:text-white/70" />}
+              </button>
               <p className="text-white/60 text-xs uppercase tracking-widest mb-2">Nombre del Evento</p>
               <EditableText
                 value={config.eventName}
@@ -767,7 +782,10 @@ export default function BlackPlanejamentoEcoSpace() {
             </div>
 
             {/* Valor do produto */}
-            <div className="bg-white border border-[#eee] rounded-2xl p-6 flex flex-col justify-between">
+            <div className={`bg-white border rounded-2xl p-6 flex flex-col justify-between relative ${checked["card-produto"] ? "border-green-300 bg-green-50/30" : "border-[#eee]"}`}>
+              <button onClick={() => toggle("card-produto")} className="absolute top-4 right-4 transition-transform active:scale-90">
+                {checked["card-produto"] ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Circle className="w-5 h-5 text-[#ccc] hover:text-[#aaa]" />}
+              </button>
               <p className="text-[#999] text-xs uppercase tracking-widest mb-2">Valor del Producto</p>
               <EditableText
                 value={config.productValue}
@@ -782,7 +800,10 @@ export default function BlackPlanejamentoEcoSpace() {
             </div>
 
             {/* Investimento */}
-            <div className="bg-white border border-[#eee] rounded-2xl p-6 flex flex-col justify-between">
+            <div className={`bg-white border rounded-2xl p-6 flex flex-col justify-between relative ${checked["card-inversion"] ? "border-green-300 bg-green-50/30" : "border-[#eee]"}`}>
+              <button onClick={() => toggle("card-inversion")} className="absolute top-4 right-4 transition-transform active:scale-90">
+                {checked["card-inversion"] ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Circle className="w-5 h-5 text-[#ccc] hover:text-[#aaa]" />}
+              </button>
               <p className="text-[#999] text-xs uppercase tracking-widest mb-2">Inversion Trafico / API</p>
               <EditableText
                 value={config.investmentValue}
@@ -797,7 +818,10 @@ export default function BlackPlanejamentoEcoSpace() {
             </div>
 
             {/* CPL */}
-            <div className="bg-white border border-[#eee] rounded-2xl p-6 flex flex-col justify-between">
+            <div className={`bg-white border rounded-2xl p-6 flex flex-col justify-between relative ${checked["card-cpl"] ? "border-green-300 bg-green-50/30" : "border-[#eee]"}`}>
+              <button onClick={() => toggle("card-cpl")} className="absolute top-4 right-4 transition-transform active:scale-90">
+                {checked["card-cpl"] ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Circle className="w-5 h-5 text-[#ccc] hover:text-[#aaa]" />}
+              </button>
               <p className="text-[#999] text-xs uppercase tracking-widest mb-2">Costo por Lead (CPL)</p>
               <EditableText
                 value={config.cplValue}
@@ -812,7 +836,10 @@ export default function BlackPlanejamentoEcoSpace() {
             </div>
 
             {/* Meta de leads */}
-            <div className="bg-white border border-[#eee] rounded-2xl p-6 flex flex-col justify-between">
+            <div className={`bg-white border rounded-2xl p-6 flex flex-col justify-between relative ${checked["card-leads"] ? "border-green-300 bg-green-50/30" : "border-[#eee]"}`}>
+              <button onClick={() => toggle("card-leads")} className="absolute top-4 right-4 transition-transform active:scale-90">
+                {checked["card-leads"] ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Circle className="w-5 h-5 text-[#ccc] hover:text-[#aaa]" />}
+              </button>
               <p className="text-[#999] text-xs uppercase tracking-widest mb-2">Meta de Leads</p>
               <EditableText
                 value={config.leadsGoal}
