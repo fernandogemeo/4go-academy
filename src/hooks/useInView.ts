@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react"
+import type { RefObject } from "react"
 
-export function useInView(threshold = 0.15) {
+type InViewResult = [RefObject<HTMLDivElement | null>, boolean] & {
+  ref: RefObject<HTMLDivElement | null>
+  isInView: boolean
+}
+
+export function useInView(threshold = 0.15): InViewResult {
   const ref = useRef<HTMLDivElement>(null)
   const [isInView, setIsInView] = useState(false)
 
@@ -18,5 +24,10 @@ export function useInView(threshold = 0.15) {
     return () => observer.disconnect()
   }, [threshold])
 
-  return { ref, isInView }
+  // Supports both `const { ref, isInView } = useInView()` and
+  // `const [ref, inView] = useInView()` call styles.
+  const result = [ref, isInView] as unknown as InViewResult
+  result.ref = ref
+  result.isInView = isInView
+  return result
 }
