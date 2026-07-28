@@ -141,24 +141,30 @@ const weekPlan = [
   { week: 8, phase: "Ventas 🔥",     color: "#F97316", tasks: ["Apertura del carrito — Black Friday", "1 reel + 3–5 stories diarios + email diario", "Live de presentacion y apertura de carrito", "Recuperacion de carrito abandonado", "Live de cierre con Preguntas y Respuestas en las ultimas horas"] },
 ]
 
-const defaultEntregaveis = ["—", "—", "—", "—", "—", "—"]
+const defaultEntregaveis = [
+  "Todos Cursos Gravados da Acospace (De por vida)",
+  "Aceso a todos los 9 Diplomados (De por vida)",
+  "Aceso a 1 año CAO (Clases en Vivo)",
+  "Materiales PDF",
+  "IA para Odontolocos",
+  "Parceria con empresa para tener descuentos",
+]
 
 const defaultNarrativa = [
-  "🔥 El Mayor Black Friday de la Historia",
-  "💥 Descuento irreal — nunca visto antes",
-  "📦 Combo de Cursos · Acceso Vitalicio",
-  "🛡️ Soporte por 1 ano incluido",
-  "🎯 Nunca mas vas a gastar en cursos de [NICHO] por el resto de tu vida",
+  "🔥 La Major Black Friday de la Historia",
+  "💥 Descuento nunca antes visto",
+  "📦 Combo de Infoprodutos · Acceso de por vida",
+  "🎯🎯 Nunca más tendrás que gastar dinero en un curso de ortodoncia en lo que te queda de vida.",
 ]
 
 const defaultConfig = {
-  eventName: "Black Friday\nVitalicio",
-  eventDate: "22/10",
+  eventName: "Black Infinito Odonto",
+  eventDate: "28/10",
   productValue: "$500",
-  productAccess: "Acceso Vitalicio",
+  productAccess: "Aceso de por Vida",
   investmentValue: "$10.000",
-  investmentDesc: "Inversion total en el lanzamiento",
-  cplValue: "$2,00",
+  investmentDesc: "Total del lanzamiento",
+  cplValue: "$1,00 a $3,00",
   cplDesc: "por lead captado",
   leadsGoal: "5.000",
   leadsDesc: "leads para el lanzamiento",
