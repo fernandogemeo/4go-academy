@@ -9,6 +9,7 @@ import DonGuz from "@/pages/DonGuz"
 import BlackFriday from "@/pages/BlackFriday"
 import BlackPlanejamento from "@/pages/BlackPlanejamento"
 import BlackPlanejamentoEcoSpace from "@/pages/BlackPlanejamentoEcoSpace"
+import BlackPlanejamentoGuz from "@/pages/BlackPlanejamentoGuz"
 import NotFound from "@/pages/NotFound"
 
 const queryClient = new QueryClient()
@@ -27,6 +28,7 @@ function App() {
           <Route path="/black" element={<BlackFriday />} />
           <Route path="/blackplanejamento" element={<BlackPlanejamento />} />
           <Route path="/blackplanejamento-ecospace" element={<BlackPlanejamentoEcoSpace />} />
+          <Route path="/blackplanejamento-guz" element={<BlackPlanejamentoGuz />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
