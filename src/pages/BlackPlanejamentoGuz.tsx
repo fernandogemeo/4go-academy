@@ -153,7 +153,7 @@ const defaultNarrativa = [
 
 const defaultConfig = {
   eventName: "Black Friday\nGUZ",
-  eventDate: "",
+  eventDate: "DD/MM",
   productValue: "$500",
   productAccess: "Acceso Vitalicio",
   investmentValue: "$10.000",
