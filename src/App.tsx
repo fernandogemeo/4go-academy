@@ -10,6 +10,7 @@ import BlackFriday from "@/pages/BlackFriday"
 import BlackPlanejamento from "@/pages/BlackPlanejamento"
 import BlackPlanejamentoEcoSpace from "@/pages/BlackPlanejamentoEcoSpace"
 import BlackPlanejamentoGuz from "@/pages/BlackPlanejamentoGuz"
+import BlackPlanejamentoSussete from "@/pages/BlackPlanejamentoSussete"
 import NotFound from "@/pages/NotFound"
 
 const queryClient = new QueryClient()
@@ -29,6 +30,7 @@ function App() {
           <Route path="/blackplanejamento" element={<BlackPlanejamento />} />
           <Route path="/blackplanejamento-ecospace" element={<BlackPlanejamentoEcoSpace />} />
           <Route path="/blackplanejamento-guz" element={<BlackPlanejamentoGuz />} />
+          <Route path="/blackplanejamento-sussete" element={<BlackPlanejamentoSussete />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
