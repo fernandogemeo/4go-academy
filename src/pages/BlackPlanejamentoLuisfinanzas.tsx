@@ -113,11 +113,15 @@ const contentItems = [
   { icon: FileText,  qty: 5,  label: "Creativos Estaticos",                 desc: "Imagenes de captacion para trafico pago", exampleVideo: "" },
 ]
 
-const goalColumns = [
-  { icon: Target, label: "Meta Baja",      color: "text-yellow-600", border: "border-yellow-200", bg: "bg-yellow-50", dot: "bg-yellow-400", items: ["Facturacion: $75.000", "Leads: 5.000", "Conversion: 3%  →  150 ventas", "ROI: 7.5x"] },
-  { icon: Star,   label: "Meta OK",        color: "text-blue-600",   border: "border-blue-200",   bg: "bg-blue-50",   dot: "bg-blue-400",   items: ["Facturacion: $150.000", "Leads: 5.000", "Conversion: 6%  →  300 ventas", "ROI: 15x"] },
-  { icon: Flame,  label: "Meta Explosiva", color: "text-orange-600", border: "border-orange-200", bg: "bg-orange-50", dot: "bg-orange-400", items: ["Facturacion: $250.000", "Leads: 5.000", "Conversion: 10%  →  500 ventas", "ROI: 25x"] },
-]
+// goalColumns is now computed dynamically inside the component
+
+function parseNum(s: string): number {
+  return parseFloat(s.replace(/[^0-9.,]/g, "").replace(/\./g, "").replace(",", ".")) || 0
+}
+
+function fmtNum(n: number): string {
+  return n.toLocaleString("es-ES", { maximumFractionDigits: 0 })
+}
 
 const materialLinks = [
   { icon: Users,           label: "Lista de Alumnos",          href: "#" },
@@ -156,9 +160,9 @@ const defaultConfig = {
   eventDate: "21/10",
   productValue: "$500",
   productAccess: "Acceso Vitalicio",
-  investmentValue: "$10.000",
+  investmentValue: "$20.000",
   investmentDesc: "Inversion total en el lanzamiento",
-  cplValue: "$2,00",
+  cplValue: "$3,00",
   cplDesc: "por lead captado",
   leadsGoal: "5.000",
   leadsDesc: "leads para el lanzamiento",
@@ -651,6 +655,42 @@ export default function BlackPlanejamentoLuisfinanzas() {
   const totalTasks = allTaskIds.length
   const totalPct = Math.round((totalDone / totalTasks) * 100)
 
+  // ─── CÁLCULOS DINÂMICOS DE TRÁFEGO ───
+  const investment = parseNum(config.investmentValue)
+  const cpl = parseNum(config.cplValue)
+  const productPrice = parseNum(config.productValue)
+  const leads = cpl > 0 ? Math.round(investment / cpl) : 0
+
+  const convRates = [0.03, 0.06, 0.10]
+  const metaLabels = ["Meta Baja", "Meta OK", "Meta Explosiva"] as const
+  const metaStyles = [
+    { icon: Target, color: "text-yellow-600", border: "border-yellow-200", bg: "bg-yellow-50", dot: "bg-yellow-400" },
+    { icon: Star,   color: "text-blue-600",   border: "border-blue-200",   bg: "bg-blue-50",   dot: "bg-blue-400" },
+    { icon: Flame,  color: "text-orange-600", border: "border-orange-200", bg: "bg-orange-50", dot: "bg-orange-400" },
+  ]
+
+  const goalColumns = metaLabels.map((label, i) => {
+    const rate = convRates[i]
+    const sales = Math.round(leads * rate)
+    const revenue = sales * productPrice
+    const roi = investment > 0 ? (revenue / investment) : 0
+    return {
+      ...metaStyles[i],
+      label,
+      items: [
+        `Facturacion: $${fmtNum(revenue)}`,
+        `Leads: ${fmtNum(leads)}`,
+        `Conversion: ${Math.round(rate * 100)}%  →  ${fmtNum(sales)} ventas`,
+        `ROI: ${roi.toFixed(1)}x`,
+      ],
+    }
+  })
+
+  const facLow = fmtNum(Math.round(leads * convRates[0] * productPrice))
+  const facHigh = fmtNum(Math.round(leads * convRates[2] * productPrice))
+  const roiLow = investment > 0 ? (leads * convRates[0] * productPrice / investment).toFixed(1) : "0"
+  const roiHigh = investment > 0 ? (leads * convRates[2] * productPrice / investment).toFixed(1) : "0"
+
   const resetAll = () => {
     if (confirm("¿Estas seguro de que deseas reiniciar todo el progreso?")) {
       setChecked({})
@@ -983,8 +1023,8 @@ export default function BlackPlanejamentoLuisfinanzas() {
             {[
               { icon: Calendar,     label: "Dias de Captacion",         value: "21–30 dias" },
               { icon: ShoppingCart, label: "Carrito Abierto",          value: "7–10 dias" },
-              { icon: Users,        label: "Meta de Leads",            value: "5.000" },
-              { icon: TrendingUp,   label: "Costo por Lead Estimado",  value: "$2,00" },
+              { icon: Users,        label: "Meta de Leads",            value: fmtNum(leads) },
+              { icon: TrendingUp,   label: "Costo por Lead Estimado",  value: config.cplValue },
             ].map((item, i) => (
               <motion.div key={i} variants={fadeUp} className="bg-[#fafafa] border border-[#eee] rounded-2xl p-5">
                 <item.icon className="w-5 h-5 text-[#4B6BFB] mb-3" />
@@ -995,10 +1035,10 @@ export default function BlackPlanejamentoLuisfinanzas() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              { icon: DollarSign, label: "Inversion Total",              value: "$10.000" },
+              { icon: DollarSign, label: "Inversion Total",              value: config.investmentValue },
               { icon: BarChart3,  label: "Conversion Esperada",        value: "3% a 10%" },
-              { icon: TrendingUp, label: "Estimacion de Facturacion",  value: "$75k – $250k" },
-              { icon: Zap,        label: "ROI Esperado",               value: "7.5x – 25x" },
+              { icon: TrendingUp, label: "Estimacion de Facturacion",  value: `$${facLow} – $${facHigh}` },
+              { icon: Zap,        label: "ROI Esperado",               value: `${roiLow}x – ${roiHigh}x` },
             ].map((item, i) => (
               <motion.div key={i} variants={fadeUp} className="bg-[#fafafa] border border-[#eee] rounded-2xl p-5">
                 <item.icon className="w-5 h-5 text-[#EF4444] mb-3" />
