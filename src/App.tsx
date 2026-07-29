@@ -11,6 +11,7 @@ import BlackPlanejamento from "@/pages/BlackPlanejamento"
 import BlackPlanejamentoEcoSpace from "@/pages/BlackPlanejamentoEcoSpace"
 import BlackPlanejamentoGuz from "@/pages/BlackPlanejamentoGuz"
 import BlackPlanejamentoSussete from "@/pages/BlackPlanejamentoSussete"
+import BlackPlanejamentoLuisfinanzas from "@/pages/BlackPlanejamentoLuisfinanzas"
 import NotFound from "@/pages/NotFound"
 
 const queryClient = new QueryClient()
@@ -31,6 +32,7 @@ function App() {
           <Route path="/blackplanejamento-ecospace" element={<BlackPlanejamentoEcoSpace />} />
           <Route path="/blackplanejamento-guz" element={<BlackPlanejamentoGuz />} />
           <Route path="/blackplanejamento-sussete" element={<BlackPlanejamentoSussete />} />
+          <Route path="/blackplanejamento-luisfinanzas" element={<BlackPlanejamentoLuisfinanzas />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
